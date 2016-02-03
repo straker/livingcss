@@ -1,0 +1,33 @@
+{
+  "name": "style-guide-generator",
+  "version": "1.0.0",
+  "description": "Generate a style guide using comment driven content creation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/straker/style-guide-generator.git"
+  },
+  "keywords": [
+    "style",
+    "guide",
+    "generator",
+    "css"
+  ],
+  "author": "Steven Lambert <steven@sklambert.com> (http://sklambert.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/straker/style-guide-generator/issues"
+  },
+  "homepage": "https://github.com/straker/style-guide-generator",
+  "dependencies": {
+    "comment-parser": "^0.3.1",
+    "glob": "^6.0.4",
+    "handlebars": "^4.0.5",
+    "html-minifier": "^1.1.1",
+    "marked": "^0.3.5",
+    "native-promise-only": "^0.8.1"
+  }
+}
