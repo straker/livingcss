@@ -1,0 +1,14 @@
+{{#each sections~}}
+<div id="{{id}}">
+  <h1 class="section-title">{{name}}</h1>
+  <div class="section-description">{{{description}}}</div>
+
+  {{#each children}}
+  <div id="{{../id}}-{{id}}">
+    <h2 class="section-title">{{name}}</h1>
+    <div class="section-description">{{{description}}}</div>
+  </div>
+  {{/each}}
+
+</div>
+{{/each}}
