@@ -47,7 +47,7 @@ function StyleGuideGenerator(source, dest, options) {
   // defaults
   source = (typeof source === 'string' ? [source] : source);
   options = options || {};
-  options.template = options.template || path.join(__dirname, 'defaultTemplate.hbs');
+  options.template = options.template || path.join(__dirname, 'template.hbs');
   options.partials = (typeof options.partials === 'string' ? [options.partials] : options.partials || []);
   options.sectionOrder = options.sectionOrder || [];
   options.tags = options.tags || [];
