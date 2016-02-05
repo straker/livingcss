@@ -8,6 +8,8 @@ var parseComments = require('./lib/parseComments');
 var tags = require('./lib/tags');
 var utils = require('./lib/utils');
 
+var sections = [];
+
 /**
  * Generate a style guide using content driven content creation.
  *
@@ -17,29 +19,30 @@ var utils = require('./lib/utils');
  * @param {string} [options.template="defaultTempalte.hbs"] - Path to the handlebars template to use for generating the HTML.
  * @param {string|string[]} [options.partials=[]] - List of glob files of handlebars partials used in the template.
  * @param {string[]} [options.sectionOrder=[]] - List of root section names (a section without a parent) in the order they should be sorted. Any root section not listed will be added to the end in the order encountered.
- * @param {object} [options.tags={}] - Custom tags and their callback functions to parse them. The function will receive an object of the tag, the parsed comment, the block object, the list of sections, and the file as a parameter.
+ * @param {object} [options.tags={}] - Custom tags and their callback functions to parse them. The function will receive an object of the tag, the parsed comment, the block object, the list of sections, and the file as parameters.
  * @param {boolean} [options.minify=true] - If the generated HTML should be minified.
+ * @param {function} [options.preprocess] - Function that will get executed right before Handlebars is called with the context. Will be passed the context object and options as parameters.
  *
  * @example
     StyleGuideGenerator('input.css', 'output.html');
 
     StyleGuideGenerator('input.css', 'output.html', {
+      template: 'path/to/template.hbs',
+      partials: 'path/to/partial.hbs',
+      sectionOrder: ['buttons', 'fields'],
       tags: {
         myCustomTag: function(params) { return; }
       },
-      sectionOrder: ['buttons', 'fields']
+      minify: false,
+      preprocess: function(context, options) {
+        context.foo = bar;
+      }
     });
  */
 function StyleGuideGenerator(source, dest, options) {
   if (!(this instanceof StyleGuideGenerator)) {
     return new StyleGuideGenerator(source, dest, options);
   }
-
-  // @property {Section[]} sections - List of sections.
-  this.sections = [];
-
-  // @property {object} tags - Tags and their callback function.
-  this.tags = tags;
 
   // defaults
   source = (typeof source === 'string' ? [source] : source);
@@ -61,24 +64,24 @@ function StyleGuideGenerator(source, dest, options) {
       continue;
     }
 
-    this.tags[tag] = options.tags[tag];
+    tags[tag] = options.tags[tag];
   }
 
   // read all source files and handlebar templates
   Promise.all([
     utils.readFileGlobs(source, function(data, file) {
-      parseComments(data, file, this.tags, this.sections);
-    }.bind(this)),
-    loadPartials(options)
+      parseComments(data, file, tags, sections);
+    }),
+    loadPartials(options.partials)
   ]).then(
     function success() {
-      generate(dest, this.sections, options);
-    }.bind(this),
+      generate(dest, sections, options.template, options);
+    },
     function failure(err) {
-      console.log('err:', err);
+      console.error(err.stack);
     })
   .catch(function(err) {
-    console.log('err:', err);
+    console.error(err.stack);
   });
 }
 

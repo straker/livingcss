@@ -33,10 +33,12 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^2.11.6",
     "gulp": "^3.9.0",
     "gulp-jshint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
     "jshint": "^2.9.1",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "proxyquire": "^1.7.4",
+    "sinon": "^1.17.3"
   }
 }
