@@ -59,8 +59,8 @@ describe('parseComments', function() {
   it('should execute a defined tags function', function(done) {
     var file = path.join(__dirname, 'data/simple-tag.css');
     var myTags = {
-      tagName: function(params) {
-        params.block.foo = 'bar';
+      tagName: function() {
+        this.block.foo = 'bar';
       }
     };
 
@@ -71,6 +71,99 @@ describe('parseComments', function() {
 
       parseComments(data, file, myTags, function(block) {
         expect(block.foo).to.equal('bar');
+      });
+
+      done();
+    });
+  });
+
+  it('should set an undefined tags value as true if it does not have a description', function(done) {
+    var file = path.join(__dirname, 'data/no-description.css');
+
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) {
+        throw err;
+      }
+
+      parseComments(data, file, function(block) {
+        expect(block.hideCode).to.equal(true);
+      });
+
+      done();
+    });
+  });
+
+  it('should save an undefined tag as an object if it has a type', function(done) {
+    var file = path.join(__dirname, 'data/tag-object.css');
+
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) {
+        throw err;
+      }
+
+      parseComments(data, file, function(block) {
+        expect(block.color).to.exist;
+        expect(block.color.type).to.equal('hex');
+        expect(block.color.description).to.equal('#fff');
+      });
+
+      done();
+    });
+  });
+
+  it('should parse a tag name', function(done) {
+    var file = path.join(__dirname, 'data/name.css');
+
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) {
+        throw err;
+      }
+
+      parseComments(data, file, function(block) {
+        expect(block.myTag).to.exist;
+        expect(block.myTag.name).to.equal('myName');
+        expect(block.myTag.description).to.equal('my description');
+      });
+
+      done();
+    });
+  });
+
+  it('tag objects should only contain properties that have been defined in the tag', function(done) {
+    var file = path.join(__dirname, 'data/tag-object.css');
+
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) {
+        throw err;
+      }
+
+      parseComments(data, file, function(block) {
+         expect(block.color.name).to.not.exist;
+      });
+
+      done();
+    });
+  });
+
+  it('should only parse a name when followed by a hyphen', function(done) {
+    var file = path.join(__dirname, 'data/name-only-with-hyphen.css');
+    var result = { state: [
+      { description: 'hover state', name: ':hover', type: 'type' },
+      { description: 'disabled state', name: ':disabled' },
+      '.primary-description',
+      '.secondary -description',
+      { description: 'description', type: 'type' },
+      'description with some text and no name',
+      '.party some text which then needs a hyphen - to separate content'
+    ]};
+
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) {
+        throw err;
+      }
+
+      parseComments(data, file, function(block) {
+        expect(block).to.deep.equal(result);
       });
 
       done();
@@ -169,6 +262,7 @@ describe('parseComments', function() {
           id: 'complex-block',
           example: '<div>foo<span>bar</span></div>',
           code: '<div>foo</div>',
+          language: 'markup',
           customTag: true,
         });
 
@@ -228,6 +322,46 @@ describe('parseComments', function() {
         expect(function() {
           parseComments(data, file, tags, sections);
         }).to.throw(ReferenceError);
+
+        done();
+      });
+    });
+
+  });
+
+  describe('tag @example', function() {
+
+    it('should set default code and language properties', function(done) {
+      var file = path.join(__dirname, 'data/example.css');
+      var sections = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, sections, function(block) {
+          expect(block.code).to.equal(block.example);
+          expect(block.language).to.equal('markup');
+        });
+
+        done();
+      });
+    });
+
+    it('should allow overrides of code and language', function(done) {
+      var file = path.join(__dirname, 'data/example-code-language.css');
+      var sections = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, sections, function(block) {
+          expect(block.code).to.equal("console.log('hello');");
+          expect(block.language).to.equal('javascript');
+        });
 
         done();
       });

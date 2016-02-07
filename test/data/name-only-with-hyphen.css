@@ -1,0 +1,9 @@
+/**
+ * @state {type} :hover -     hover state
+ * @state :disabled - disabled state
+ * @state .primary-description
+ * @state .secondary -description
+ * @state {type} description
+ * @state description with some text and no name
+ * @state .party some text which then needs a hyphen - to separate content
+ */

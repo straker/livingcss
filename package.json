@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/straker/style-guide-generator",
   "dependencies": {
-    "comment-parser": "^0.3.1",
+    "comment-parser": "fs-webdev/comment-parser",
     "glob": "^6.0.4",
     "handlebars": "^4.0.5",
     "html-minifier": "^1.1.1",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "gulp": "^3.9.0",
+    "gulp-connect": "^2.3.1",
     "gulp-jshint": "^2.0.0",
     "gulp-mocha": "^2.2.0",
     "jshint": "^2.9.1",
