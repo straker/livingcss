@@ -12,9 +12,6 @@
  *
  * @example
  * <button>Shiny</button>
- * <div>
- *   <span>Hello</span>
- * </div>
  */
 button {
   padding: 5px 15px;
@@ -48,21 +45,20 @@ button.smaller {
   padding: 4px 10px;
 }
 
-/**
- * JavaScript
- * @section
- * @language javascript
- * @example
- * <div id="test_this"></div>
- * <script>document.getElementById('test_this').innerHTML = 'Hello';</script>
- *
- * @code
- * document.getElementById('test_this').innerHTML = 'Hello';
- */
+        /**
+         * JavaScript
+         * @section
+         * @example
+         * <div id="test_this"></div>
+         * <script>document.getElementById('test_this').innerHTML = 'Hello';</script>
+         *
+         * @code {javascript}
+         * document.getElementById('test_this').innerHTML = 'Hello';
+         */
 
 /**
  * @section No code
- * @example
- * <div>You can only see this</div>
+ * @example {yaml}
+ * <div>You can only see the example, the code is hidden</div>
  * @hideCode
  */

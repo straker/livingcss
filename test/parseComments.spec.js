@@ -145,6 +145,23 @@ describe('parseComments', function() {
     });
   });
 
+  it('should add multiple same tags into an array', function(done) {
+    var file = path.join(__dirname, 'data/multiple-same-tags.css');
+
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) {
+        throw err;
+      }
+
+      parseComments(data, file, function(block) {
+         expect(Array.isArray(block.state)).to.be.true;
+         expect(block.state.length).to.equal(3);
+      });
+
+      done();
+    });
+  });
+
   it('should only parse a name when followed by a hyphen', function(done) {
     var file = path.join(__dirname, 'data/name-only-with-hyphen.css');
     var result = { state: [
@@ -170,6 +187,13 @@ describe('parseComments', function() {
     });
   });
 
+
+
+
+
+  // --------------------------------------------------
+  // @section
+  // --------------------------------------------------
   describe('tag @section', function() {
 
     it('should add the block to the sections list', function(done) {
@@ -244,34 +268,15 @@ describe('parseComments', function() {
       });
     });
 
-    it('should correctly parse a complex comment', function(done) {
-      var file = path.join(__dirname, 'data/complex.css');
-      var sections = [];
-
-      fs.readFile(file, 'utf8', function(err, data) {
-        if (err) {
-          throw err;
-        }
-
-
-        parseComments(data, file, tags, sections);
-
-        expect(sections[0]).to.deep.equal({
-          name: 'Complex Block',
-          description: '<p>This is a complex block with multiple tags.</p>\n',
-          id: 'complex-block',
-          example: '<div>foo<span>bar</span></div>',
-          code: '<div>foo</div>',
-          language: 'markup',
-          customTag: true,
-        });
-
-        done();
-      });
-    });
-
   });
 
+
+
+
+
+  // --------------------------------------------------
+  // @sectionof
+  // --------------------------------------------------
   describe('tag @sectionof', function() {
 
     it('should add the block as a child to the parent section', function(done) {
@@ -329,7 +334,14 @@ describe('parseComments', function() {
 
   });
 
-  describe('tag @example', function() {
+
+
+
+
+  // --------------------------------------------------
+  // @example and @code
+  // --------------------------------------------------
+  describe('tag @example and @code', function() {
 
     it('should set default code and language properties', function(done) {
       var file = path.join(__dirname, 'data/example.css');
@@ -341,8 +353,9 @@ describe('parseComments', function() {
         }
 
         parseComments(data, file, tags, sections, function(block) {
-          expect(block.code).to.equal(block.example);
-          expect(block.language).to.equal('markup');
+          expect(block.code).to.exist;
+          expect(block.code.description).to.equal(block.example.description);
+          expect(block.code.type).to.equal(block.example.type);
         });
 
         done();
@@ -359,8 +372,10 @@ describe('parseComments', function() {
         }
 
         parseComments(data, file, tags, sections, function(block) {
-          expect(block.code).to.equal("console.log('hello');");
-          expect(block.language).to.equal('javascript');
+          expect(block.example.description).to.equal('<div>foo</div>');
+          expect(block.example.type).to.equal('markup');
+          expect(block.code.description).to.equal("console.log('hello');");
+          expect(block.code.type).to.equal('javascript');
         });
 
         done();

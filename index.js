@@ -19,6 +19,7 @@ var utils = require('./lib/utils');
  * @param {string[]} [options.sectionOrder=[]] - List of root section names (a section without a parent) in the order they should be sorted. Any root section not listed will be added to the end in the order encountered.
  * @param {object} [options.tags={}] - Custom tags and their callback functions to parse them. The function will have the tag, the parsed comment, the block object, the list of sections, and the file on the `this` object.
  * @param {boolean} [options.minify=true] - If the generated HTML should be minified.
+ * @param {boolean} [options.handlebars=true] - Generate the style guide using handlebars. Set to false if you want to use a different templating engine, then use the `preprocess` function to get the JSON context object.
  * @param {function} [options.preprocess] - Function that will get executed right before Handlebars is called with the context. Will be passed the context object, the Handlebars object, and the options passed to the StyleGuideGenerator as parameters.
  * @param {function} [options.postprocess] - Function that will get executed after the style guide has been created. Will be passed the context object, the Handlebars object, and the options passed to the StyleGuideGenerator as parameters.
  *
@@ -61,6 +62,7 @@ function StyleGuideGenerator(source, dest, options) {
   options.sectionOrder = options.sectionOrder || [];
   options.tags = options.tags || [];
   options.minify = (typeof options.minify === 'undefined' ? true : options.minify);
+  options.handlebars = (typeof options.handlebars === 'undefined' ? true : options.handlebars);
 
   // normalize sort order section names
   options.sectionOrder.forEach(function(value, index) {

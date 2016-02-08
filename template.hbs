@@ -47,11 +47,11 @@
       {{/if}}
 
       {{#if example}}
-        {{{example}}}
+        {{{example.description}}}
 
         {{#unless hideCode}}
         <div class="markup">
-          <pre class="code"><code class="language-{{language}}">{{code}}</code></pre>
+          <pre class="code"><code class="language-{{code.type}}">{{code.description}}</code></pre>
         </div>
         {{/unless}}
       {{/if}}
