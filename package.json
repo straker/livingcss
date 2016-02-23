@@ -1,5 +1,5 @@
 {
-  "name": "style-guide-generator",
+  "name": "livingcss",
   "version": "1.0.0",
   "description": "Generate a style guide using comment driven content creation",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/straker/style-guide-generator.git"
+    "url": "https://github.com/straker/livingcss.git"
   },
   "keywords": [
     "style",
@@ -19,11 +19,11 @@
   "author": "Steven Lambert <steven@sklambert.com> (http://sklambert.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/straker/style-guide-generator/issues"
+    "url": "https://github.com/straker/livingcss/issues"
   },
-  "homepage": "https://github.com/straker/style-guide-generator",
+  "homepage": "https://github.com/straker/livingcss",
   "dependencies": {
-    "comment-parser": "fs-webdev/comment-parser",
+    "comment-parser": "0.4.0",
     "glob": "^6.0.4",
     "handlebars": "^4.0.5",
     "html-minifier": "^1.1.1",
@@ -38,6 +38,7 @@
     "gulp-jshint": "^2.0.0",
     "gulp-mocha": "^2.2.0",
     "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0",
     "mocha": "^2.4.5",
     "proxyquire": "^1.7.4",
     "sinon": "^1.17.3"

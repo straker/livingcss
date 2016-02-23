@@ -28,20 +28,4 @@ describe('generate', function() {
     expect(preprocess.called).to.be.true;
   });
 
-  it('should not call the postprocess function if the handlebars template was not generated', function() {
-    var postprocess = sinon.spy();
-
-    generate(null, {sections: []}, {postprocess: postprocess});
-
-    expect(postprocess.called).to.be.false;
-  });
-
-  it('should call the postprocess function if the handlebars template was generated', function() {
-    var postprocess = sinon.spy();
-
-    generate(null, {sections: []}, {postprocess: postprocess, handlebars: true});
-
-    expect(postprocess.called).to.be.true;
-  });
-
 });

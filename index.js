@@ -1,3 +1,4 @@
+/*jshint -W055 */
 var fs = require('fs');
 var path = require('path');
 var Promise = require("native-promise-only");
@@ -20,13 +21,13 @@ var utils = require('./lib/utils');
  * @param {object} [options.tags={}] - Custom tags and their callback functions to parse them. The function will have the tag, the parsed comment, the block object, the list of sections, and the file on the `this` object.
  * @param {boolean} [options.minify=true] - If the generated HTML should be minified.
  * @param {boolean} [options.handlebars=true] - Generate the style guide using handlebars. Set to false if you want to use a different templating engine, then use the `preprocess` function to get the JSON context object.
- * @param {function} [options.preprocess] - Function that will get executed right before Handlebars is called with the context. Will be passed the context object, the Handlebars object, and the options passed to the StyleGuideGenerator as parameters.
- * @param {function} [options.postprocess] - Function that will get executed after the style guide has been created. Will be passed the context object, the Handlebars object, and the options passed to the StyleGuideGenerator as parameters.
+ * @param {boolean} [options.loadcss=true] - If the style guide should load the css files that were used to generate it.
+ * @param {function} [options.preprocess] - Function that will get executed right before Handlebars is called with the context. Will be passed the context object, the Handlebars object, and the options passed to livingcss as parameters.
  *
  * @example
-    StyleGuideGenerator('input.css', 'output.html');
+    livingcss('input.css', 'output.html');
 
-    StyleGuideGenerator('input.css', 'output.html', {
+    livingcss('input.css', 'output.html', {
       template: 'path/to/template.hbs',
       partials: 'path/to/partial.hbs',
       sectionOrder: ['buttons', 'fields'],
@@ -34,6 +35,8 @@ var utils = require('./lib/utils');
         myCustomTag: function() { return; }
       },
       minify: false,
+      handlebars: true,
+      loadcss: true,
       preprocess: function(context, Handlebars, options) {
         context.foo = bar;
       },
@@ -42,11 +45,12 @@ var utils = require('./lib/utils');
       }
     });
  */
-function StyleGuideGenerator(source, dest, options) {
-  if (!(this instanceof StyleGuideGenerator)) {
-    return new StyleGuideGenerator(source, dest, options);
+function livingcss(source, dest, options) {
+  if (!(this instanceof livingcss)) {
+    return new livingcss(source, dest, options);
   }
 
+  var destDir = path.dirname(path.resolve(dest));
   var context = {
     sections: [],
     stylesheets: [],
@@ -57,12 +61,13 @@ function StyleGuideGenerator(source, dest, options) {
   source = (typeof source === 'string' ? [source] : source);
 
   options = options || {};
-  options.template = options.template || path.join(__dirname, 'template.hbs');
+  options.template = options.template || path.join(__dirname, 'template/template.hbs');
   options.partials = (typeof options.partials === 'string' ? [options.partials] : options.partials || []);
   options.sectionOrder = options.sectionOrder || [];
   options.tags = options.tags || [];
   options.minify = (typeof options.minify === 'undefined' ? true : options.minify);
   options.handlebars = (typeof options.handlebars === 'undefined' ? true : options.handlebars);
+  options.loadcss = (typeof options.loadcss === 'undefined' ? true : options.loadcss);
 
   // normalize sort order section names
   options.sectionOrder.forEach(function(value, index) {
@@ -83,8 +88,9 @@ function StyleGuideGenerator(source, dest, options) {
     utils.readFileGlobs(source, function(data, file) {
       parseComments(data, file, tags, context.sections);
 
-      // we need to take the relative path from the directory the dest file is in
-      context.stylesheets.push( path.relative( path.dirname( path.resolve(dest) ), file) );
+      if (options.loadcss && ) {
+        context.stylesheets.push(path.relative(destDir, file));
+      }
     }),
     loadPartials(options.partials)
   ]).then(
@@ -99,5 +105,9 @@ function StyleGuideGenerator(source, dest, options) {
   });
 }
 
-module.exports = StyleGuideGenerator;
+module.exports = livingcss;
+module.exports.generate = generate;
+module.exports.loadPartials = loadPartials;
+module.exports.parseComments = parseComments;
+module.exports.tags = tags;
 module.exports.utils = utils;
