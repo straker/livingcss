@@ -1,6 +1,6 @@
-var StyleGuideGenerator = require('../../index');
+var livingcss = require('../../index');
 
-StyleGuideGenerator('buttons.css', 'index.html', { minify: false,
+livingcss('buttons.css', 'index.html', { minify: false,
   preprocess: function(context) {
     // console.log(JSON.stringify(context,null,2));
 

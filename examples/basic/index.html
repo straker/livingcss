@@ -2,72 +2,119 @@
 <html>
 <head>
   <title></title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/prism/1.4.1/themes/prism.css">
+  <!-- critical path css -->
+  <style>
+  body {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .content {
+    display: flex;
+  }
+
+  .sections {
+    max-width: 80%;
+    margin-left: 20px;
+  }
+  </style>
+  <!-- /critical path css -->
+
+  <!-- user and style guide styles -->
   <link rel="stylesheet" href="buttons.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/prism/1.4.1/plugins/show-language/prism-show-language.css">
+  <!-- /user and style guide styles -->
 </head>
 <body>
+  <header></header>
 
-  <ul class="nav">
-    <li class="nav-item">
-      <a clss="nav-link" href="#no-code">No code</a>
+  <div class="content">
 
-    </li>
-    <li class="nav-item">
-      <a clss="nav-link" href="#javascript">JavaScript</a>
+    <ul class="nav">
+      <li class="nav-item">
+        <a clss="nav-link" href="#example-from-file">Example from file</a>
 
-    </li>
-    <li class="nav-item">
-      <a clss="nav-link" href="#buttons">Buttons</a>
+      </li>
+      <li class="nav-item">
+        <a clss="nav-link" href="#no-code">No code</a>
 
-    </li>
-  </ul>
+      </li>
+      <li class="nav-item">
+        <a clss="nav-link" href="#javascript">JavaScript</a>
 
-  <main class="sections">
-    <section class="section" id="no-code">
-      <h2 class="section-title">No code</h1>
-      <div class="section-description"></div>
+      </li>
+      <li class="nav-item">
+        <a clss="nav-link" href="#buttons">Buttons</a>
 
+      </li>
+    </ul>
 
-
-        <div>You can only see the example, the code is hidden</div>
-
-
-    </div>
-    <section class="section" id="javascript">
-      <h2 class="section-title">JavaScript</h1>
-      <div class="section-description"></div>
+    <main class="sections">
+      <section class="section" id="example-from-file">
+        <h2 class="section-title">Example from file</h1>
+        <div class="section-description"></div>
 
 
 
-        <div id="test_this"></div>
+          <div><span>Foo</span></div>
+
+          <div class="markup">
+            <pre class="code"><code class="language-markup">&lt;div&gt;&lt;span&gt;Foo&lt;/span&gt;&lt;/div&gt;</code></pre>
+          </div>
+
+      </section>
+      <section class="section" id="no-code">
+        <h2 class="section-title">No code</h1>
+        <div class="section-description"></div>
+
+
+
+          <div>You can only see the example, the code is hidden</div>
+
+
+      </section>
+      <section class="section" id="javascript">
+        <h2 class="section-title">JavaScript</h1>
+        <div class="section-description"></div>
+
+
+
+          <div id="test_this"></div>
 <script>document.getElementById('test_this').innerHTML = 'Hello';</script>
 
-        <div class="markup">
-          <pre class="code"><code class="language-javascript">document.getElementById(&#x27;test_this&#x27;).innerHTML &#x3D; &#x27;Hello&#x27;;</code></pre>
-        </div>
+          <div class="markup">
+            <pre class="code"><code class="language-javascript">document.getElementById(&#x27;test_this&#x27;).innerHTML &#x3D; &#x27;Hello&#x27;;</code></pre>
+          </div>
 
-    </div>
-    <section class="section" id="buttons">
-      <h2 class="section-title">Buttons</h1>
-      <div class="section-description"><p>Your standard form button.</p>
+      </section>
+      <section class="section" id="buttons">
+        <h2 class="section-title">Buttons</h1>
+        <div class="section-description"><p>Your standard form button.</p>
 </div>
 
 
 
 
-        <button>Shiny</button>
+          <button>Shiny</button>
 
-        <div class="markup">
-          <pre class="code"><code class="language-markup">&lt;button&gt;Shiny&lt;/button&gt;</code></pre>
-        </div>
+          <div class="markup">
+            <pre class="code"><code class="language-markup">&lt;button&gt;Shiny&lt;/button&gt;</code></pre>
+          </div>
 
-    </div>
-  </main>
+      </section>
+    </main>
 
+  </div>
+
+  <!-- prism -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/prism/1.4.1/themes/prism.css">
   <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
   <script src="https://cdn.jsdelivr.net/prism/1.4.1/components/prism-markup.min.js"></script>
+  <!-- /prism -->
+
+  <!-- user scripts -->
   <script src="https://cdn.jsdelivr.net/prism/1.4.1/components/prism-j.min.js"></script>
   <script src="https://cdn.jsdelivr.net/prism/1.4.1/plugins/show-language/prism-show-language.min.js"></script>
+  <!-- /user scripts -->
 </body>
 </html>

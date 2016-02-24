@@ -12,37 +12,47 @@ var utils = require('./lib/utils');
 /**
  * Generate a style guide using content driven content creation.
  *
- * @param {string|string[]} source=[] - List of glob files to generate the style guide from.
+ * @param {string|string[]} source=[] - A single file, list of files, or glob file paths to be parsed to generate the style guide.
  * @param {string} dest - Path of the file for the generated HTML.
  * @param {object} [options={}] - Configuration options.
- * @param {string} [options.template="defaultTempalte.hbs"] - Path to the handlebars template to use for generating the HTML.
- * @param {string|string[]} [options.partials=[]] - List of glob files of handlebars partials used in the template.
+ * @param {string} [options.template="defaultTempalte.hbs"] - Path to the Handlebars template to use for generating the HTML.
+ * @param {string|string[]} [options.partials=[]] - List of glob file paths to Handlebars partials to use in the template
  * @param {string[]} [options.sectionOrder=[]] - List of root section names (a section without a parent) in the order they should be sorted. Any root section not listed will be added to the end in the order encountered.
- * @param {object} [options.tags={}] - Custom tags and their callback functions to parse them. The function will have the tag, the parsed comment, the block object, the list of sections, and the file on the `this` object.
+ * @param {object} [options.tags={}] - Object of custom tag names to callback functions that are called when the tag is encountered. The tag, the parsed comment, the block object, the list of sections, and the file are passed as the `this` object to the callback function.
  * @param {boolean} [options.minify=true] - If the generated HTML should be minified.
- * @param {boolean} [options.handlebars=true] - Generate the style guide using handlebars. Set to false if you want to use a different templating engine, then use the `preprocess` function to get the JSON context object.
- * @param {boolean} [options.loadcss=true] - If the style guide should load the css files that were used to generate it.
- * @param {function} [options.preprocess] - Function that will get executed right before Handlebars is called with the context. Will be passed the context object, the Handlebars object, and the options passed to livingcss as parameters.
+ * @param {boolean} [options.handlebars=true] - If the style guide should use Handlebars. Set to false to use a different templating engine, then use the `option.preprocess` option to get the JSON context object.
+ * @param {boolean} [options.loadcss=true] - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work).
+ * @param {function} [options.preprocess] - Function that will be executed right before Handlebars is called with the context object. The function will be passed the context object, the Handlebars object, and the options passed to `livingcss` as parameters. Use this function to modify the context object or register Handlebars helpers or decorators.
  *
  * @example
     livingcss('input.css', 'output.html');
 
-    livingcss('input.css', 'output.html', {
-      template: 'path/to/template.hbs',
-      partials: 'path/to/partial.hbs',
-      sectionOrder: ['buttons', 'fields'],
-      tags: {
-        myCustomTag: function() { return; }
-      },
-      minify: false,
+    livingcss('input.css', 'styleguide.html', {
       handlebars: true,
       loadcss: true,
-      preprocess: function(context, Handlebars, options) {
-        context.foo = bar;
+      minify: true,
+      partials: ['partials/*.hb'],
+      preprocess: function(context, handlebars, options) {
+        context.title = 'My Awesome Style Guide';
       },
-      postprocess: function(context, Handlebars, options) {
-        // do some post processing work
-      }
+      sectionOrder: ['buttons', 'forms', 'images'],
+      tags: {
+        color: function() {
+          for (var i = 0; i < this.sections.length; i++) {
+            var section = this.sections[i];
+
+            // found the corresponding section
+            if (section.name === this.tag.description) {
+              section.colors = section.colors || [];
+              section.colors.push({
+                name: this.tag.name,
+                value: this.tag.type
+              });
+            }
+          }
+        }
+      },
+      template: 'styleguide.hb'
     });
  */
 function livingcss(source, dest, options) {
