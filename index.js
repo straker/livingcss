@@ -98,7 +98,7 @@ function livingcss(source, dest, options) {
     utils.readFileGlobs(source, function(data, file) {
       parseComments(data, file, tags, context.sections);
 
-      if (options.loadcss && ) {
+      if (options.loadcss) {
         context.stylesheets.push(path.relative(destDir, file));
       }
     }),
