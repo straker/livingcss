@@ -1,7 +1,6 @@
 /*jshint -W055 */
 var fs = require('fs');
 var path = require('path');
-var Promise = require("native-promise-only");
 
 var generate = require('./lib/generate');
 var parseComments = require('./lib/parseComments');

@@ -144,7 +144,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
 * `loadcss` - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work). Defaults to `true`.
 * `minify` - If the generated HTML should be minified. Defaults to `false`.
-* `preprocess` - Function that will be called right before Handlebars is called with the context object. The function will be passed a Promise `resolve` and `reject` object as parameters, and the context object and Handlebars object as the `this` object. Call `resolve` to generate the style guide using Handlebars, call `reject` otherwise (e.g. you want to use a different templating language). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
+* `preprocess` - Function that will be called right before Handlebars is called with the context object. The function will be passed the context object and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
 * `sectionOrder` - List of root section names (a section without a parent) in the order they should be sorted. Any root section not listed will be added to the end in the order encountered.
 * `tags` - Object of custom tag names to callback functions that are called when the tag is encountered. The tag, the parsed comment, the block object, the list of sections, and the file are passed as the `this` object to the callback function.
 * `template` - Path to the Handlebars template to use for generating the HTML. Defaults to the LivingCSS template `template/template.hbs'.`
@@ -153,13 +153,11 @@ It also generates a JSON object of the parsed comments that can be used to gener
 livingcss(['input.css', 'css/*.css'], 'styleguide.html', {
   loadcss: true,
   minify: true,
-  preprocess: function(resolve, reject) {
-    this.context.title = 'My Awesome Style Guide';
+  preprocess: function(context, Handlebars) {
+    context.title = 'My Awesome Style Guide';
 
     // register a Handlebars partial
-    this.Handlebars.registerParial('myPartial', '{{name}}');
-
-    resolve();
+    Handlebars.registerParial('myPartial', '{{name}}');
   },
   sectionOrder: ['buttons', 'forms', 'images'],
   tags: {
@@ -221,17 +219,15 @@ livingcss('input.css', 'styleguide.html', {
 
 ## Context Object
 
-Use the `options.preprocess` option to modify or use the context object before it is passed to Handlebars. The function will be passed a Promise `resolve` and `reject` object as parameters, and the context object and Handlebars object as the `this` object. Call `resolve` to generate the style guide using Handlebars, call `reject` otherwise (e.g. you want to use a different templating language). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
+Use the `options.preprocess` option to modify or use the context object before it is passed to Handlebars. The function will be passed the context object and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
 
 ```js
 livingcss('input.css', 'styleguide.html', {
-  preprocess: function(resolve, reject) {
-    this.context.title = 'My Awesome Style Guide';
+  preprocess: function(context, Handlebars) {
+    context.title = 'My Awesome Style Guide';
 
     // register a Handlebars partial
-    this.Handlebars.registerParial('myPartial', '{{name}}');
-
-    resolve();
+    Handlebars.registerParial('myPartial', '{{name}}');
   }
 });
 ```
@@ -243,7 +239,7 @@ livingcss('input.css', 'styleguide.html', {
 
 ## Utility functions
 
-LivingCSS makes available a few helpful utility functions that you can use in custom tags or in the `preprocess` function.
+LivingCSS makes available a few helpful utility functions that you can use in custom tags or in the `options.preprocess` function.
 
 * `livingcss.getId(name)` - Get a hyphenated id from the name. Useful for generating ids for the DOM.
 
@@ -257,16 +253,13 @@ LivingCSS makes available a few helpful utility functions that you can use in cu
     var path = require('path');
 
     livingcss('input.css', 'styleguide.html', {
-      preprocess: function(resolve, reject) {
+      preprocess: function(context, Handlebars) {
         // register a glob of partials with Handlebars
-        livingcss.readFileGlobs('partials/*.hb', function(data, file) {
+        return livingcss.readFileGlobs('partials/*.hb', function(data, file) {
           // make the name of the partial the name of the file
           var partialName = path.basename(file, path.extname(file));
-          this.Handlebars.registerPartial(partialName, data);
-        }.bind(this)).then(function() {
-          // resolve the preprocess function after all partials have been registered
-          resolve();
-        }); 
+          Handlebars.registerPartial(partialName, data);
+        });
       }
     });
     ```
