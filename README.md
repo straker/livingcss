@@ -155,6 +155,10 @@ livingcss(['input.css', 'css/*.css'], 'styleguide.html', {
   minify: true,
   preprocess: function(resolve, reject) {
     this.context.title = 'My Awesome Style Guide';
+
+    // register a Handlebars partial
+    this.Handlebars.registerParial('myPartial', '{{name}}');
+
     resolve();
   },
   sectionOrder: ['buttons', 'forms', 'images'],
@@ -223,6 +227,10 @@ Use the `options.preprocess` option to modify or use the context object before i
 livingcss('input.css', 'styleguide.html', {
   preprocess: function(resolve, reject) {
     this.context.title = 'My Awesome Style Guide';
+
+    // register a Handlebars partial
+    this.Handlebars.registerParial('myPartial', '{{name}}');
+
     resolve();
   }
 });
@@ -232,3 +240,35 @@ livingcss('input.css', 'styleguide.html', {
 * `sections` - Modified array of all root sections (sections without a parent) and their children. List will be sorted by `options.sectionOrder`. Any section is also accessible by it's name for convenience (e.g. `sections['Section Name]`).
 * `stylesheets` - List of all CSS files to load in the style guide. If the `options.loadcss` option is set, this list will contain all CSS files used to generate the style guide.
 * `title` - Title of the style guide. Defaults to 'LivingCSS Style Guide'.
+
+## Utility functions
+
+LivingCSS makes available a few helpful utility functions that you can use in custom tags or in the `preprocess` function.
+
+* `livingcss.getId(name)` - Get a hyphenated id from the name. Useful for generating ids for the DOM.
+
+    ```js
+    livingcss.getId('Section Name');  //=> 'section-name'
+    ```
+
+* `livingcss.readFileGlobs(glob, callback)` - Pass a glob or array of globs to be read and a callback function that will be called for each file read. The function will be passed the file contents and the name of the file as parameters. Returns a Promise that is resolved when all files returned by the glob have been read. Useful for registering a glob of partials with Handlebars.
+
+    ```js
+    var path = require('path');
+
+    livingcss('input.css', 'styleguide.html', {
+      preprocess: function(resolve, reject) {
+        // register a glob of partials with Handlebars
+        livingcss.readFileGlobs('partials/*.hb', function(data, file) {
+          // make the name of the partial the name of the file
+          var partialName = path.basename(file, path.extname(file));
+          this.Handlebars.registerPartial(partialName, data);
+        }.bind(this)).then(function() {
+          // resolve the preprocess function after all partials have been registered
+          resolve();
+        }); 
+      }
+    });
+    ```
+
+* `livingcss.readFiles(files, callback)` - Pass a file or array of files to be read and a callback function that will be called for each file read. The function will be passed the file contents and the name of the file as parameters. Returns a Promise that is resolved when all files have been read.
