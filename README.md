@@ -77,7 +77,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
-* `@example` - Provide an example that will be displayed in the style guide. Can provide a type to change the language for code highlighting, and you can also provide a file path to be used as the example.
+* `@example` - Provide an example that will be displayed in the style guide. Can provide a type to change the language for code highlighting, and you can also provide a file path to be used as the example. See Prisms [supported languages](http://prismjs.com/#languages-list) for valid types.
 
     ```css
     /**
@@ -122,7 +122,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
-* `@hideCode` - Use this tag to hide the code output.
+* `@hideCode` -Hide the code output of the example.
 
     ```css
     /**
@@ -139,40 +139,32 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
 ## Options
 
-Most options default to true to generate the default output.
-
-* `handlebars` - If the style guide should use Handlebars. Set to false to use a different templating engine, then use the `option.preprocess` option to get the JSON context object. Defaults to `true`.
 * `loadcss` - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work). Defaults to `true`.
-* `minify` - If the generated HTML should be minified. Defaults to `true`.
-* `partials` - List of glob file paths to Handlebars partials to use in the template. Each partial will be registered with Handlebars using the name of the file (e.g. the file `partials/myPartial.hb` will be registered as `myPartial`).
-* `preprocess` - Function that will be executed right before Handlebars is called with the context object. The function will be passed the context object, the Handlebars object, and the options passed to `livingcss` as parameters. Use this function to modify the context object or register Handlebars helpers or decorators.
+* `minify` - If the generated HTML should be minified. Defaults to `false`.
+* `preprocess` - Function that will be called right before Handlebars is called with the context object. The function will be passed a Promise `resolve` and `reject` object as parameters, and the context object and Handlebars object as the `this` object. Call `resolve` to generate the style guide using Handlebars, call `reject` otherwise (e.g. you want to use a different templating language). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
 * `sectionOrder` - List of root section names (a section without a parent) in the order they should be sorted. Any root section not listed will be added to the end in the order encountered.
 * `tags` - Object of custom tag names to callback functions that are called when the tag is encountered. The tag, the parsed comment, the block object, the list of sections, and the file are passed as the `this` object to the callback function.
 * `template` - Path to the Handlebars template to use for generating the HTML. Defaults to the LivingCSS template `template/template.hbs'.`
 
 ```js
-livingcss('input.css', 'styleguide.html', {
-  handlebars: true,
+livingcss(['input.css', 'css/*.css'], 'styleguide.html', {
   loadcss: true,
   minify: true,
-  partials: ['partials/*.hb'],
-  preprocess: function(context, Handlebars, options) {
-    context.title = 'My Awesome Style Guide';
+  preprocess: function(resolve, reject) {
+    this.context.title = 'My Awesome Style Guide';
+    resolve();
   },
   sectionOrder: ['buttons', 'forms', 'images'],
   tags: {
     color: function() {
-      for (var i = 0; i < this.sections.length; i++) {
-        var section = this.sections[i];
+      var section = this.sections[this.tag.description];
 
-        // found the corresponding section
-        if (section.name === this.tag.description) {
-          section.colors = section.colors || [];
-          section.colors.push({
-            name: this.tag.name,
-            value: this.tag.type
-          });
-        }
+      if (section) {
+        section.colors = section.colors || [];
+        section.colors.push({
+          name: this.tag.name,
+          value: this.tag.type
+        });
       }
     }
   },
@@ -200,17 +192,20 @@ For example, if you wanted to generate a color palette for your style guide, you
 livingcss('input.css', 'styleguide.html', {
   tags: {
     color: function() {
-      for (var i = 0; i < this.sections.length; i++) {
-        var section = this.sections[i];
+      /* this.tag = {
+          tag: 'color',
+          type: '#F00',
+          name: 'Brand Red'
+          description: 'Section Name',
+        } */
+      var section = this.sections[this.tag.description];
 
-        // found the corresponding section
-        if (section.name === this.tag.description) {
-          section.colors = section.colors || [];
-          section.colors.push({
-            name: this.tag.name,
-            value: this.tag.type
-          });
-        }
+      if (section) {
+        section.colors = section.colors || [];
+        section.colors.push({
+          name: this.tag.name,
+          value: this.tag.type
+        });
       }
     }
   }
@@ -219,18 +214,18 @@ livingcss('input.css', 'styleguide.html', {
 
 ## Context Object
 
-Use the `options.preprocess` option to modify or use the context object before it is passed to Handlebars. The function will be passed the context object, the Handlebars object, and the options passed to `livingcss` as parameters.
+Use the `options.preprocess` option to modify or use the context object before it is passed to Handlebars. The function will be passed a Promise `resolve` and `reject` object as parameters, and the context object and Handlebars object as the `this` object. Call `resolve` to generate the style guide using Handlebars, call `reject` otherwise (e.g. you want to use a different templating language). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
 
 ```js
 livingcss('input.css', 'styleguide.html', {
-  preprocess: function(context, Handlebars, options) {
-    context.title = 'My Awesome Style Guide';
+  preprocess: function(resolve, reject) {
+    this.context.title = 'My Awesome Style Guide';
+    resolve();
   }
 });
 ```
 
-* `allSections` - List of all sections, not sorted and not nested.
-* `scripts` - List of all JS files to load in the style guide.
-* `sections` - List of all root sections (sections without a parent) and their children. List will be sorted by `options.sectionOrder`.
-* `stylesheets` - List of all CSS files to load in the style guide. If the `options.loadcss` option is set, this list will contain all css files used to generate the style guide.
-* `title` - Title of the style guide.
+* `scripts` - List of all JavaScript files to load in the style guide.
+* `sections` - Modified array of all root sections (sections without a parent) and their children. List will be sorted by `options.sectionOrder`. Any section is also accessible by it's name for convenience (e.g. `sections['Section Name]`).
+* `stylesheets` - List of all CSS files to load in the style guide. If the `options.loadcss` option is set, this list will contain all CSS files used to generate the style guide.
+* `title` - Title of the style guide. Defaults to 'LivingCSS Style Guide'.

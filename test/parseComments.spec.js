@@ -225,7 +225,7 @@ describe('parseComments', function() {
         parseComments(data, file, tags, sections);
 
         expect(sections[0].name).to.equal('Buttons');
-        expect(sections[0].description).to.equal('<p>Description of buttons and their uses.</p>\n');
+        expect(sections[0].description).to.equal('<p>Description of buttons and their uses.</p>');
         expect(sections[0].id).to.equal('buttons');
 
         done();
@@ -244,7 +244,7 @@ describe('parseComments', function() {
         parseComments(data, file, tags, sections);
 
         expect(sections[0].name).to.equal('Buttons');
-        expect(sections[0].description).to.equal('<p>Description of buttons and their uses.</p>\n');
+        expect(sections[0].description).to.equal('<p>Description of buttons and their uses.</p>');
         expect(sections[0].id).to.equal('buttons');
 
         done();
