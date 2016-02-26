@@ -1,3 +1,6 @@
+[![GitHub version](https://badge.fury.io/gh/straker%2Flivingcss.svg)](https://badge.fury.io/gh/straker%2Flivingcss)
+[![Build Status](https://travis-ci.org/straker/livingcss.svg?branch=master)](https://travis-ci.org/straker/livingcss)
+
 # LivingCSS
 
 Parse comments in your CSS to generate a living style guide. Uses [Handlebars](http://handlebarsjs.com/) templates and [Prism](http://prismjs.com/) syntax highlighter to generate the style guide.
