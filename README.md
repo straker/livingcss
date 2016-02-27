@@ -63,7 +63,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
-* `@sectionof` - Add a section as a child of another section. There is no limit to the number of nested sections. If the section you are referencing is a child of another section, then the value of `@sectionof` must use all parent section names delimited by a `.`.
+* `@sectionof` - Add a section as a child of another section. There is no limit to the number of nested sections. If the section you are referencing is a child of another section, then the value of `@sectionof` must use all parent section names delimited by a period.
 
     ```css
     /**
