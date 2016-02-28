@@ -1,5 +1,6 @@
 [![GitHub version](https://badge.fury.io/gh/straker%2Flivingcss.svg)](https://badge.fury.io/gh/straker%2Flivingcss)
 [![Build Status](https://travis-ci.org/straker/livingcss.svg?branch=master)](https://travis-ci.org/straker/livingcss)
+[![Coverage Status](https://coveralls.io/repos/github/straker/livingcss/badge.svg?branch=master)](https://coveralls.io/github/straker/livingcss?branch=master)
 
 # LivingCSS
 
@@ -118,7 +119,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      *
      * @section Example
      * @example
-     * path/to/file.html
+     * relative/path/to/file.html
      */
     ```
 
