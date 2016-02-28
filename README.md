@@ -140,7 +140,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
-* `@hideCode` -Hide the code output of the example.
+* `@hideCode` - Hide the code output of the example.
 
     ```css
     /**
@@ -254,7 +254,7 @@ livingcss('input.css', 'styleguide.html', {
 
 ## Utility functions
 
-LivingCSS makes available a few helpful utility functions that you can use in custom tags or in the `options.preprocess` function.
+LivingCSS has a few helpful utility functions that you can use in custom tags or in the `options.preprocess` function.
 
 * `livingcss.getId(name)` - Get a hyphenated id from the name. Useful for generating ids for the DOM.
 
@@ -271,6 +271,7 @@ LivingCSS makes available a few helpful utility functions that you can use in cu
       preprocess: function(context, Handlebars) {
         // register a glob of partials with Handlebars
         return livingcss.readFileGlobs('partials/*.hb', function(data, file) {
+          
           // make the name of the partial the name of the file
           var partialName = path.basename(file, path.extname(file));
           Handlebars.registerPartial(partialName, data);
