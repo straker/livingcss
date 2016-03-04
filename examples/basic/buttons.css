@@ -9,6 +9,7 @@
  * @state .smaller  - A smaller button.
  *
  * @section
+ * @page CSS
  *
  * @example
  * <button>Shiny</button>
@@ -51,7 +52,7 @@ button.smaller {
          * @example
          * <div id="test_this"></div>
          * <script>document.getElementById('test_this').innerHTML = 'Hello';</script>
-         *
+         * @page javascript
          * @code {javascript}
          * document.getElementById('test_this').innerHTML = 'Hello';
          */
@@ -61,6 +62,7 @@ button.smaller {
  * @example {yaml}
  * <div>You can only see the example, the code is hidden</div>
  * @hideCode
+ * @page CSS
  */
 
 /**

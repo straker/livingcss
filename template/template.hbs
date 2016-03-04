@@ -1,85 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html class="livingcss">
 <head>
   <title>{{title}}</title>
+
   <!-- critical path css -->
-  <style>
-  body {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .content {
-    display: flex;
-  }
-
-  .sections {
-    max-width: 80%;
-    margin-left: 20px;
-  }
-  </style>
+  {{> criticalCss}}
   <!-- /critical path css -->
 
-  <!-- user and style guide styles -->
+  <!-- user styles -->
   {{#each stylesheets}}
   <link rel="stylesheet" href="{{this}}">
   {{/each}}
-  <!-- /user and style guide styles -->
+  <!-- /user styles -->
 </head>
-<body>
-  <header>{{title}}</header>
+<body class="livingcss">
+  <div class="livingcss__wrapper">
 
-  <div class="content">
+    <header class="livingcss__header">
+      <h1 class="livingcss__container livingcss__header-title livingcss__inverse-text">{{title}}</h1>
 
-    <ul class="nav">
-      {{#each sections}}
-      <li class="nav-item">
-        <a clss="nav-link" href="#{{id}}">{{name}}</a>
-
-        {{~#if children}}
-
-        <ul class="subnav">
-          {{#each children}}
-          <li class="nav-item">
-            <a clss="nav-link" href="#{{../id}}-{{id}}">{{name}}</a>
-          </li>
-          {{/each}}
-        </ul>
-        {{~/if}}
-
-      </li>
+      <nav class="livingcss__main-nav">
+      {{#each pages}}
+        <a class="livingcss__main-nav-link" href="{{@key}}.html">{{@key}}</a>
       {{/each}}
-    </ul>
+      </nav>
+    </header>
 
-    <main class="sections">
-      {{#each sections}}
-      <section class="section" id="{{id}}">
-        <h2 class="section-title">{{name}}</h1>
-        <div class="section-description">{{{description}}}</div>
+    <div class="livingcss__container livingcss__content">
 
-        {{#each children}}
-        <div class="subsection">
-          <div id="{{../id}}-{{id}}">
-            <h3 class="section-title">{{name}}</h1>
-            <div class="section-description">{{{description}}}</div>
-          </div>
-        </div>
+      <main class="livingcss__main" role="main">
 
+        {{#each sections}}
+        <article class="livingcss__section" id="{{id}}">
+          <h1 class="livingcss__section-title">{{name}}</h1>
+          {{~> section}}
+
+          {{#children}}
+          {{~> childSection}}
+          {{/children}}
+        </article>
         {{/each}}
 
-        {{~#if example}}
-        {{{example.description}}}
-        {{/if}}
+      </main>
 
-        {{~#if code}}
-        <div class="markup">
-          <pre class="code"><code class="language-{{code.type}}">{{code.description}}</code></pre>
+      <nav class="livingcss__nav">
+        <div class="livingcss__nav-container">
+        {{#each sections}}
+          <a class="livingcss__nav-link" href="#{{id}}">{{name}}</a>
+        {{/each}}
         </div>
-        {{/if}}
-      </section>
+      </nav>
 
-      {{/each}}
-    </main>
+    </div>
+
+    <footer class="livingcss__footer livingcss__inverse-text">
+      <div class="livingcss__container">Style Guide generated with <a href="https://github.com/straker/livingcss">LivingCSS</a>.</div>
+    </footer>
 
   </div>
 
@@ -94,5 +70,8 @@
   <script src="{{this}}"></script>
   {{/each}}
   <!-- /user scripts -->
+
+  {{> mainScript}}
+
 </body>
 </html>

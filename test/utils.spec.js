@@ -87,12 +87,12 @@ describe('utils', function() {
       });
     });
 
-    it('should allow single file names', function() {
+    it('should allow single file names', function(done) {
       var file = 'fileOne.css';
       var fileRead;
 
       utils.readFiles(file, function(data, file) {
-        readFile = file;
+        fileRead = file;
       }).then(
         function() {
           expect(fileRead).to.equal(file);
@@ -131,15 +131,15 @@ describe('utils', function() {
       });
     });
 
-    it('should allow single file patterns', function() {
+    it('should allow single file patterns', function(done) {
       var file = 'template/*.hbs';
       var fileRead;
 
       utils.readFileGlobs(file, function(data, file) {
-        readFile = file;
+        fileRead = file;
       }).then(
         function() {
-          expect(readFile).to.contain('template/template.hbs');
+          expect(fileRead).to.contain('template/template.hbs');
           done();
         })
       .catch(function(err) {

@@ -22,7 +22,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections);
+        parseComments(data, file, tags, {sections: sections});
 
         expect(sections.length).to.equal(1);
 
@@ -39,7 +39,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections);
+        parseComments(data, file, tags, {sections: sections});
 
         expect(sections[0].name).to.equal('Buttons');
         expect(sections[0].description).to.equal('<p>Description of buttons and their uses.</p>');
@@ -58,7 +58,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections);
+        parseComments(data, file, tags, {sections: sections});
 
         expect(sections[0].name).to.equal('Buttons');
         expect(sections[0].description).to.equal('<p>Description of buttons and their uses.</p>');
@@ -78,7 +78,7 @@ describe('tags', function() {
         }
 
         expect(function() {
-          parseComments(data, file, tags, sections);
+          parseComments(data, file, tags, {sections: sections});
         }).to.throw(SyntaxError);
 
         done();
@@ -105,7 +105,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections);
+        parseComments(data, file, tags, {sections: sections});
 
         expect(sections.length).to.equal(2);
         expect(sections[0].children).to.exist;
@@ -125,7 +125,7 @@ describe('tags', function() {
         }
 
         expect(function() {
-          parseComments(data, file, tags, sections);
+          parseComments(data, file, tags, {sections: sections});
         }).to.throw(SyntaxError);
 
         done();
@@ -142,7 +142,7 @@ describe('tags', function() {
         }
 
         expect(function() {
-          parseComments(data, file, tags, sections);
+          parseComments(data, file, tags, {sections: sections});
         }).to.throw(ReferenceError);
 
         done();
@@ -159,7 +159,7 @@ describe('tags', function() {
         }
 
         expect(function() {
-          parseComments(data, file, tags, sections);
+          parseComments(data, file, tags, {sections: sections});
         }).to.throw(SyntaxError);
 
         done();
@@ -186,7 +186,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections, function(block) {
+        parseComments(data, file, tags, {sections: sections}, function(block) {
           expect(block.code).to.exist;
           expect(block.code.description).to.equal(block.example.description);
           expect(block.code.type).to.equal(block.example.type);
@@ -205,7 +205,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections, function(block) {
+        parseComments(data, file, tags, {sections: sections}, function(block) {
           expect(block.example.description).to.equal('<div>bar</div>');
           expect(block.example.type).to.equal('markup');
           expect(block.code.description).to.equal('<div>foo</div>');
@@ -225,7 +225,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections, function(block) {
+        parseComments(data, file, tags, {sections: sections}, function(block) {
           expect(block.example).to.exist;
           expect(block.example.description).to.equal('/**\n * @example example-with-file.css\n */');
         });
@@ -244,7 +244,7 @@ describe('tags', function() {
         }
 
         expect(function() {
-          parseComments(data, file, tags, sections);
+          parseComments(data, file, tags, {sections: sections});
         }).to.throw(ReferenceError);
 
         done();
@@ -271,7 +271,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections, function(block) {
+        parseComments(data, file, tags, {sections: sections}, function(block) {
           expect(block.example.description).to.equal('<div>foo</div>');
           expect(block.example.type).to.equal('markup');
           expect(block.code.description).to.equal("console.log('hello');");
@@ -302,7 +302,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections, function(block) {
+        parseComments(data, file, tags, {sections: sections}, function(block) {
           expect(block.code).to.not.exist;
         });
 
@@ -319,7 +319,7 @@ describe('tags', function() {
           throw err;
         }
 
-        parseComments(data, file, tags, sections, function(block) {
+        parseComments(data, file, tags, {sections: sections}, function(block) {
           expect(block.code).to.not.exist;
         });
 

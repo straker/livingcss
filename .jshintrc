@@ -17,5 +17,8 @@
     "browser"       : true,     // Standard browser globals e.g. `window`, `document`.
     "boss"          : true,     // Suppress warnings about assignments in comparisons
     "node"          : true,     // Node.js
-    "mocha"         : true      // Mocha
+    "mocha"         : true,     // Mocha
+
+    // Custom Globals
+    "globals"       : {"Promise": false}
 }
