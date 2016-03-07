@@ -115,6 +115,28 @@ describe('tags', function() {
       });
     });
 
+    it('should allow multiple tags to be defined', function(done) {
+      var file = path.join(__dirname, 'data/sectionof-multiple-tags.css');
+      var sections = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections});
+
+        expect(sections['Foo.Faz']).to.exist;
+        expect(sections['Bar.Faz']).to.exist;
+        expect(sections['Baz.Faz']).to.exist;
+
+        expect(sections['Foo.Faz']).to.equal(sections['Baz.Faz']);
+        expect(sections['Bar.Faz']).to.equal(sections['Baz.Faz']);
+
+        done();
+      });
+    });
+
     it('should throw an error if it doesn\'t reference a section', function(done) {
       var file = path.join(__dirname, 'data/sectionof-no-section.css');
       var sections = [];
@@ -164,6 +186,39 @@ describe('tags', function() {
 
         done();
       });
+    });
+
+  });
+
+
+
+
+
+  // --------------------------------------------------
+  // @page
+  // --------------------------------------------------
+  describe('@page', function() {
+
+    it('should add the block to the given page', function(done) {
+      var file = path.join(__dirname, 'data/page.css');
+      var sections = [];
+      var pages = {};
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.page).to.exist;
+          expect(block.page).to.equal('foobar');
+          expect(Object.keys(pages)).to.deep.equal(['foobar']);
+          expect(pages.foobar[0]).to.equal(block);
+        });
+
+        done();
+      });
+
     });
 
   });
