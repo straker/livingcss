@@ -1,0 +1,273 @@
+<style>
+/*
+  BASELINE FONT - 16px
+  BASELINE GRID - 1.625rem
+
+  MODULAR FONT SCALE
+  ------------------
+  14px - small, H6
+  16px - body
+  18px - H5
+  22px - H4
+  26px - H3
+  30px - H2
+  36px - H1
+*/
+
+/*
+ * GLOBAL
+ */
+html {
+  font-size: 14px;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #fdfdfd;
+  color: #212121;
+
+  /* mobile first system ui font stack */
+  font-family: -apple-system, BlinkMacSystemFont,
+  "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+  "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+
+  margin: 0 auto;
+  line-height: 1.625rem;  /* 26px */
+}
+
+/*
+ * TYPOGRAPHY
+ */
+h1, h2, h3, h4 {
+  font-family: "Skolar Bold", "Segoe UI Bold", "Roboto Slab", "Droid Serif",
+  AvenirNext-Bold, "Avenir Bold", Georgia,
+  "Times New Roman", Times, serif;
+  margin: 1.625rem 0 0 0;
+}
+
+h1 {
+  font-size: 2.25rem;    /* 36 / 16 */
+  line-height: 3.25rem;  /* 1.625 * 2 */
+}
+
+h2 {
+  font-size: 1.875rem;   /* 30 / 16 */
+  line-height: 3.25rem;  /* 1.625 * 2 */
+}
+
+h3 {
+  font-size: 1.625rem;   /* 26 / 16 */
+  line-height: 3.25rem;  /* 1.625 * 2 */
+}
+
+h4, h5, h6 {
+  line-height: 1.625rem;
+  margin: 1.625rem 0 0 0;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.625rem;
+  margin: 0;
+}
+
+p:not(:last-child) {
+  margin-bottom: 1.625rem;
+}
+
+a,
+a:visited {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+a:hover,
+a:active,
+a:hover {
+  color: #1976d2;
+  text-decoration: underline;
+}
+
+/*
+ * GRID
+ */
+.livingcss__wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
+.livingcss__container {
+  padding-left: 0.8125rem;
+  padding-right: 0.8125rem;
+  margin: 0 auto;
+}
+
+/*
+ * HEADER
+ */
+.livingcss__header-title-container {
+  background: #2196F3;
+  padding: 0.8125rem 0;
+}
+
+.livingcss__header-title {
+  font-size: 1.625rem;
+  line-height: 1.625rem;
+}
+
+.livingcss__main-nav-container {
+  background: #1976D2;
+  padding: 0.8125rem 0;
+}
+
+/*
+ * CONTENT
+ */
+.livingcss__content {
+  padding-bottom: 3.25rem;
+}
+
+/*
+ * MAIN
+ */
+.livingcss__main {
+  margin-top: 1.625rem;
+  order: 2;
+}
+
+.livingcss__section-title {
+  border-bottom: 1px solid #727272;
+  margin-bottom: 1.625rem;
+}
+
+.livingcss__section:first-child .livingcss__section-title {
+  margin-top: 0;
+}
+
+.livingcss__section + .livingcss__section {
+  margin-top: 3.25rem;
+}
+
+livingcss-example {
+  margin-top: 1.625rem;
+  border: 1px solid #B6B6B6;
+  padding: 1rem;
+  border-radius: .25rem .25rem 0 0;
+}
+
+.livingcss__section-markup {
+  border: 1px solid #B6B6B6;
+  border-top: 0;
+  border-radius: 0 0 .25rem .25rem;
+}
+
+.livingcss__section-code[class*="language-"] {
+  margin: 0;
+  border-radius: 0 0 .25rem .25rem;
+}
+
+/*
+ * NAV
+ */
+.livingcss__nav {
+  order: 1;
+}
+
+.livingcss__nav-container {
+  margin-top: 1.625rem;
+}
+
+.livingcss__nav--fixed .livingcss__nav-container {
+  position: fixed;
+  top: 0;
+  width: 180px;
+}
+
+.livingcss__nav-link {
+  display: block;
+  padding: 0.40625rem 0.8125rem;
+}
+
+a.livingcss__nav-link:hover,
+a.livingcss__nav-link:active,
+a.livingcss__nav-link:focus,
+a.livingcss__nav-link--active {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #2196F3;
+  color: white;
+  text-decoration: none;
+}
+
+/*
+ * FOOTER
+ */
+.livingcss__footer {
+  background: #1976D2;
+  bottom: 0;
+  color: #727272;
+  left: 0;
+  padding: 1rem 0;
+  position: absolute;
+  right: 0;
+  text-align: right;
+}
+
+.livingcss__footer a {
+  font-weight: bold;
+}
+
+/*
+ * DESKTOP BREAKPOINT
+ */
+@media (min-width: 992px) {
+  html{
+    font-size: 16px;
+  }
+
+  .livingcss__content {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .livingcss__container {
+    max-width: 1170px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .livingcss__nav {
+    flex: 0 0 180px;
+    padding-right: 0.8125rem;
+  }
+
+  .livingcss__main {
+    flex: 1;
+    max-width: 964px;
+    padding-left: 0.8125rem;
+  }
+}
+
+/*
+ * HELPERS
+ */
+.livingcss__inverse-text {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: white;
+}
+
+.livingcss__inverse-text a {
+  color: white;
+}
+
+.livingcss__inverse-text a:hover,
+.livingcss__inverse-text a:active,
+.livingcss__inverse-text a:focus {
+  color: white;
+}
+</style>

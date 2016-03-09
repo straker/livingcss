@@ -6,14 +6,32 @@
   <!-- critical path css -->
   <style>
   /*
+    BASELINE FONT - 16px
+    BASELINE GRID - 1.625rem
+  
+    MODULAR FONT SCALE
+    ------------------
+    14px - small, H6
+    16px - body
+    18px - H5
+    22px - H4
+    26px - H3
+    30px - H2
+    36px - H1
+  */
+  
+  /*
    * GLOBAL
    */
-  html.livingcss, .livingcss body {
-    height: 100%;
+  html {
     font-size: 14px;
   }
   
-  .livingcss body {
+  html, body {
+    height: 100%;
+  }
+  
+  body {
     background: #fdfdfd;
     color: #212121;
   
@@ -24,117 +42,136 @@
     sans-serif;
   
     margin: 0 auto;
+    line-height: 1.625rem;  /* 26px */
   }
   
-  .livingcss h1,
-  .livingcss h2,
-  .livingcss h3 {
+  /*
+   * TYPOGRAPHY
+   */
+  h1, h2, h3, h4 {
     font-family: "Skolar Bold", "Segoe UI Bold", "Roboto Slab", "Droid Serif",
     AvenirNext-Bold, "Avenir Bold", Georgia,
     "Times New Roman", Times, serif;
+    margin: 1.625rem 0 0 0;
   }
   
-  .livingcss a,
-  .livingcss a:visited {
+  h1 {
+    font-size: 2.25rem;    /* 36 / 16 */
+    line-height: 3.25rem;  /* 1.625 * 2 */
+  }
+  
+  h2 {
+    font-size: 1.875rem;   /* 30 / 16 */
+    line-height: 3.25rem;  /* 1.625 * 2 */
+  }
+  
+  h3 {
+    font-size: 1.625rem;   /* 26 / 16 */
+    line-height: 3.25rem;  /* 1.625 * 2 */
+  }
+  
+  h4, h5, h6 {
+    line-height: 1.625rem;
+    margin: 1.625rem 0 0 0;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.625rem;
+    margin: 0;
+  }
+  
+  p:not(:last-child) {
+    margin-bottom: 1.625rem;
+  }
+  
+  a,
+  a:visited {
     color: #1976d2;
     text-decoration: none;
   }
   
-  .livingcss a:hover,
-  .livingcss a:active,
-  .livingcss a:hover {
+  a:hover,
+  a:active,
+  a:hover {
     color: #1976d2;
     text-decoration: underline;
-  }
-  
-  
-  /*
-   * HELPERS
-   */
-  .livingcss .livingcss__inverse-text {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: white;
-  }
-  
-  .livingcss .livingcss__inverse-text a {
-    color: white;
-  }
-  
-  .livingcss .livingcss__inverse-text a:hover,
-  .livingcss .livingcss__inverse-text a:active,
-  .livingcss .livingcss__inverse-text a:focus {
-    color: white;
   }
   
   /*
    * GRID
    */
-  .livingcss .livingcss__wrapper {
+  .livingcss__wrapper {
     min-height: 100%;
     position: relative;
   }
   
-  .livingcss .livingcss__container {
-    padding-left: 0.625rem;
-    padding-right: 0.625rem;
+  .livingcss__container {
+    padding-left: 0.8125rem;
+    padding-right: 0.8125rem;
     margin: 0 auto;
   }
   
   /*
    * HEADER
    */
-  .livingcss .livingcss__header {
+  .livingcss__header-title-container {
     background: #2196F3;
-    padding: 1rem 0;
+    padding: 0.8125rem 0;
   }
   
-  .livingcss .livingcss__header-title {
-    font-size: 2rem;
-    padding: 0.5rem 0.625rem;
+  .livingcss__header-title {
+    font-size: 1.625rem;
+    line-height: 1.625rem;
+  }
+  
+  .livingcss__main-nav-container {
+    background: #1976D2;
+    padding: 0.8125rem 0;
   }
   
   /*
    * CONTENT
    */
-  .livingcss .livingcss__content {
-    padding-bottom: 75px;
+  .livingcss__content {
+    padding-bottom: 3.25rem;
   }
   
   /*
    * MAIN
    */
-  .livingcss .livingcss__main {
-    margin-top: 1.5rem;
+  .livingcss__main {
+    margin-top: 1.625rem;
     order: 2;
   }
   
-  .livingcss .livingcss__section-title {
+  .livingcss__section-title {
     border-bottom: 1px solid #727272;
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-    margin-top: 4rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: 1.625rem;
   }
   
-  .livingcss .livingcss__section:first-child .livingcss__section-title {
+  .livingcss__section:first-child .livingcss__section-title {
     margin-top: 0;
   }
   
-  .livingcss .livingcss__section-example {
-    margin-top: 1rem;
+  .livingcss__section + .livingcss__section {
+    margin-top: 3.25rem;
+  }
+  
+  livingcss-example {
+    margin-top: 1.625rem;
     border: 1px solid #B6B6B6;
     padding: 1rem;
     border-radius: .25rem .25rem 0 0;
   }
   
-  .livingcss .livingcss__section-markup {
+  .livingcss__section-markup {
     border: 1px solid #B6B6B6;
     border-top: 0;
     border-radius: 0 0 .25rem .25rem;
   }
   
-  .livingcss .livingcss__section-code[class*="language-"] {
+  .livingcss__section-code[class*="language-"] {
     margin: 0;
     border-radius: 0 0 .25rem .25rem;
   }
@@ -142,29 +179,29 @@
   /*
    * NAV
    */
-  .livingcss .livingcss__nav {
+  .livingcss__nav {
     order: 1;
   }
   
   .livingcss__nav-container {
-    margin-top: 1.5rem;
+    margin-top: 1.625rem;
   }
   
-  .livingcss .livingcss__nav--fixed .livingcss__nav-container {
+  .livingcss__nav--fixed .livingcss__nav-container {
     position: fixed;
     top: 0;
     width: 180px;
   }
   
-  .livingcss .livingcss__nav-link {
+  .livingcss__nav-link {
     display: block;
-    padding: 0.5rem 0.625rem;
+    padding: 0.40625rem 0.8125rem;
   }
   
-  .livingcss a.livingcss__nav-link:hover,
-  .livingcss a.livingcss__nav-link:active,
-  .livingcss a.livingcss__nav-link:focus,
-  .livingcss a.livingcss__nav-link--active {
+  a.livingcss__nav-link:hover,
+  a.livingcss__nav-link:active,
+  a.livingcss__nav-link:focus,
+  a.livingcss__nav-link--active {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: #2196F3;
@@ -194,90 +231,144 @@
    * DESKTOP BREAKPOINT
    */
   @media (min-width: 992px) {
-    html.livingcss {
+    html{
       font-size: 16px;
     }
   
-    .livingcss .livingcss__content {
+    .livingcss__content {
       display: flex;
       flex-direction: row;
     }
   
-    .livingcss .livingcss__container {
+    .livingcss__container {
       max-width: 1170px;
       padding-left: 0;
       padding-right: 0;
     }
   
-    .livingcss .livingcss__nav {
+    .livingcss__nav {
       flex: 0 0 180px;
-      padding-right: 1rem;
+      padding-right: 0.8125rem;
     }
   
-    .livingcss .livingcss__main {
+    .livingcss__main {
       flex: 1;
       max-width: 964px;
-      padding-left: 0.625rem;
+      padding-left: 0.8125rem;
     }
+  }
+  
+  /*
+   * HELPERS
+   */
+  .livingcss__inverse-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: white;
+  }
+  
+  .livingcss__inverse-text a {
+    color: white;
+  }
+  
+  .livingcss__inverse-text a:hover,
+  .livingcss__inverse-text a:active,
+  .livingcss__inverse-text a:focus {
+    color: white;
   }
   </style>  <!-- /critical path css -->
 
-  <!-- user styles -->
-  <link rel="stylesheet" href="buttons.css">
-  <!-- /user styles -->
+  <!-- webcomponent -->
+  <template id="livingcssExampleTemplate">
+    <style>
+    /* user stylesheets */
+    @import "buttons.css";
+    /* /user stylesheets */
+
+    :host {
+      display: block;
+    }
+    </style>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
+  <script>
+  (function() {
+    var proto = Object.create(HTMLElement.prototype, {
+      createdCallback: {
+        value: function() {
+          // create a shadow DOM to encapsulate user styles
+          var shadow = this.createShadowRoot();
+          var template = document.querySelector('#livingcssExampleTemplate');
+          var clone = document.importNode(template.content, true);
+
+          // add all children of the element to the shadow DOM
+          while (this.children.length > 0) {
+            clone.appendChild(this.children[0]);
+          }
+
+          shadow.appendChild(clone);
+        }
+      }
+    });
+
+    document.registerElement('livingcss-example', {prototype: proto});
+  })(document);
+  </script>
+  <!-- /webcomponent -->
+
 </head>
-<body class="livingcss">
+<body class="livingcss" style="background: linear-gradient( to bottom, #000, #fdfdfd 1px);background-size: 100% 26px;">
   <div class="livingcss__wrapper">
 
     <header class="livingcss__header">
-      <h1 class="livingcss__container livingcss__header-title livingcss__inverse-text">LivingCSS Style Guide</h1>
+      <div class="livingcss__header-title-container livingcss__inverse-text">
+        <h1 class="livingcss__container livingcss__header-title">LivingCSS Style Guide</h1>
+      </div>
 
-      <nav class="livingcss__main-nav">
-        <a class="livingcss__main-nav-link" href="index.html">index</a>
-        <a class="livingcss__main-nav-link" href="javascript.html">javascript</a>
-      </nav>
+      <div class="livingcss__main-nav-container livingcss__inverse-text">
+        <nav class="livingcss__container livingcss__main-nav">
+          <a class="livingcss__main-nav-link" href="index.html">index</a>
+        </nav>
+      </div>
     </header>
 
     <div class="livingcss__container livingcss__content">
 
       <main class="livingcss__main" role="main">
 
-        <article class="livingcss__section" id="no-code">
-          <h1 class="livingcss__section-title">No code</h1><div class="livingcss__section-description"></div>
+        <article class="livingcss__section" id="buttons">
+          <h1 class="livingcss__section-title">Buttons</h1><div class="livingcss__section-description"><p>The Button <code>.btn</code> class can be applied to <code>&lt;button&gt;</code>, <code>&lt;input&gt;</code>, or <code>&lt;a&gt;</code> elements.</p></div>
 
-<div class="livingcss__section-example"><div>You can only see the example, the code is hidden</div></div>
-
-
-<section id="no-code-Example from file">
-  <h2>Example from file</h2><div class="livingcss__section-description"></div>
-
-<div class="livingcss__section-example"><div>
-  <span>Foo</span>
-</div></div>
+<livingcss-example><button class="btn">Button</button>
+<input type="submit" class="btn">Input</input>
+<a href="#" class="btn">Anchor</a></livingcss-example>
 
 <div class="livingcss__section-markup">
-  <pre class="livingcss__section-code"><code class="language-markup">&lt;div&gt;
-  &lt;span&gt;Foo&lt;/span&gt;
-&lt;/div&gt;</code></pre>
+  <pre class="livingcss__section-code"><code class="language-markup">&lt;button class&#x3D;&quot;btn&quot;&gt;Button&lt;/button&gt;
+&lt;input type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn&quot;&gt;Input&lt;/input&gt;
+&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn&quot;&gt;Anchor&lt;/a&gt;</code></pre>
+</div>
+
+<section id="buttons-primary-button">
+  <h2>Primary Button</h2><div class="livingcss__section-description"><p>A primary button</p></div>
+
+<livingcss-example><button class="btn primary">Button</button>
+<input type="submit" class="btn primary">Input</input>
+<a href="#" class="btn primary">Anchor</a></livingcss-example>
+
+<div class="livingcss__section-markup">
+  <pre class="livingcss__section-code"><code class="language-markup">&lt;button class&#x3D;&quot;btn primary&quot;&gt;Button&lt;/button&gt;
+&lt;input type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn primary&quot;&gt;Input&lt;/input&gt;
+&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn primary&quot;&gt;Anchor&lt;/a&gt;</code></pre>
 </div>
 
 </section>        </article>
-        <article class="livingcss__section" id="buttons">
-          <h1 class="livingcss__section-title">Buttons</h1><div class="livingcss__section-description"><p>Your standard form button.</p></div>
-
-<div class="livingcss__section-example"><button>Shiny</button></div>
-
-<div class="livingcss__section-markup">
-  <pre class="livingcss__section-code"><code class="language-markup">&lt;button&gt;Shiny&lt;/button&gt;</code></pre>
-</div>
-
-        </article>
 
       </main>
 
       <nav class="livingcss__nav">
         <div class="livingcss__nav-container">
-          <a class="livingcss__nav-link" href="#no-code">No code</a>
           <a class="livingcss__nav-link" href="#buttons">Buttons</a>
         </div>
       </nav>

@@ -128,27 +128,21 @@ function livingcss(source, dest, options) {
       var partialName = path.basename(file, path.extname(file));
       Handlebars.registerPartial(partialName, data);
     })
-  ]).then(
-    function success(values) {
-      for (var page in context.pages) {
-        if (!context.pages.hasOwnProperty(page)) {
-          continue;
-        }
-
-        var pageContext = Object.assign({}, context);
-        pageContext.sections = context.pages[page];
-
-        // values[0] = handlebars template
-        generate(path.join(dest, page + '.html'), values[0], pageContext, options);
+  ]).then(function success(values) {
+    for (var page in context.pages) {
+      if (!context.pages.hasOwnProperty(page)) {
+        continue;
       }
-    },
-    function failure(message) {
-      if (message) {
-        console.error(message);
-      }
-    })
+
+      var pageContext = Object.assign({}, context);
+      pageContext.sections = context.pages[page];
+
+      // values[0] = handlebars template
+      generate(path.join(dest, page + '.html'), values[0], pageContext, options);
+    }
+  })
   .catch(function(err) {
-    throw err;
+    console.error(err.stack);
   });
 }
 

@@ -4,26 +4,66 @@
   <title>{{title}}</title>
 
   <!-- critical path css -->
-  {{> criticalCss}}
+  {{> mainStylesheet}}
   <!-- /critical path css -->
 
-  <!-- user styles -->
-  {{#each stylesheets}}
-  <link rel="stylesheet" href="{{this}}">
-  {{/each}}
-  <!-- /user styles -->
+  <!-- webcomponent -->
+  <template id="livingcssExampleTemplate">
+    <style>
+    /* user stylesheets */
+    {{#each stylesheets}}
+    @import "{{this}}";
+    {{/each}}
+    /* /user stylesheets */
+
+    :host {
+      display: block;
+    }
+    </style>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
+  <script>
+  (function() {
+    var proto = Object.create(HTMLElement.prototype, {
+      createdCallback: {
+        value: function() {
+          // create a shadow DOM to encapsulate user styles
+          var shadow = this.createShadowRoot();
+          var template = document.querySelector('#livingcssExampleTemplate');
+          var clone = document.importNode(template.content, true);
+
+          // add all children of the element to the shadow DOM
+          while (this.children.length > 0) {
+            clone.appendChild(this.children[0]);
+          }
+
+          shadow.appendChild(clone);
+        }
+      }
+    });
+
+    document.registerElement('livingcss-example', {prototype: proto});
+  })(document);
+  </script>
+  <!-- /webcomponent -->
+
 </head>
-<body class="livingcss">
+<body class="livingcss" style="background: linear-gradient( to bottom, #000, #fdfdfd 1px);background-size: 100% 26px;">
   <div class="livingcss__wrapper">
 
     <header class="livingcss__header">
-      <h1 class="livingcss__container livingcss__header-title livingcss__inverse-text">{{title}}</h1>
+      <div class="livingcss__header-title-container livingcss__inverse-text">
+        <h1 class="livingcss__container livingcss__header-title">{{title}}</h1>
+      </div>
 
-      <nav class="livingcss__main-nav">
-      {{#each pages}}
-        <a class="livingcss__main-nav-link" href="{{@key}}.html">{{@key}}</a>
-      {{/each}}
-      </nav>
+      <div class="livingcss__main-nav-container livingcss__inverse-text">
+        <nav class="livingcss__container livingcss__main-nav">
+        {{#each pages}}
+          <a class="livingcss__main-nav-link" href="{{@key}}.html">{{@key}}</a>
+        {{/each}}
+        </nav>
+      </div>
     </header>
 
     <div class="livingcss__container livingcss__content">

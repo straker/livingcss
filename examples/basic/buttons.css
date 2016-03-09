@@ -1,73 +1,69 @@
 /**
  * Buttons
  *
- * Your standard form button.
- *
- * @state :hover    - Highlights when hovering.
- * @state :disabled - Dims the button when disabled.
- * @state .primary  - Indicates button is the primary action.
- * @state .smaller  - A smaller button.
+ * The Button `.btn` class can be applied to `<button>`, `<input>`, or `<a>` elements.
  *
  * @section
- * @page CSS
  *
  * @example
- * <button>Shiny</button>
+ * <button class="btn">Button</button>
+ * <input type="submit" class="btn">Input</input>
+ * <a href="#" class="btn">Anchor</a>
  */
-button {
-  padding: 5px 15px;
-  border: 2px solid #ddd;
-  border-radius: 4px;
+.btn {
   background-color: #ddd;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  color: black;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  padding: 5px 15px;
+  text-decoration: none;
 }
 
-button:hover {
+.btn:hover,
+.btn:focus,
+.btn:active {
   background-color: #aaa;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-button:disabled {
+.btn:disabled {
   opacity: 0.5;
 }
 
-button.primary {
+.btn + .btn {
+  margin-left: 2px;
+}
+
+/**
+ * Primary Button
+ *
+ * A primary button
+ *
+ * @section
+ * @sectionof Buttons
+ *
+ * @example
+ * <button class="btn primary">Button</button>
+ * <input type="submit" class="btn primary">Input</input>
+ * <a href="#" class="btn primary">Anchor</a>
+ */
+.btn.primary {
   background-color: #60b044;
   background-image: linear-gradient(#8add6d, #60b044);
   border-color: #5ca941;
   color: #fff;
 }
-button.primary:hover {
+.btn.primary:hover {
   background-color: #569e3d;
   background-image: linear-gradient(#79d858, #569e3d);
   border-color: #4a993e;
 }
 
-button.smaller {
+.btn.smaller {
   font-size: 10px;
   padding: 4px 10px;
 }
-
-        /**
-         * JavaScript
-         * @section
-         * @example
-         * <div id="test_this"></div>
-         * <script>document.getElementById('test_this').innerHTML = 'Hello';</script>
-         * @page javascript
-         * @code {javascript}
-         * document.getElementById('test_this').innerHTML = 'Hello';
-         */
-
-/**
- * @section No code
- * @example {yaml}
- * <div>You can only see the example, the code is hidden</div>
- * @hideCode
- * @page CSS
- */
-
-/**
- * @section Example from file
- * @sectionof No code
- * @example
- * example.html
- */
