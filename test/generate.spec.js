@@ -42,8 +42,6 @@ describe('generate', function() {
 
 
 
-
-
   beforeEach(function() {
     sinon.spy(HandlebarsStub, 'compile');
   });
@@ -65,13 +63,13 @@ describe('generate', function() {
     expect(sections[0].name).to.equal('one');
   });
 
-  it('should call utils.sortSections if options.sectionOrder is set', function() {
-    sinon.spy(utils, 'sortSections');
+  it('should call utils.sortCategoryBy if context.sectionOrder is set', function() {
+    sinon.spy(utils, 'sortCategoryBy');
 
-    generate(null, '', {sections: []}, {sectionOrder: []});
+    generate(null, '', {sections: [], sectionOrder: []}, {});
 
-    expect(utils.sortSections.called).to.be.true;
-    utils.sortSections.restore();
+    expect(utils.sortCategoryBy.called).to.be.true;
+    utils.sortCategoryBy.restore();
   });
 
   it('should call Handlebars if no preprocess function is defined', function(done) {

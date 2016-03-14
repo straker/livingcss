@@ -1,0 +1,28 @@
+/**
+ * @section One
+ */
+
+/**
+ * @section Two
+ * @sectionof One
+ */
+
+/**
+ * @section Three
+ * @sectionof One.Two
+ */
+
+/**
+ * @section Four
+ * @sectionof One.Two.Three
+ */
+
+/**
+ * @section Five
+ * @sectionof One.Two.Three.Four
+ */
+
+/**
+ * @section Six
+ * @sectionof One.Two.Three.Four.Five
+ */

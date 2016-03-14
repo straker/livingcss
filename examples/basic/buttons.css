@@ -7,7 +7,7 @@
  *
  * @example
  * <button class="btn">Button</button>
- * <input type="submit" class="btn">Input</input>
+ * <input type="submit" class="btn" value="Input"/>
  * <a href="#" class="btn">Anchor</a>
  */
 .btn {
@@ -34,22 +34,19 @@
   opacity: 0.5;
 }
 
-.btn + .btn {
-  margin-left: 2px;
-}
-
 /**
  * Primary Button
  *
  * A primary button
  *
  * @section
- * @sectionof Buttons
  *
  * @example
  * <button class="btn primary">Button</button>
- * <input type="submit" class="btn primary">Input</input>
+ * <input type="submit" class="btn primary" value="Input"/>
  * <a href="#" class="btn primary">Anchor</a>
+ *
+ * @page test this
  */
 .btn.primary {
   background-color: #60b044;

@@ -8,18 +8,14 @@ var parseComments = require('./lib/parseComments');
 var tags = require('./lib/tags');
 var utils = require('./lib/utils');
 
-if (typeof Object.assign !== 'function') {
-  Object.assign = require('object-assign');
-}
-
 /**
  * Parse comments in your CSS to generate a living style guide using Markdown.
  *
  * @param {string|string[]} source=[] - A single file, list of files, or glob file paths to be parsed to generate the style guide.
- * @param {string} [dest='.'] - Path of the directory for the generated HTML. Defaults to the current directory.
+ * @param {string} [dest='.'] - Directory to output the style guide HTML. Defaults to the current directory.
  * @param {object} [options={}] - Configuration options.
  * @param {string} [options.template="template/template.hbs"] - Path to the Handlebars template to use for generating the HTML.
- * @param {string[]} [options.sectionOrder=[]] - List of root section names (a section without a parent) in the order they should be sorted. Any root section not listed will be added to the end in the order encountered.
+ * @param {string[]|object[]} [options.sortOrder=[]] - List of pages and their sections in the order they should be sorted. Any page not listed will be added to the end in the order encountered. Can be an array of page names to just sort pages, an array of objects with page names as keys and an array of sections names as the values to sort both pages and sections, or any combination of both.
  * @param {object} [options.tags={}] - Object of custom tag names to callback functions that are called when the tag is encountered. The tag, the parsed comment, the block object, the list of sections, and the file are passed as the `this` object to the callback function.
  * @param {boolean} [options.minify=false] - If the generated HTML should be minified.
  * @param {boolean} [options.loadcss=true] - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work).
@@ -63,15 +59,17 @@ function livingcss(source, dest, options) {
     options = args.pop();
   }
 
-  dest = args[0] || path.join(process.cwd(), '');
+  dest = args[0] || process.cwd();
 
   var defaultTemplate = path.join(__dirname, 'template/template.hbs');
   var defaultPartials = path.join(__dirname, 'template/partials/*.hbs');
   var context = {
-    pages: {},
+    pages: [],
+    pageOrder: [],
     sections: [],
     stylesheets: [],
     scripts: [],
+    globalStylesheets: [],
     title: 'LivingCSS Style Guide'
   };
 
@@ -80,15 +78,10 @@ function livingcss(source, dest, options) {
 
   options = options || {};
   options.template = options.template || path.join(__dirname, 'template/template.hbs');
-  options.sectionOrder = options.sectionOrder || [];
+  options.sortOrder = options.sortOrder || [];
   options.tags = options.tags || [];
   options.minify = (typeof options.minify === 'undefined' ? false : options.minify);
   options.loadcss = (typeof options.loadcss === 'undefined' ? true : options.loadcss);
-
-  // normalize sort order section names
-  options.sectionOrder.forEach(function(value, index) {
-    options[index] = value.toLowerCase();
-  });
 
   // add custom tags
   for (var tag in options.tags) {
@@ -128,18 +121,34 @@ function livingcss(source, dest, options) {
       var partialName = path.basename(file, path.extname(file));
       Handlebars.registerPartial(partialName, data);
     })
-  ]).then(function success(values) {
-    for (var page in context.pages) {
-      if (!context.pages.hasOwnProperty(page)) {
-        continue;
+  ]).then(function(values) {
+    utils.generateSortOrder(context, options.sortOrder);
+    utils.sortCategoryBy(context.pages, context.pageOrder);
+
+    context.allSections = context.sections;
+
+    if (context.pages.length > 1) {
+      context.navbar = context.pages.map(function(page) {
+        return {
+          name: page.name,
+          url: page.id
+        };
+      });
+    }
+
+    context.pages.forEach(function(page, index) {
+      // deep copy context for each page
+      var pageContext = JSON.parse(JSON.stringify(context));
+      pageContext.sections = page.sections;
+
+      // set current page selected
+      if (context.navbar) {
+        pageContext.navbar[index].selected = true;
       }
 
-      var pageContext = Object.assign({}, context);
-      pageContext.sections = context.pages[page];
-
       // values[0] = handlebars template
-      generate(path.join(dest, page + '.html'), values[0], pageContext, options);
-    }
+      generate(path.join(dest, page.id + '.html'), values[0], pageContext, options);
+    });
   })
   .catch(function(err) {
     console.error(err.stack);
