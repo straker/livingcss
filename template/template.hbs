@@ -15,7 +15,7 @@
 
   <script src="https://cdn.jsdelivr.net/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
 </head>
-<body class="livingcss" style="background: linear-gradient( to bottom, #000, #fdfdfd 1px);background-size: 100% 26px;">
+<body class="livingcss" style="/*background: linear-gradient( to bottom, #000, #fdfdfd 1px);*/ background-size: 100% 26px;">
   <!-- webcomponent -->
   <template id="livingcssExampleTemplate">
     <style>
@@ -64,13 +64,15 @@
       </div>
 
       {{#if navbar}}
-      <div class="livingcss__main-nav-container livingcss__inverse-text">
+      <div class="livingcss__main-nav-container">
         <nav class="livingcss__container livingcss__main-nav">
         {{#each navbar}}
           <a class="livingcss__nav-link livingcss__nav-link--main {{#if selected}}livingcss__nav-link--active{{/if}}" href="{{url}}.html">{{name}}</a>
         {{/each}}
         </nav>
       </div>
+
+      <button class="livingcss__menu livingcss__inverse-text">☰ Menu</button>
       {{/if}}
     </header>
 
@@ -79,8 +81,8 @@
       <main class="livingcss__main" role="main">
 
         {{#each sections}}
-        <article class="livingcss__section" id="{{id}}">
-          <h1 class="livingcss__section-title">{{name}}</h1>
+        <article class="livingcss__article" id="{{id}}">
+          <h1 class="livingcss__article-title">{{name}}</h1>
           {{~> section}}
 
           {{#children}}

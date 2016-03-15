@@ -52,7 +52,7 @@
     font-family: "Skolar Bold", "Segoe UI Bold", "Roboto Slab", "Droid Serif",
     AvenirNext-Bold, "Avenir Bold", Georgia,
     "Times New Roman", Times, serif;
-    margin: 1.625rem 0 0 0;
+    margin: 0;
   }
   
   h1 {
@@ -72,17 +72,13 @@
   
   h4, h5, h6 {
     line-height: 1.625rem;
-    margin: 1.625rem 0 0 0;
+    margin: 0;
   }
   
   p {
     font-size: 1rem;
     line-height: 1.625rem;
-    margin: 0;
-  }
-  
-  p:not(:last-child) {
-    margin-bottom: 1.625rem;
+    margin: 0 0 1.625rem 0;
   }
   
   a,
@@ -104,6 +100,8 @@
   .livingcss__wrapper {
     min-height: 100%;
     position: relative;
+    transition: right 0.2s;
+    right: 0;
   }
   
   .livingcss__container {
@@ -115,6 +113,10 @@
   /*
    * HEADER
    */
+  .livingcss__header {
+    position: relative;
+  }
+  
   .livingcss__header-title-container {
     background: #2196F3;
     padding: 0.8125rem 0;
@@ -126,7 +128,6 @@
   }
   
   .livingcss__main-nav-container {
-    background: #1976D2;
     padding: 0.40625rem 0;
   }
   
@@ -147,15 +148,24 @@
     text-decoration: none;
   }
   
-  .livingcss__nav-link--main {
-    display: inline-block;
+  .livingcss__menu {
+    position: absolute;
+    right: 1.625rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    font-size: 1rem;
+    background: transparent;
+    cursor: pointer;
+    background: #1976D2;
+    padding: 0.40625rem 0.8125rem;
   }
   
   /*
    * CONTENT
    */
   .livingcss__content {
-    padding-bottom: 3.25rem;
+    padding-bottom: 6.5rem;
   }
   
   /*
@@ -166,21 +176,24 @@
     order: 2;
   }
   
-  .livingcss__section-title {
+  .livingcss__article-title {
     border-bottom: 1px solid #727272;
     margin-bottom: 1.625rem;
   }
   
-  .livingcss__section:first-child .livingcss__section-title {
+  .livingcss__article:first-child .livingcss__article-title {
     margin-top: 0;
   }
   
-  .livingcss__section + .livingcss__section {
+  .livingcss__article + .livingcss__article {
     margin-top: 3.25rem;
   }
   
-  livingcss-example {
+  .livingcss__section {
     margin-top: 1.625rem;
+  }
+  
+  livingcss-example {
     border: 1px solid #B6B6B6;
     padding: 1rem;
     border-radius: .25rem .25rem 0 0;
@@ -211,12 +224,6 @@
     margin-top: 1.625rem;
   }
   
-  .livingcss__nav--fixed .livingcss__nav-container {
-    position: fixed;
-    top: 0;
-    width: 180px;
-  }
-  
   /*
    * FOOTER
    */
@@ -236,9 +243,47 @@
   }
   
   /*
+   * MOBILE BREAKPOINT
+   */
+  @media (max-width: 992px) {
+    .livingcss__main-nav {
+      position: fixed;
+      top: 0;
+      right: -14rem;
+      bottom: 0;
+      width: 13rem;
+      background: #fdfdfd;
+      border-left: 1px solid #B6B6B6;
+      transition: right 0.2s;
+      padding: 0;
+    }
+  
+    .livingcss__main-nav--open .livingcss__wrapper {
+      right: 13rem;
+    }
+  
+    .livingcss__main-nav--open .livingcss__main-nav {
+      right: 0;
+      box-shadow: -2px 0px 6px rgba(0,0,0,0.2);
+    }
+  
+    .livingcss__main-nav-container {
+      padding: 0;
+    }
+  
+    .livingcss__nav-link {
+      border-bottom: 1px solid #B6B6B6;
+    }
+  
+    .livingcss__nav {
+      display: none;
+    }
+  }
+  
+  /*
    * DESKTOP BREAKPOINT
    */
-  @media (min-width: 992px) {
+  @media (min-width: 993px) {
     html{
       font-size: 16px;
     }
@@ -249,20 +294,56 @@
     }
   
     .livingcss__container {
-      max-width: 1170px;
+      max-width: 964px;
       padding-left: 0;
       padding-right: 0;
     }
   
     .livingcss__nav {
-      flex: 0 0 180px;
+      flex: 0 0 13rem;
       padding-right: 0.8125rem;
+    }
+  
+    .livingcss__main-nav-container {
+      border-bottom: 1px solid #B6B6B6;
     }
   
     .livingcss__main {
       flex: 1;
-      max-width: 964px;
+      max-width: 729px;
       padding-left: 0.8125rem;
+    }
+  
+    .livingcss__nav-link--main {
+      display: inline-block;
+    }
+  
+    .livingcss__nav--fixed .livingcss__nav-container {
+      position: fixed;
+      top: 0;
+      width: 13rem;
+    }
+  
+    .livingcss__menu {
+      display: none;
+    }
+  
+    .livingcss__nav-link--main {
+      font-size: 0.875rem;
+      line-height: 1rem
+    }
+  }
+  
+  /**
+   * DESKTOP HD BREAKPOINT
+   */
+  @media (min-width: 1200px) {
+    .livingcss__container {
+      max-width: 1170px;
+    }
+  
+    .livingcss__main {
+      max-width: 935px;
     }
   }
   
@@ -291,7 +372,7 @@
 
   <script src="https://cdn.jsdelivr.net/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
 </head>
-<body class="livingcss" style="background: linear-gradient( to bottom, #000, #fdfdfd 1px);background-size: 100% 26px;">
+<body class="livingcss" style="/*background: linear-gradient( to bottom, #000, #fdfdfd 1px);*/ background-size: 100% 26px;">
   <!-- webcomponent -->
   <template id="livingcssExampleTemplate">
     <style>
@@ -303,8 +384,6 @@
     </style>
 
     <div class="livingcss__example"></div>
-
-    <script src="test.js"></script>
   </template>
 
   <script>
@@ -321,11 +400,6 @@
           while (this.childNodes.length > 0) {
             clone.querySelector('.livingcss__example').appendChild(this.childNodes[0]);
           }
-
-          // add a script tag that exposes the shadow root for scripts
-          var script = document.createElement('script');
-          script.textContent = 'var root = this.shadowRoot';
-          clone.insertBefore(script, clone.querySelector('script'));
 
           shadow.appendChild(clone);
         }
@@ -344,20 +418,22 @@
         <h1 class="livingcss__container livingcss__header-title">LivingCSS Style Guide</h1>
       </div>
 
-      <div class="livingcss__main-nav-container livingcss__inverse-text">
+      <div class="livingcss__main-nav-container">
         <nav class="livingcss__container livingcss__main-nav">
           <a class="livingcss__nav-link livingcss__nav-link--main " href="test-this.html">test this</a>
           <a class="livingcss__nav-link livingcss__nav-link--main livingcss__nav-link--active" href="index.html">index</a>
         </nav>
       </div>
+
+      <button class="livingcss__menu livingcss__inverse-text">☰ Menu</button>
     </header>
 
     <div class="livingcss__container livingcss__content">
 
       <main class="livingcss__main" role="main">
 
-        <article class="livingcss__section" id="buttons">
-          <h1 class="livingcss__section-title">Buttons</h1><div class="livingcss__section-description"><p>The Button <code>.btn</code> class can be applied to <code>&lt;button&gt;</code>, <code>&lt;input&gt;</code>, or <code>&lt;a&gt;</code> elements.</p></div>
+        <article class="livingcss__article" id="buttons">
+          <h1 class="livingcss__article-title">Buttons</h1><div class="livingcss__section-description"><p>The Button <code>.btn</code> class can be applied to <code>&lt;button&gt;</code>, <code>&lt;input&gt;</code>, or <code>&lt;a&gt;</code> elements.</p></div>
 
 <livingcss-example><button class="btn">Button</button>
 <input type="submit" class="btn" value="Input"/>
@@ -394,10 +470,11 @@
   <!-- /prism -->
 
   <!-- user scripts -->
+  <script src="test.js"></script>
   <!-- /user scripts -->
 
   <script>
-  // (function(window, document) {
+  (function(window, document) {
     /**
      * Set the active nav link
      * @param {Element} link - Link to make active.
@@ -417,7 +494,7 @@
   
     // set active link when
     var nav = document.querySelector('.livingcss__nav');
-    var sections = document.querySelectorAll('article.livingcss__section');
+    var sections = document.querySelectorAll('article.livingcss__article');
     var sectionPositions = [];
   
     // set the current link based on the hash
@@ -469,7 +546,12 @@
         }
       }
     });
-  // })(window, document);
+  
+    // open mobile drawer
+    document.querySelector('.livingcss__menu').addEventListener('click', function(e) {
+      document.body.classList.toggle('livingcss__main-nav--open')
+    });
+  })(window, document);
   </script>
 </body>
 </html>

@@ -46,7 +46,7 @@ h1, h2, h3, h4 {
   font-family: "Skolar Bold", "Segoe UI Bold", "Roboto Slab", "Droid Serif",
   AvenirNext-Bold, "Avenir Bold", Georgia,
   "Times New Roman", Times, serif;
-  margin: 1.625rem 0 0 0;
+  margin: 0;
 }
 
 h1 {
@@ -66,17 +66,13 @@ h3 {
 
 h4, h5, h6 {
   line-height: 1.625rem;
-  margin: 1.625rem 0 0 0;
+  margin: 0;
 }
 
 p {
   font-size: 1rem;
   line-height: 1.625rem;
-  margin: 0;
-}
-
-p:not(:last-child) {
-  margin-bottom: 1.625rem;
+  margin: 0 0 1.625rem 0;
 }
 
 a,
@@ -98,6 +94,8 @@ a:hover {
 .livingcss__wrapper {
   min-height: 100%;
   position: relative;
+  transition: right 0.2s;
+  right: 0;
 }
 
 .livingcss__container {
@@ -109,6 +107,10 @@ a:hover {
 /*
  * HEADER
  */
+.livingcss__header {
+  position: relative;
+}
+
 .livingcss__header-title-container {
   background: #2196F3;
   padding: 0.8125rem 0;
@@ -120,7 +122,6 @@ a:hover {
 }
 
 .livingcss__main-nav-container {
-  background: #1976D2;
   padding: 0.40625rem 0;
 }
 
@@ -141,15 +142,24 @@ a.livingcss__nav-link--active {
   text-decoration: none;
 }
 
-.livingcss__nav-link--main {
-  display: inline-block;
+.livingcss__menu {
+  position: absolute;
+  right: 1.625rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  font-size: 1rem;
+  background: transparent;
+  cursor: pointer;
+  background: #1976D2;
+  padding: 0.40625rem 0.8125rem;
 }
 
 /*
  * CONTENT
  */
 .livingcss__content {
-  padding-bottom: 3.25rem;
+  padding-bottom: 6.5rem;
 }
 
 /*
@@ -160,21 +170,24 @@ a.livingcss__nav-link--active {
   order: 2;
 }
 
-.livingcss__section-title {
+.livingcss__article-title {
   border-bottom: 1px solid #727272;
   margin-bottom: 1.625rem;
 }
 
-.livingcss__section:first-child .livingcss__section-title {
+.livingcss__article:first-child .livingcss__article-title {
   margin-top: 0;
 }
 
-.livingcss__section + .livingcss__section {
+.livingcss__article + .livingcss__article {
   margin-top: 3.25rem;
 }
 
-livingcss-example {
+.livingcss__section {
   margin-top: 1.625rem;
+}
+
+livingcss-example {
   border: 1px solid #B6B6B6;
   padding: 1rem;
   border-radius: .25rem .25rem 0 0;
@@ -205,12 +218,6 @@ livingcss-example {
   margin-top: 1.625rem;
 }
 
-.livingcss__nav--fixed .livingcss__nav-container {
-  position: fixed;
-  top: 0;
-  width: 180px;
-}
-
 /*
  * FOOTER
  */
@@ -230,9 +237,47 @@ livingcss-example {
 }
 
 /*
+ * MOBILE BREAKPOINT
+ */
+@media (max-width: 992px) {
+  .livingcss__main-nav {
+    position: fixed;
+    top: 0;
+    right: -14rem;
+    bottom: 0;
+    width: 13rem;
+    background: #fdfdfd;
+    border-left: 1px solid #B6B6B6;
+    transition: right 0.2s;
+    padding: 0;
+  }
+
+  .livingcss__main-nav--open .livingcss__wrapper {
+    right: 13rem;
+  }
+
+  .livingcss__main-nav--open .livingcss__main-nav {
+    right: 0;
+    box-shadow: -2px 0px 6px rgba(0,0,0,0.2);
+  }
+
+  .livingcss__main-nav-container {
+    padding: 0;
+  }
+
+  .livingcss__nav-link {
+    border-bottom: 1px solid #B6B6B6;
+  }
+
+  .livingcss__nav {
+    display: none;
+  }
+}
+
+/*
  * DESKTOP BREAKPOINT
  */
-@media (min-width: 992px) {
+@media (min-width: 993px) {
   html{
     font-size: 16px;
   }
@@ -243,20 +288,56 @@ livingcss-example {
   }
 
   .livingcss__container {
-    max-width: 1170px;
+    max-width: 964px;
     padding-left: 0;
     padding-right: 0;
   }
 
   .livingcss__nav {
-    flex: 0 0 180px;
+    flex: 0 0 13rem;
     padding-right: 0.8125rem;
+  }
+
+  .livingcss__main-nav-container {
+    border-bottom: 1px solid #B6B6B6;
   }
 
   .livingcss__main {
     flex: 1;
-    max-width: 964px;
+    max-width: 729px;
     padding-left: 0.8125rem;
+  }
+
+  .livingcss__nav-link--main {
+    display: inline-block;
+  }
+
+  .livingcss__nav--fixed .livingcss__nav-container {
+    position: fixed;
+    top: 0;
+    width: 13rem;
+  }
+
+  .livingcss__menu {
+    display: none;
+  }
+
+  .livingcss__nav-link--main {
+    font-size: 0.875rem;
+    line-height: 1rem
+  }
+}
+
+/**
+ * DESKTOP HD BREAKPOINT
+ */
+@media (min-width: 1200px) {
+  .livingcss__container {
+    max-width: 1170px;
+  }
+
+  .livingcss__main {
+    max-width: 935px;
   }
 }
 

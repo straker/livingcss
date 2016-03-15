@@ -1,5 +1,5 @@
 <script>
-// (function(window, document) {
+(function(window, document) {
   /**
    * Set the active nav link
    * @param {Element} link - Link to make active.
@@ -19,7 +19,7 @@
 
   // set active link when
   var nav = document.querySelector('.livingcss__nav');
-  var sections = document.querySelectorAll('article.livingcss__section');
+  var sections = document.querySelectorAll('article.livingcss__article');
   var sectionPositions = [];
 
   // set the current link based on the hash
@@ -71,5 +71,10 @@
       }
     }
   });
-// })(window, document);
+
+  // open mobile drawer
+  document.querySelector('.livingcss__menu').addEventListener('click', function(e) {
+    document.body.classList.toggle('livingcss__main-nav--open')
+  });
+})(window, document);
 </script>
