@@ -1,0 +1,18 @@
+/**
+ * @section Foo
+ */
+
+/**
+ * @section Bar
+ */
+
+/**
+ * @section Baz
+ */
+
+/**
+ * @section Faz
+ * @sectionof Foo
+ * @sectionof Bar
+ * @sectionof Baz
+ */

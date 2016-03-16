@@ -4,41 +4,8 @@ var expect = require('chai').expect;
 var fs = require('fs');
 var path = require('path');
 var parseComments = require('../lib/parseComments');
-var tags = require('../lib/tags');
 
 describe('parseComments', function() {
-
-  it('should always take the last parameter as the callback', function(done) {
-    var file = path.join(__dirname, 'data/simple-tag.css');
-
-    fs.readFile(file, 'utf8', function(err, data) {
-      if (err) {
-        throw err;
-      }
-
-      // all parameters passed
-      parseComments(data, file, {}, [], function(block) {
-        expect(block.tagName).to.equal('tagValue');
-      });
-
-      // tags not passed
-      parseComments(data, file, [], function(block) {
-        expect(block.tagName).to.equal('tagValue');
-      });
-
-      // section not passed
-      parseComments(data, file, {}, function(block) {
-        expect(block.tagName).to.equal('tagValue');
-      });
-
-      // tags and section not passed
-      parseComments(data, file, function(block) {
-        expect(block.tagName).to.equal('tagValue');
-      });
-
-      done();
-    });
-  });
 
   it('should add an undefined tag as a property to the block', function(done) {
     var file = path.join(__dirname, 'data/simple-tag.css');
@@ -48,7 +15,7 @@ describe('parseComments', function() {
         throw err;
       }
 
-      parseComments(data, file, function(block) {
+      parseComments(data, file, {}, {}, function(block) {
         expect(block.tagName).to.equal('tagValue');
       });
 
@@ -58,7 +25,7 @@ describe('parseComments', function() {
 
   it('should execute a defined tags function', function(done) {
     var file = path.join(__dirname, 'data/simple-tag.css');
-    var myTags = {
+    var tags = {
       tagName: function() {
         this.block.foo = 'bar';
       }
@@ -69,7 +36,7 @@ describe('parseComments', function() {
         throw err;
       }
 
-      parseComments(data, file, myTags, function(block) {
+      parseComments(data, file, tags, {}, function(block) {
         expect(block.foo).to.equal('bar');
       });
 
@@ -85,7 +52,7 @@ describe('parseComments', function() {
         throw err;
       }
 
-      parseComments(data, file, function(block) {
+      parseComments(data, file, {}, {}, function(block) {
         expect(block.hideCode).to.equal(true);
       });
 
@@ -101,7 +68,7 @@ describe('parseComments', function() {
         throw err;
       }
 
-      parseComments(data, file, function(block) {
+      parseComments(data, file, {}, {}, function(block) {
         expect(block.color).to.exist;
         expect(block.color.type).to.equal('hex');
         expect(block.color.description).to.equal('#fff');
@@ -119,7 +86,7 @@ describe('parseComments', function() {
         throw err;
       }
 
-      parseComments(data, file, function(block) {
+      parseComments(data, file, {}, {}, function(block) {
         expect(block.myTag).to.exist;
         expect(block.myTag.name).to.equal('myName');
         expect(block.myTag.description).to.equal('my description');
@@ -137,7 +104,7 @@ describe('parseComments', function() {
         throw err;
       }
 
-      parseComments(data, file, function(block) {
+      parseComments(data, file, {}, {}, function(block) {
          expect(block.color.name).to.not.exist;
       });
 
@@ -153,7 +120,7 @@ describe('parseComments', function() {
         throw err;
       }
 
-      parseComments(data, file, function(block) {
+      parseComments(data, file, {}, {}, function(block) {
          expect(Array.isArray(block.state)).to.be.true;
          expect(block.state.length).to.equal(3);
       });
@@ -179,8 +146,8 @@ describe('parseComments', function() {
         throw err;
       }
 
-      parseComments(data, file, function(block) {
-        expect(block).to.deep.equal(result);
+      parseComments(data, file, {}, {}, function(block) {
+        expect(block.state).to.deep.equal(result.state);
       });
 
       done();

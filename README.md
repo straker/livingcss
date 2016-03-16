@@ -16,11 +16,11 @@ Parse comments in your CSS to generate a living style guide using Markdown, [Han
 var livingcss = require('livingcss');
 
 // livingcss(source, dest, options)
-livingcss('input.css', 'styleguide.html', options);
+livingcss('input.css', 'styleguide', options);
 ```
 
 * source - A single file, list of files, or glob file paths to be parsed to generate the style guide. Any file type can be used so long as it allows `/** */` type comments.
-* dest - Path of the file for the generated HTML.
+* dest - Directory to output the style guide HTML. Defaults to the current directory.
 * options - optional list of [options](#options).
 
 ## How it works
@@ -29,7 +29,7 @@ LivingCSS parses JSDoc-like comments for documentation in order to create a livi
 
 ```css
 /**
- * A shot description or lengthy explanation about the style. Will be parsed
+ * A short description or lengthy explanation about the style. Will be parsed
  * using `markdown`.
  *
  * @section Section Name
@@ -92,6 +92,17 @@ It also generates a JSON object of the parsed comments that can be used to gener
      *
      * @section Great-grandchild Section
      * @sectionof Parent Section.Child Section.Grandchild Section
+     */
+    ```
+
+* `@page` - Add a section to a page. Each unique page will output its own HTML file. Defaults to `index`.
+
+    ```css
+    /**
+     + Section belonging to a page.
+     *
+     + @section Section Name
+     + @page Page Name
      */
     ```
 
@@ -159,8 +170,8 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
 * `loadcss` - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work). Defaults to `true`.
 * `minify` - If the generated HTML should be minified. Defaults to `false`.
-* `preprocess` - Function that will be called right before Handlebars is called with the context object. The function will be passed the context object and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
-* `sectionOrder` - List of root section names (a section without a parent) in the order they should be sorted. Any root section not listed will be added to the end in the order encountered.
+* `preprocess` - Function that will be called for every page right before Handlebars is called with the context object. The function will be passed the context object and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
+* `sortOrder` - List of pages and their sections in the order they should be sorted. Any page not listed will be added to the end in the order encountered. Can be an array of page names to just sort pages, an array of objects with page names as keys and an array of sections names as the values to sort both pages and sections, or any combination of both.
 * `tags` - Object of custom tag names to callback functions that are called when the tag is encountered. The tag, the parsed comment, the block object, the list of sections, and the file are passed as the `this` object to the callback function.
 * `template` - Path to the Handlebars template to use for generating the HTML. Defaults to the LivingCSS template `template/template.hbs'.`
 
@@ -174,7 +185,7 @@ livingcss(['input.css', 'css/*.css'], 'styleguide.html', {
     // register a Handlebars partial
     Handlebars.registerParial('myPartial', '{{name}}');
   },
-  sectionOrder: ['buttons', 'forms', 'images'],
+  sortOrder: [{index: ['buttons', 'forms', 'images']}],
   tags: {
     color: function() {
       var section = this.sections[this.tag.description];
@@ -247,19 +258,32 @@ livingcss('input.css', 'styleguide.html', {
 });
 ```
 
+* `allSections` - List of all sections.
+* `footerHTML` - HTML content of the footer. Defualts to `Style Guide generated with LivingCSS`.
+* `globalStylesheets` - List of all CSS files to load in the `<head>` of the style guide.
+* `menuButtonHTML` - HTML content of the menu button. Defaults to `☰ Menu`.
+* `navbar` - List of page links for linking pages together in the `<header>` navigation bar. Only set if there is more than one page defined.
+* `pageOrder` - List of page names in order that they should be sorted.
+* `pages` - List of all pages and their sections. List will be sorted by `options.sortOrder`.
 * `scripts` - List of all JavaScript files to load in the style guide.
-* `sections` - Modified array of all root sections (sections without a parent) and their children. List will be sorted by `options.sectionOrder`. Any section is also accessible by it's name for convenience (e.g. `sections['Section Name]`).
-* `stylesheets` - List of all CSS files to load in the style guide. If the `options.loadcss` option is set, this list will contain all CSS files used to generate the style guide.
+* `sections` - List all root sections for the page (sections without a parent) and their children. List will be sorted by `options.sortOrder`.
+* `stylesheets` - List of all CSS files to load in the examples of the style guide. If the `options.loadcss` option is set, this list will contain all CSS files used to generate the style guide.
 * `title` - Title of the style guide. Defaults to 'LivingCSS Style Guide'.
 
 ## Utility functions
 
 LivingCSS has a few helpful utility functions that you can use in custom tags or in the `options.preprocess` function.
 
-* `livingcss.getId(name)` - Get a hyphenated id from the name. Useful for generating ids for the DOM.
+* `livingcss.getId(name)` - Get a hyphenated id from the name. Useful for generating ids for the DOM or a URL.
 
     ```js
     livingcss.getId('Section Name');  //=> 'section-name'
+    ```
+
+* `normalizeName(name)` - Normalize a name. Useful for comparisons ignoring case.
+
+    ```js
+    livingcss.normalizeName('Section Name');  //=> 'section name'
     ```
 
 * `livingcss.readFileGlobs(glob, callback)` - Pass a glob or array of globs to be read and a callback function that will be called for each file read. The function will be passed the file contents and the name of the file as parameters. Returns a Promise that is resolved when all files returned by the glob have been read. Useful for registering a glob of partials with Handlebars.
@@ -281,3 +305,19 @@ LivingCSS has a few helpful utility functions that you can use in custom tags or
     ```
 
 * `livingcss.readFiles(files, callback)` - Pass a file or array of files to be read and a callback function that will be called for each file read. The function will be passed the file contents and the name of the file as parameters. Returns a Promise that is resolved when all files have been read.
+  
+    ```js
+    var path = require('path');
+
+    livingcss('input.css', 'styleguide.html', {
+      preprocess: function(context, Handlebars) {
+        // register a glob of partials with Handlebars
+        return livingcss.readFiles(['partials/one.hb', 'partials/two.hb'], function(data, file) {
+          
+          // make the name of the partial the name of the file
+          var partialName = path.basename(file, path.extname(file));
+          Handlebars.registerPartial(partialName, data);
+        });
+      }
+    });
+    ```

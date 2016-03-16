@@ -1,0 +1,11 @@
+<div class="livingcss__section-description">{{{description}}}</div>
+
+{{#if example}}
+<livingcss-example>{{{example.description}}}</livingcss-example>
+{{/if}}
+
+{{#if code}}
+<div class="livingcss__section-markup">
+  <pre class="livingcss__section-code"><code class="language-{{code.type}}">{{code.description}}</code></pre>
+</div>
+{{/if}}

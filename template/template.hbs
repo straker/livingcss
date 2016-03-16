@@ -1,85 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html class="livingcss">
 <head>
   <title>{{title}}</title>
+
   <!-- critical path css -->
-  <style>
-  body {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .content {
-    display: flex;
-  }
-
-  .sections {
-    max-width: 80%;
-    margin-left: 20px;
-  }
-  </style>
+  {{> mainStylesheet}}
   <!-- /critical path css -->
 
-  <!-- user and style guide styles -->
-  {{#each stylesheets}}
+  <!-- user styles -->
+  {{#each globalStylesheets}}
   <link rel="stylesheet" href="{{this}}">
   {{/each}}
-  <!-- /user and style guide styles -->
+  <!-- /user styles -->
+
+  <script src="https://cdn.jsdelivr.net/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
 </head>
-<body>
-  <header>{{title}}</header>
+<body class="livingcss" style="/*background: linear-gradient( to bottom, #000, #fdfdfd 1px);*/ background-size: 100% 26px;">
+  <!-- webcomponent -->
+  <template id="livingcssExampleTemplate">
+    <style>
+    {{#each stylesheets}}
+    @import "{{this}}";
+    {{/each}}
 
-  <div class="content">
+    :host {
+      display: block;
+    }
+    </style>
 
-    <ul class="nav">
-      {{#each sections}}
-      <li class="nav-item">
-        <a clss="nav-link" href="#{{id}}">{{name}}</a>
+    <div class="livingcss__example"></div>
+  </template>
 
-        {{~#if children}}
+  <script>
+  (function() {
+    var proto = Object.create(HTMLElement.prototype, {
+      createdCallback: {
+        value: function() {
+          // create a shadow DOM to encapsulate user styles
+          var shadow = this.createShadowRoot();
+          var template = document.querySelector('#livingcssExampleTemplate');
+          var clone = document.importNode(template.content, true);
 
-        <ul class="subnav">
-          {{#each children}}
-          <li class="nav-item">
-            <a clss="nav-link" href="#{{../id}}-{{id}}">{{name}}</a>
-          </li>
-          {{/each}}
-        </ul>
-        {{~/if}}
+          // add all childNodes of the element to the shadow DOM
+          while (this.childNodes.length > 0) {
+            clone.querySelector('.livingcss__example').appendChild(this.childNodes[0]);
+          }
 
-      </li>
-      {{/each}}
-    </ul>
+          shadow.appendChild(clone);
+        }
+      }
+    });
 
-    <main class="sections">
-      {{#each sections}}
-      <section class="section" id="{{id}}">
-        <h2 class="section-title">{{name}}</h1>
-        <div class="section-description">{{{description}}}</div>
+    document.registerElement('livingcss-example', {prototype: proto});
+  })(document);
+  </script>
+  <!-- /webcomponent -->
 
-        {{#each children}}
-        <div class="subsection">
-          <div id="{{../id}}-{{id}}">
-            <h3 class="section-title">{{name}}</h1>
-            <div class="section-description">{{{description}}}</div>
-          </div>
-        </div>
+  <div class="livingcss__wrapper">
 
+    <header class="livingcss__header">
+      <div class="livingcss__header-title-container livingcss__inverse-text">
+        <h1 class="livingcss__container livingcss__header-title"><a href="{{navbar.0.url}}">{{title}}</a></h1>
+      </div>
+
+      {{#if navbar}}
+      <div class="livingcss__main-nav-container">
+        <nav class="livingcss__container livingcss__main-nav">
+        {{#each navbar}}
+          <a class="livingcss__nav-link livingcss__nav-link--main {{#if selected}}livingcss__nav-link--active{{/if}}" href="{{url}}">{{name}}</a>
+        {{/each}}
+        </nav>
+      </div>
+
+      <button class="livingcss__menu livingcss__inverse-text">{{{menuButtonHTML}}}</button>
+      {{/if}}
+    </header>
+
+    <div class="livingcss__container livingcss__content">
+
+      <main class="livingcss__main" role="main">
+
+        {{#each sections}}
+        <article class="livingcss__article" id="{{id}}">
+          <h1 class="livingcss__article-title">{{name}}</h1>
+          {{~> section}}
+
+          {{#children}}
+          {{~> childSection}}
+          {{/children}}
+        </article>
         {{/each}}
 
-        {{~#if example}}
-        {{{example.description}}}
-        {{/if}}
+      </main>
 
-        {{~#if code}}
-        <div class="markup">
-          <pre class="code"><code class="language-{{code.type}}">{{code.description}}</code></pre>
+      <nav class="livingcss__nav">
+        <div class="livingcss__nav-container">
+        {{#each sections}}
+          <a class="livingcss__nav-link" href="#{{id}}">{{name}}</a>
+        {{/each}}
         </div>
-        {{/if}}
-      </section>
+      </nav>
 
-      {{/each}}
-    </main>
+    </div>
+
+    <footer class="livingcss__footer livingcss__inverse-text">
+      <div class="livingcss__container">{{{footerHTML}}}</div>
+    </footer>
 
   </div>
 
@@ -94,5 +120,8 @@
   <script src="{{this}}"></script>
   {{/each}}
   <!-- /user scripts -->
+
+  {{> mainScript}}
+
 </body>
 </html>

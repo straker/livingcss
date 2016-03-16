@@ -1,0 +1,83 @@
+<script>
+(function(window, document) {
+  /**
+   * Set the active nav link
+   * @param {Element} link - Link to make active.
+   */
+  function setActiveLink(link) {
+    if (link) {
+      // remove previously active link
+      var activeLink = document.querySelector('.livingcss__nav .livingcss__nav-link--active');
+
+      if (activeLink) {
+        activeLink.classList.remove('livingcss__nav-link--active');
+      }
+
+      link.classList.add('livingcss__nav-link--active');
+    }
+  }
+
+  // set active link when
+  var nav = document.querySelector('.livingcss__nav');
+  var sections = document.querySelectorAll('article.livingcss__article');
+  var sectionPositions = [];
+
+  // set the current link based on the hash
+  var currentLink = document.querySelector('.livingcss__nav-link[href="' + window.location.hash + '"]');
+  setActiveLink(currentLink);
+
+  // save section positions for scrolling
+  for (var i = 0; i < sections.length; i++) {
+    var section = sections[i];
+    var pos = section.getBoundingClientRect().top + window.scrollY -
+      parseInt(getComputedStyle(section).marginTop, 10);
+
+    sectionPositions.push(pos);
+  }
+
+  // click link
+  nav.addEventListener('click', function(e) {
+    if (e.target.nodeName === 'A') {
+      setActiveLink(e.target);
+    }
+  });
+
+  // move active link and affix sidebar
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY;
+
+    // fix the sidebar nav
+    if (nav.getBoundingClientRect().top <= 0 && y > 50) {
+      nav.classList.add('livingcss__nav--fixed');
+    }
+    else {
+      nav.classList.remove('livingcss__nav--fixed');
+    }
+
+    // window is scrolled to the very bottom so set last section as active
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
+      var activeSection = document.querySelector('.livingcss__nav .livingcss__nav-link:last-child');
+      setActiveLink(activeSection);
+    }
+    // look for which section is being viewed
+    else {
+      for (var i = 0; i < sections.length; i++) {
+        if (y >= sectionPositions[i] &&
+            (sectionPositions[i+1] ? y < sectionPositions[i+1] : true)) {
+          var id = sections[i].getAttribute('id');
+          var activeSection = document.querySelector('.livingcss__nav .livingcss__nav-link[href="#'+id+'"]');
+          setActiveLink(activeSection);
+        }
+      }
+    }
+  });
+
+  // open mobile drawer
+  var menu = document.querySelector('.livingcss__menu');
+  if (menu) {
+    menu.addEventListener('click', function(e) {
+      document.body.classList.toggle('livingcss__main-nav--open')
+    });
+  }
+})(window, document);
+</script>
