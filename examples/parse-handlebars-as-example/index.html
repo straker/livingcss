@@ -562,9 +562,12 @@
     });
   
     // open mobile drawer
-    document.querySelector('.livingcss__menu').addEventListener('click', function(e) {
-      document.body.classList.toggle('livingcss__main-nav--open')
-    });
+    var menu = document.querySelector('.livingcss__menu');
+    if (menu) {
+      menu.addEventListener('click', function(e) {
+        document.body.classList.toggle('livingcss__main-nav--open')
+      });
+    }
   })(window, document);
   </script>
 </body>

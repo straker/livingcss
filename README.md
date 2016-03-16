@@ -259,7 +259,9 @@ livingcss('input.css', 'styleguide.html', {
 ```
 
 * `allSections` - List of all sections.
+* `footerHTML` - HTML content of the footer. Defualts to `Style Guide generated with LivingCSS`.
 * `globalStylesheets` - List of all CSS files to load in the `<head>` of the style guide.
+* `menuButtonHTML` - HTML content of the menu button. Defaults to `☰ Menu`.
 * `navbar` - List of page links for linking pages together in the `<header>` navigation bar. Only set if there is more than one page defined.
 * `pageOrder` - List of page names in order that they should be sorted.
 * `pages` - List of all pages and their sections. List will be sorted by `options.sortOrder`.
@@ -272,7 +274,7 @@ livingcss('input.css', 'styleguide.html', {
 
 LivingCSS has a few helpful utility functions that you can use in custom tags or in the `options.preprocess` function.
 
-* `livingcss.getId(name)` - Get a hyphenated id from the name. Useful for generating ids for the DOM or URL names.
+* `livingcss.getId(name)` - Get a hyphenated id from the name. Useful for generating ids for the DOM or a URL.
 
     ```js
     livingcss.getId('Section Name');  //=> 'section-name'
@@ -303,3 +305,19 @@ LivingCSS has a few helpful utility functions that you can use in custom tags or
     ```
 
 * `livingcss.readFiles(files, callback)` - Pass a file or array of files to be read and a callback function that will be called for each file read. The function will be passed the file contents and the name of the file as parameters. Returns a Promise that is resolved when all files have been read.
+  
+    ```js
+    var path = require('path');
+
+    livingcss('input.css', 'styleguide.html', {
+      preprocess: function(context, Handlebars) {
+        // register a glob of partials with Handlebars
+        return livingcss.readFiles(['partials/one.hb', 'partials/two.hb'], function(data, file) {
+          
+          // make the name of the partial the name of the file
+          var partialName = path.basename(file, path.extname(file));
+          Handlebars.registerPartial(partialName, data);
+        });
+      }
+    });
+    ```

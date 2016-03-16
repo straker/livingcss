@@ -5,10 +5,11 @@
  *
  * @section
  *
- * @example
- * <button class="btn">Button</button>
- * <input type="submit" class="btn" value="Input"/>
- * <a href="#" class="btn">Anchor</a>
+ * @button Button
+ * @input Input
+ * @anchor Anchor
+ *
+ * @handlebarsExample handlebars.hbs
  */
 .btn {
   background-color: #ddd;

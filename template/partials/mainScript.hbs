@@ -47,7 +47,7 @@
     var y = window.scrollY;
 
     // fix the sidebar nav
-    if (nav.getBoundingClientRect().top <= 0) {
+    if (nav.getBoundingClientRect().top <= 0 && y > 50) {
       nav.classList.add('livingcss__nav--fixed');
     }
     else {
@@ -73,8 +73,11 @@
   });
 
   // open mobile drawer
-  document.querySelector('.livingcss__menu').addEventListener('click', function(e) {
-    document.body.classList.toggle('livingcss__main-nav--open')
-  });
+  var menu = document.querySelector('.livingcss__menu');
+  if (menu) {
+    menu.addEventListener('click', function(e) {
+      document.body.classList.toggle('livingcss__main-nav--open')
+    });
+  }
 })(window, document);
 </script>

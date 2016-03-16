@@ -60,19 +60,19 @@
 
     <header class="livingcss__header">
       <div class="livingcss__header-title-container livingcss__inverse-text">
-        <h1 class="livingcss__container livingcss__header-title">{{title}}</h1>
+        <h1 class="livingcss__container livingcss__header-title"><a href="{{navbar.0.url}}">{{title}}</a></h1>
       </div>
 
       {{#if navbar}}
       <div class="livingcss__main-nav-container">
         <nav class="livingcss__container livingcss__main-nav">
         {{#each navbar}}
-          <a class="livingcss__nav-link livingcss__nav-link--main {{#if selected}}livingcss__nav-link--active{{/if}}" href="{{url}}.html">{{name}}</a>
+          <a class="livingcss__nav-link livingcss__nav-link--main {{#if selected}}livingcss__nav-link--active{{/if}}" href="{{url}}">{{name}}</a>
         {{/each}}
         </nav>
       </div>
 
-      <button class="livingcss__menu livingcss__inverse-text">☰ Menu</button>
+      <button class="livingcss__menu livingcss__inverse-text">{{{menuButtonHTML}}}</button>
       {{/if}}
     </header>
 
@@ -104,7 +104,7 @@
     </div>
 
     <footer class="livingcss__footer livingcss__inverse-text">
-      <div class="livingcss__container">Style Guide generated with <a href="https://github.com/straker/livingcss">LivingCSS</a>.</div>
+      <div class="livingcss__container">{{{footerHTML}}}</div>
     </footer>
 
   </div>

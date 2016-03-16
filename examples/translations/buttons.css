@@ -1,11 +1,11 @@
 /**
- * Buttons
+ * Botones
  *
- * The Button `.btn` class can be applied to `<button>`, `<input>`, or `<a>` elements.
+ * El botón `.btn` clase puede ser aplicado a `<button>`, `<input>`, o `<a>` elementos.
  *
- * @section
+ * @sección
  *
- * @example
+ * @ejemplo
  * <button class="btn">Button</button>
  * <input type="submit" class="btn" value="Input"/>
  * <a href="#" class="btn">Anchor</a>
@@ -35,13 +35,13 @@
 }
 
 /**
- * Primary Button
+ * Botón Principal
  *
- * A primary button
+ * Un botón principal.
  *
- * @section
+ * @sección
  *
- * @example
+ * @ejemplo
  * <button class="btn primary">Button</button>
  * <input type="submit" class="btn primary" value="Input"/>
  * <a href="#" class="btn primary">Anchor</a>

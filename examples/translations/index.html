@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="livingcss">
 <head>
-  <title>LivingCSS Style Guide</title>
+  <title>LivingCSS Guía de Estilo</title>
 
   <!-- critical path css -->
   <style>
@@ -11,8 +11,8 @@
   
     MODULAR FONT SCALE
     ------------------
-    14px - small, H6
-    16px - body
+    14px - small
+    16px - body, H6
     18px - H5
     22px - H4
     26px - H3
@@ -68,6 +68,14 @@
   h3 {
     font-size: 1.625rem;   /* 26 / 16 */
     line-height: 3.25rem;  /* 1.625 * 2 */
+  }
+  
+  h4 {
+    font-size: 1.375rem;   /* 22 / 16 */
+  }
+  
+  h5 {
+    font-size: 1.125rem;   /* 18 / 16 */
   }
   
   h4, h5, h6 {
@@ -186,7 +194,7 @@
   }
   
   .livingcss__article + .livingcss__article {
-    margin-top: 3.25rem;
+    margin-top: 4.875rem;
   }
   
   .livingcss__section {
@@ -415,34 +423,34 @@
 
     <header class="livingcss__header">
       <div class="livingcss__header-title-container livingcss__inverse-text">
-        <h1 class="livingcss__container livingcss__header-title">LivingCSS Style Guide</h1>
+        <h1 class="livingcss__container livingcss__header-title"><a href="test.html">LivingCSS Guía de Estilo</a></h1>
       </div>
 
       <div class="livingcss__main-nav-container">
         <nav class="livingcss__container livingcss__main-nav">
-          <a class="livingcss__nav-link livingcss__nav-link--main livingcss__nav-link--active" href="test-this.html">test this</a>
-          <a class="livingcss__nav-link livingcss__nav-link--main " href="index.html">index</a>
+          <a class="livingcss__nav-link livingcss__nav-link--main " href="test.html">test</a>
+          <a class="livingcss__nav-link livingcss__nav-link--main livingcss__nav-link--active" href="index.html">index</a>
         </nav>
       </div>
 
-      <button class="livingcss__menu livingcss__inverse-text">☰ Menu</button>
+      <button class="livingcss__menu livingcss__inverse-text">☰ Menú</button>
     </header>
 
     <div class="livingcss__container livingcss__content">
 
       <main class="livingcss__main" role="main">
 
-        <article class="livingcss__article" id="primary-button">
-          <h1 class="livingcss__article-title">Primary Button</h1><div class="livingcss__section-description"><p>A primary button</p></div>
+        <article class="livingcss__article" id="botones">
+          <h1 class="livingcss__article-title">Botones</h1><div class="livingcss__section-description"><p>El botón <code>.btn</code> clase puede ser aplicado a <code>&lt;button&gt;</code>, <code>&lt;input&gt;</code>, o <code>&lt;a&gt;</code> elementos.</p></div>
 
-<livingcss-example><button class="btn primary">Button</button>
-<input type="submit" class="btn primary" value="Input"/>
-<a href="#" class="btn primary">Anchor</a></livingcss-example>
+<livingcss-example><button class="btn">Button</button>
+<input type="submit" class="btn" value="Input"/>
+<a href="#" class="btn">Anchor</a></livingcss-example>
 
 <div class="livingcss__section-markup">
-  <pre class="livingcss__section-code"><code class="language-markup">&lt;button class&#x3D;&quot;btn primary&quot;&gt;Button&lt;/button&gt;
-&lt;input type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn primary&quot; value&#x3D;&quot;Input&quot;/&gt;
-&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn primary&quot;&gt;Anchor&lt;/a&gt;</code></pre>
+  <pre class="livingcss__section-code"><code class="language-markup">&lt;button class&#x3D;&quot;btn&quot;&gt;Button&lt;/button&gt;
+&lt;input type&#x3D;&quot;submit&quot; class&#x3D;&quot;btn&quot; value&#x3D;&quot;Input&quot;/&gt;
+&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;btn&quot;&gt;Anchor&lt;/a&gt;</code></pre>
 </div>
 
         </article>
@@ -451,14 +459,14 @@
 
       <nav class="livingcss__nav">
         <div class="livingcss__nav-container">
-          <a class="livingcss__nav-link" href="#primary-button">Primary Button</a>
+          <a class="livingcss__nav-link" href="#botones">Botones</a>
         </div>
       </nav>
 
     </div>
 
     <footer class="livingcss__footer livingcss__inverse-text">
-      <div class="livingcss__container">Style Guide generated with <a href="https://github.com/straker/livingcss">LivingCSS</a>.</div>
+      <div class="livingcss__container">Guía de Estilo generado con <a href="https://github.com/straker/livingcss">LivingCSS</a>.</div>
     </footer>
 
   </div>
@@ -470,7 +478,6 @@
   <!-- /prism -->
 
   <!-- user scripts -->
-  <script src="test.js"></script>
   <!-- /user scripts -->
 
   <script>
@@ -522,7 +529,7 @@
       var y = window.scrollY;
   
       // fix the sidebar nav
-      if (nav.getBoundingClientRect().top <= 0) {
+      if (nav.getBoundingClientRect().top <= 0 && y > 50) {
         nav.classList.add('livingcss__nav--fixed');
       }
       else {
@@ -548,9 +555,12 @@
     });
   
     // open mobile drawer
-    document.querySelector('.livingcss__menu').addEventListener('click', function(e) {
-      document.body.classList.toggle('livingcss__main-nav--open')
-    });
+    var menu = document.querySelector('.livingcss__menu');
+    if (menu) {
+      menu.addEventListener('click', function(e) {
+        document.body.classList.toggle('livingcss__main-nav--open')
+      });
+    }
   })(window, document);
   </script>
 </body>
