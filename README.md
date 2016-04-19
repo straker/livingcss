@@ -50,7 +50,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
 * `@tag {type} name - description` - Any tag that follows this format will be parsed. The type, name, and description are all optional. If only the `tag` is defined, the description will be set to `true`.
 
 * `@section` - Add a new section to the style guide. The `@section` tag can define the name of the section or the first line of the comment description will be used as the section name.
-    
+
     ```css
     /**
      * My Section
@@ -109,7 +109,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
-* `@example` - Provide an example that will be displayed in the style guide. Can provide a type to change the language for code highlighting, and you can also provide a file path to be used as the example. See Prisms [supported languages](http://prismjs.com/#languages-list) for valid types. 
+* `@example` - Provide an example that will be displayed in the style guide. Can provide a type to change the language for code highlighting, and you can also provide a file path to be used as the example. See Prisms [supported languages](http://prismjs.com/#languages-list) for valid types.
 
     ```css
     /**
@@ -175,7 +175,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
 * `loadcss` - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work). Defaults to `true`.
 * `minify` - If the generated HTML should be minified. Defaults to `false`.
-* `preprocess` - Function that will be called for every page right before Handlebars is called with the context object. The function will be passed the context object and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
+* `preprocess` - Function that will be called for every page right before Handlebars is called with the context object. The function will be passed the context object, the template, and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
 * `sortOrder` - List of pages and their sections in the order they should be sorted. Any page or section not listed will be added to the end in the order encountered. Can be an array of page names to just sort pages, an array of objects with page names as keys and an array of section names as values to sort both pages and sections, or a mix of both. Names are case insensitive.
 * `tags` - Object of custom tag names to callback functions that are called when the tag is encountered. The tag, the parsed comment, the block object, the list of sections, the list of pages, and the file are passed as the `this` object to the callback function.
 * `template` - Path to the Handlebars template to use for generating the HTML. Defaults to the LivingCSS template `template/template.hbs'.`
@@ -184,7 +184,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
 livingcss(['input.css', 'css/*.css'], 'styleguide.html', {
   loadcss: true,
   minify: true,
-  preprocess: function(context, Handlebars) {
+  preprocess: function(context, template, Handlebars) {
     context.title = 'My Awesome Style Guide';
 
     // register a Handlebars partial
@@ -193,7 +193,7 @@ livingcss(['input.css', 'css/*.css'], 'styleguide.html', {
   sortOrder: [
     // sort the pages components and modules in that order, and sort sections
     // within those pages.
-    { 
+    {
       components: ['modals', 'dropdowns']
     },
     {
@@ -201,7 +201,7 @@ livingcss(['input.css', 'css/*.css'], 'styleguide.html', {
     },
 
     // sort the pages atoms and molecules after components and modules, but
-    // not in any particular order between themselves. Also sort sections 
+    // not in any particular order between themselves. Also sort sections
     // within those pages.
     {
       atoms: ['buttons', 'forms', 'images'],
@@ -271,11 +271,11 @@ livingcss('input.css', 'styleguide.html', {
 
 ## Context Object
 
-Use the `options.preprocess` option to modify or use the context object before it is passed to Handlebars. The function will be passed the context object and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
+Use the `options.preprocess` option to modify or use the context object before it is passed to Handlebars. The function will be passed the context object, the template, and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object or register Handlebars partials, helpers, or decorators.
 
 ```js
 livingcss('input.css', 'styleguide.html', {
-  preprocess: function(context, Handlebars) {
+  preprocess: function(context, template, Handlebars) {
     context.title = 'My Awesome Style Guide';
 
     // register a Handlebars partial
@@ -318,10 +318,10 @@ LivingCSS has a few helpful utility functions that you can use in custom tags or
     var path = require('path');
 
     livingcss('input.css', 'styleguide.html', {
-      preprocess: function(context, Handlebars) {
+      preprocess: function(context, template, Handlebars) {
         // register a glob of partials with Handlebars
         return livingcss.readFileGlobs('partials/*.hb', function(data, file) {
-          
+
           // make the name of the partial the name of the file
           var partialName = path.basename(file, path.extname(file));
           Handlebars.registerPartial(partialName, data);
@@ -331,15 +331,15 @@ LivingCSS has a few helpful utility functions that you can use in custom tags or
     ```
 
 * `livingcss.readFiles(files, callback)` - Pass a file or array of files to be read and a callback function that will be called for each read file. The function will be passed the file contents and the name of the file as parameters. Returns a Promise that is resolved when all files have been read.
-  
+
     ```js
     var path = require('path');
 
     livingcss('input.css', 'styleguide.html', {
-      preprocess: function(context, Handlebars) {
+      preprocess: function(context, template, Handlebars) {
         // register a glob of partials with Handlebars
         return livingcss.readFiles(['partials/one.hb', 'partials/two.hb'], function(data, file) {
-          
+
           // make the name of the partial the name of the file
           var partialName = path.basename(file, path.extname(file));
           Handlebars.registerPartial(partialName, data);

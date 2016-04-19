@@ -16,7 +16,7 @@ var utils = require('./lib/utils');
  * @param {object} [options={}] - Configuration options.
  * @param {boolean} [options.loadcss=true] - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work).
  * @param {boolean} [options.minify=false] - If the generated HTML should be minified.
- * @param {function} [options.preprocess] - Function that will be executed right before Handlebars is called with the context object. The function will be passed the context object, the Handlebars object, and the options passed to `livingcss` as parameters. Use this function to modify the context object or register Handlebars helpers or decorators.
+ * @param {function} [options.preprocess] - Function that will be executed right before Handlebars is called with the context object. The function will be passed the context object, the template, and the Handlebars object. Use this function to modify the context object or register Handlebars helpers or decorators.
  * @param {string[]|object[]} [options.sortOrder=[]] - List of pages and their sections in the order they should be sorted. Any page or section not listed will be added to the end in the order encountered. Can be an array of page names to just sort pages, an array of objects with page names as keys and an array of section names as values to sort both pages and sections, or a mix of both.
  * @param {object} [options.tags={}] - Object of custom tag names to callback functions that are called when the tag is encountered. The tag, the parsed comment, the block object, the list of sections, the list of pages, and the file are passed as the `this` object to the callback function.
  * @param {string} [options.template="template/template.hbs"] - Path to the Handlebars template to use for generating the HTML.
@@ -142,6 +142,8 @@ function livingcss(source, dest, options) {
       // deep copy context for each page
       var pageContext = JSON.parse(JSON.stringify(context));
       pageContext.sections = page.sections;
+      pageContext.sectionOrder = page.sectionOrder;
+      pageContext.id = page.id;
 
       // set current page selected
       if (context.navbar) {
