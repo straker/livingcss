@@ -347,3 +347,18 @@ LivingCSS has a few helpful utility functions that you can use in custom tags or
       }
     });
     ```
+
+## Gulp
+
+Use [gulp-livingcss](https://github.com/straker/gulp-livingcss)
+
+```js
+var gulp = require('gulp');
+var livingcss = require('gulp-livingcss');
+
+gulp.task('default', function () {
+  gulp.src('src/styles.css')
+    .pipe(livingcss())
+    .pipe(gulp.dest('dist'))
+});
+```
