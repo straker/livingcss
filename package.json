@@ -1,47 +1,7 @@
 {
-  "name": "livingcss",
-  "version": "3.0.0",
-  "description": "Generate a style guide using comment driven content creation",
-  "main": "index.js",
-  "scripts": {
-    "test": "istanbul cover _mocha -- -R spec"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/straker/livingcss.git"
-  },
-  "keywords": [
-    "style",
-    "guide",
-    "generator",
-    "css"
-  ],
-  "author": "Steven Lambert <steven@sklambert.com> (http://sklambert.com/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/straker/livingcss/issues"
-  },
-  "homepage": "https://github.com/straker/livingcss",
-  "dependencies": {
-    "comment-parser": "0.4.0",
-    "glob": "^6.0.4",
-    "handlebars": "^4.0.5",
-    "html-minifier": "^1.1.1",
-    "marked": "^0.3.5",
-    "mkdirp": "^0.5.1"
-  },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "coveralls": "^2.11.8",
-    "gulp": "^3.9.0",
-    "gulp-connect": "^2.3.1",
-    "gulp-jshint": "^2.0.0",
-    "gulp-mocha": "^2.2.0",
-    "istanbul": "^0.4.2",
-    "jshint": "^2.9.1",
-    "jshint-stylish": "^2.1.0",
-    "mocha": "^2.4.5",
-    "proxyquire": "^1.7.4",
-    "sinon": "^1.17.3"
+    "gulp": "^3.9.1",
+    "gulp-connect": "^4.0.0",
+    "livingcss": "^3.0.0"
   }
 }

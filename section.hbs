@@ -4,6 +4,14 @@
 <livingcss-example>{{{example.description}}}</livingcss-example>
 {{/if}}
 
+{{#if colors}}
+<livingcss-example>
+{{#each colors}}
+  <div class="colors" style="background: {{value}}">{{name}} - {{value}}</div>
+{{/each}}
+</livingcss-example>
+{{/if}}
+
 {{#if code}}
 <div class="livingcss__section-markup">
   <pre class="livingcss__section-code"><code class="language-{{code.type}}">{{code.description}}</code></pre>

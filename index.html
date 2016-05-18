@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html class="livingcss">
+<head>
+  <title>LivingCSS Style Guide</title>
+
+  <!-- critical path css -->
+  <style>
+  /*
+    BASELINE FONT - 16px
+    BASELINE GRID - 1.625rem
+  
+    MODULAR FONT SCALE
+    ------------------
+    14px - small
+    16px - body, H6
+    18px - H5
+    22px - H4
+    26px - H3
+    30px - H2
+    36px - H1
+  */
+  
+  /*
+   * GLOBAL
+   */
+  html {
+    font-size: 14px;
+  }
+  
+  html, body {
+    height: 100%;
+  }
+  
+  body {
+    background: #fdfdfd;
+    color: #212121;
+  
+    /* mobile first system ui font stack */
+    font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  
+    margin: 0 auto;
+    line-height: 1.625rem;  /* 26px */
+  }
+  
+  /*
+   * TYPOGRAPHY
+   */
+  h1, h2, h3, h4 {
+    font-family: "Skolar Bold", "Segoe UI Bold", "Roboto Slab", "Droid Serif",
+    AvenirNext-Bold, "Avenir Bold", Georgia,
+    "Times New Roman", Times, serif;
+    margin: 0;
+  }
+  
+  h1 {
+    font-size: 2.25rem;    /* 36 / 16 */
+    line-height: 3.25rem;  /* 1.625 * 2 */
+  }
+  
+  h2 {
+    font-size: 1.875rem;   /* 30 / 16 */
+    line-height: 3.25rem;  /* 1.625 * 2 */
+  }
+  
+  h3 {
+    font-size: 1.625rem;   /* 26 / 16 */
+    line-height: 3.25rem;  /* 1.625 * 2 */
+  }
+  
+  h4 {
+    font-size: 1.375rem;   /* 22 / 16 */
+  }
+  
+  h5 {
+    font-size: 1.125rem;   /* 18 / 16 */
+  }
+  
+  h4, h5, h6 {
+    line-height: 1.625rem;
+    margin: 0;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.625rem;
+    margin: 0 0 1.625rem 0;
+  }
+  
+  a,
+  a:visited {
+    color: #1976d2;
+    text-decoration: none;
+  }
+  
+  a:hover,
+  a:active,
+  a:hover {
+    color: #1976d2;
+    text-decoration: underline;
+  }
+  
+  /*
+   * GRID
+   */
+  .livingcss__wrapper {
+    min-height: 100%;
+    position: relative;
+    transition: right 0.2s;
+    right: 0;
+  }
+  
+  .livingcss__container {
+    padding-left: 0.8125rem;
+    padding-right: 0.8125rem;
+    margin: 0 auto;
+  }
+  
+  /*
+   * HEADER
+   */
+  .livingcss__header {
+    position: relative;
+  }
+  
+  .livingcss__header-title-container {
+    background: #2196F3;
+    padding: 0.8125rem 0;
+  }
+  
+  .livingcss__header-title {
+    font-size: 1.625rem;
+    line-height: 1.625rem;
+  }
+  
+  .livingcss__main-nav-container {
+    padding: 0.40625rem 0;
+  }
+  
+  
+  .livingcss__nav-link {
+    display: block;
+    padding: 0.40625rem 0.8125rem;
+  }
+  
+  a.livingcss__nav-link:hover,
+  a.livingcss__nav-link:active,
+  a.livingcss__nav-link:focus,
+  a.livingcss__nav-link--active {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #2196F3;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .livingcss__menu {
+    position: absolute;
+    right: 1.625rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    font-size: 1rem;
+    background: transparent;
+    cursor: pointer;
+    background: #1976D2;
+    padding: 0.40625rem 0.8125rem;
+  }
+  
+  /*
+   * CONTENT
+   */
+  .livingcss__content {
+    padding-bottom: 6.5rem;
+  }
+  
+  /*
+   * MAIN
+   */
+  .livingcss__main {
+    margin-top: 1.625rem;
+    order: 2;
+  }
+  
+  .livingcss__article-title {
+    border-bottom: 1px solid #727272;
+    margin-bottom: 1.625rem;
+  }
+  
+  .livingcss__article:first-child .livingcss__article-title {
+    margin-top: 0;
+  }
+  
+  .livingcss__article + .livingcss__article {
+    margin-top: 4.875rem;
+  }
+  
+  .livingcss__section {
+    margin-top: 1.625rem;
+  }
+  
+  livingcss-example {
+    border: 1px solid #B6B6B6;
+    padding: 1rem;
+    border-radius: .25rem .25rem 0 0;
+  }
+  
+  .livingcss__section-markup {
+    border: 1px solid #B6B6B6;
+    border-top: 0;
+    border-radius: 0 0 .25rem .25rem;
+  }
+  
+  .livingcss__section-code,
+  .livingcss__section-code[class*="language-"] {
+    margin: 0;
+    border-radius: 0 0 .25rem .25rem;
+    padding: 0.40625rem 0.8125rem;
+    line-height: 1.625rem;
+  }
+  
+  /*
+   * NAV
+   */
+  .livingcss__nav {
+    order: 1;
+  }
+  
+  .livingcss__nav-container {
+    margin-top: 1.625rem;
+  }
+  
+  /*
+   * FOOTER
+   */
+  .livingcss__footer {
+    background: #1976D2;
+    bottom: 0;
+    color: #727272;
+    left: 0;
+    padding: 1rem 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+  }
+  
+  .livingcss__footer a {
+    font-weight: bold;
+  }
+  
+  /*
+   * MOBILE BREAKPOINT
+   */
+  @media (max-width: 992px) {
+    .livingcss__main-nav {
+      position: fixed;
+      top: 0;
+      right: -14rem;
+      bottom: 0;
+      width: 13rem;
+      background: #fdfdfd;
+      border-left: 1px solid #B6B6B6;
+      transition: right 0.2s;
+      padding: 0;
+    }
+  
+    .livingcss__main-nav--open .livingcss__wrapper {
+      right: 13rem;
+    }
+  
+    .livingcss__main-nav--open .livingcss__main-nav {
+      right: 0;
+      box-shadow: -2px 0px 6px rgba(0,0,0,0.2);
+    }
+  
+    .livingcss__main-nav-container {
+      padding: 0;
+    }
+  
+    .livingcss__nav-link {
+      border-bottom: 1px solid #B6B6B6;
+    }
+  
+    .livingcss__nav {
+      display: none;
+    }
+  }
+  
+  /*
+   * DESKTOP BREAKPOINT
+   */
+  @media (min-width: 993px) {
+    html{
+      font-size: 16px;
+    }
+  
+    .livingcss__content {
+      display: flex;
+      flex-direction: row;
+    }
+  
+    .livingcss__container {
+      max-width: 964px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  
+    .livingcss__nav {
+      flex: 0 0 13rem;
+      padding-right: 0.8125rem;
+    }
+  
+    .livingcss__main-nav-container {
+      border-bottom: 1px solid #B6B6B6;
+    }
+  
+    .livingcss__main {
+      flex: 1;
+      max-width: 729px;
+      padding-left: 0.8125rem;
+    }
+  
+    .livingcss__nav-link--main {
+      display: inline-block;
+    }
+  
+    .livingcss__nav--fixed .livingcss__nav-container {
+      position: fixed;
+      top: 0;
+      width: 13rem;
+    }
+  
+    .livingcss__menu {
+      display: none;
+    }
+  
+    .livingcss__nav-link--main {
+      font-size: 0.875rem;
+      line-height: 1rem
+    }
+  }
+  
+  /**
+   * DESKTOP HD BREAKPOINT
+   */
+  @media (min-width: 1200px) {
+    .livingcss__container {
+      max-width: 1170px;
+    }
+  
+    .livingcss__main {
+      max-width: 935px;
+    }
+  }
+  
+  /*
+   * HELPERS
+   */
+  .livingcss__inverse-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: white;
+  }
+  
+  .livingcss__inverse-text a {
+    color: white;
+  }
+  
+  .livingcss__inverse-text a:hover,
+  .livingcss__inverse-text a:active,
+  .livingcss__inverse-text a:focus {
+    color: white;
+  }
+  </style>  <!-- /critical path css -->
+
+  <!-- user styles -->
+  <!-- /user styles -->
+
+  <script src="https://cdn.jsdelivr.net/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
+</head>
+<body class="livingcss" style="/*background: linear-gradient( to bottom, #000, #fdfdfd 1px);*/ background-size: 100% 26px;">
+  <!-- webcomponent -->
+  <template id="livingcssExampleTemplate">
+    <style>
+    @import "livingcss.css";
+
+    :host {
+      display: block;
+    }
+    </style>
+
+    <div class="livingcss__example"></div>
+  </template>
+
+  <script>
+  (function(document) {
+    var proto = Object.create(HTMLElement.prototype, {
+      createdCallback: {
+        value: function() {
+          // create a shadow DOM to encapsulate user styles
+          var shadow = this.createShadowRoot();
+          var template = document.querySelector('#livingcssExampleTemplate');
+          var clone = document.importNode(template.content, true);
+
+          // add all childNodes of the element to the shadow DOM
+          while (this.childNodes.length > 0) {
+            clone.querySelector('.livingcss__example').appendChild(this.childNodes[0]);
+          }
+
+          shadow.appendChild(clone);
+        }
+      }
+    });
+
+    document.registerElement('livingcss-example', {prototype: proto});
+  })(document);
+  </script>
+  <!-- /webcomponent -->
+
+  <div class="livingcss__wrapper">
+
+    <header class="livingcss__header">
+      <div class="livingcss__header-title-container livingcss__inverse-text">
+        <h1 class="livingcss__container livingcss__header-title"><a href="">LivingCSS Style Guide</a></h1>
+      </div>
+
+    </header>
+
+    <div class="livingcss__container livingcss__content">
+
+      <main class="livingcss__main" role="main">
+
+        <article class="livingcss__article" id="overview">
+          <h1 class="livingcss__article-title">Overview</h1><div class="livingcss__section-description"><p>LivingCSS Style Guide is a node.js tool that parses comments in your CSS to generate a
+living style guide using Markdown, <a href="http://handlebarsjs.com/">Handlebars</a>, and
+<a href="http://prismjs.com/">Prism</a> syntax highlighter. It is also available as a <a href="https://github.com/straker/gulp-livingcss">gulp plugin</a> for ease of use.</p>
+<p>This page has been generated with LivingCSS using default options. Below are some examples
+of what a style guide (in this case Bootstrap) would look like inside LivingCSS.</p>
+<p>Visit <a href="https://github.com/straker/livingcss">LivingCSS on github</a> for more information on how to use LivingCSS and its options.</p></div>
+
+
+
+        </article>
+        <article class="livingcss__article" id="typography">
+          <h1 class="livingcss__article-title">Typography</h1><div class="livingcss__section-description"></div>
+
+
+
+<section class="livingcss__section" id="typography-headings">
+  <h2>Headings</h2><div class="livingcss__section-description"><p>All HTML headings, <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>, are available. <code>.h1</code> through <code>.h6</code> classes are also available, for when you want to match the font styling of a heading but still want your text to be displayed inline.</p></div>
+
+<livingcss-example><h1>h1. heading</h1>
+<hr>
+<h2>h2. heading</h2>
+<hr>
+<h3>h3. heading</h3>
+<hr>
+<h4>h4. heading</h4>
+<hr>
+<h5>h5. heading</h5>
+<hr>
+<h6>h6. heading</h6></livingcss-example>
+
+<div class="livingcss__section-markup">
+  <pre class="livingcss__section-code"><code class="language-markup">&lt;h1&gt;h1. heading&lt;/h1&gt;
+&lt;h2&gt;h2. heading&lt;/h2&gt;
+&lt;h3&gt;h3. heading&lt;/h3&gt;
+&lt;h4&gt;h4. heading&lt;/h4&gt;
+&lt;h5&gt;h5. heading&lt;/h5&gt;
+&lt;h6&gt;h6. heading&lt;/h6&gt;</code></pre>
+</div>
+
+</section><section class="livingcss__section" id="typography-body-copy">
+  <h2>Body Copy</h2><div class="livingcss__section-description"></div>
+
+<livingcss-example><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum et ipsum tristique ultrices. Ut commodo tortor sit amet aliquam facilisis. Maecenas eleifend convallis feugiat. Ut feugiat metus nec dolor luctus, in tristique tortor tempus. Donec iaculis lectus quam, non vulputate mi aliquam quis. Mauris lobortis turpis vitae nisl gravida gravida. Sed rutrum lacus non mauris luctus, vel condimentum nunc eleifend. Aenean nec rutrum lectus, non maximus neque. Mauris vestibulum ligula id metus accumsan maximus. Donec viverra ligula at rhoncus lobortis. Aenean vel purus mauris.</p></livingcss-example>
+
+<div class="livingcss__section-markup">
+  <pre class="livingcss__section-code"><code class="language-markup">&lt;p&gt;...&lt;/p&gt;</code></pre>
+</div>
+
+</section>        </article>
+        <article class="livingcss__article" id="buttons">
+          <h1 class="livingcss__article-title">Buttons</h1><div class="livingcss__section-description"></div>
+
+
+
+<section class="livingcss__section" id="buttons-button-tags">
+  <h2>Button tags</h2><div class="livingcss__section-description"><p>Use the button classes on an <code>&lt;a&gt;</code>, <code>&lt;button&gt;</code>, or <code>&lt;input&gt;</code> element.</p></div>
+
+<livingcss-example><a class="btn btn-default" href="#" role="button">Link</a>
+<button class="btn btn-default" type="submit">Button</button>
+<input class="btn btn-default" type="button" value="Input">
+<input class="btn btn-default" type="submit" value="Submit"></livingcss-example>
+
+<div class="livingcss__section-markup">
+  <pre class="livingcss__section-code"><code class="language-markup">&lt;a class&#x3D;&quot;btn btn-default&quot; href&#x3D;&quot;#&quot; role&#x3D;&quot;button&quot;&gt;Link&lt;/a&gt;
+&lt;button class&#x3D;&quot;btn btn-default&quot; type&#x3D;&quot;submit&quot;&gt;Button&lt;/button&gt;
+&lt;input class&#x3D;&quot;btn btn-default&quot; type&#x3D;&quot;button&quot; value&#x3D;&quot;Input&quot;&gt;
+&lt;input class&#x3D;&quot;btn btn-default&quot; type&#x3D;&quot;submit&quot; value&#x3D;&quot;Submit&quot;&gt;</code></pre>
+</div>
+
+</section>        </article>
+        <article class="livingcss__article" id="alerts">
+          <h1 class="livingcss__article-title">Alerts</h1><div class="livingcss__section-description"><p>Provide contextual feedback messages.</p></div>
+
+
+
+<section class="livingcss__section" id="alerts-examples">
+  <h2>Examples</h2><div class="livingcss__section-description"><p>Wrap any in <code>.alert</code> and on of the four contextual classes for basic alert messages.</p></div>
+
+<livingcss-example><div class="alert alert-success" role="alert"> <strong>Well done!</strong> You successfully read this important alert message. </div>
+<div class="alert alert-info" role="alert"> <strong>Heads up!</strong> This alert needs your attention, but it's not super important. </div>
+<div class="alert alert-warning" role="alert"> <strong>Warning!</strong> Better check yourself, you're not looking too good. </div>
+<div class="alert alert-danger" role="alert"> <strong>Oh snap!</strong> Change a few things up and try submitting again. </div></livingcss-example>
+
+<div class="livingcss__section-markup">
+  <pre class="livingcss__section-code"><code class="language-markup">&lt;div class&#x3D;&quot;alert alert-success&quot; role&#x3D;&quot;alert&quot;&gt;...&lt;/div&gt;
+&lt;div class&#x3D;&quot;alert alert-info&quot; role&#x3D;&quot;alert&quot;&gt;...&lt;/div&gt;
+&lt;div class&#x3D;&quot;alert alert-warning&quot; role&#x3D;&quot;alert&quot;&gt;...&lt;/div&gt;
+&lt;div class&#x3D;&quot;alert alert-danger&quot; role&#x3D;&quot;alert&quot;&gt;...&lt;/div&gt;</code></pre>
+</div>
+
+</section>        </article>
+
+      </main>
+
+      <nav class="livingcss__nav">
+        <div class="livingcss__nav-container">
+          <a class="livingcss__nav-link" href="#overview">Overview</a>
+          <a class="livingcss__nav-link" href="#typography">Typography</a>
+          <a class="livingcss__nav-link" href="#buttons">Buttons</a>
+          <a class="livingcss__nav-link" href="#alerts">Alerts</a>
+        </div>
+      </nav>
+
+    </div>
+
+    <footer class="livingcss__footer livingcss__inverse-text">
+      <div class="livingcss__container">Style Guide generated with <a href="https://github.com/straker/livingcss">LivingCSS</a>.</div>
+    </footer>
+
+  </div>
+
+  <!-- prism -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/prism/1.4.1/themes/prism.css">
+  <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
+  <script src="https://cdn.jsdelivr.net/prism/1.4.1/components/prism-markup.min.js"></script>
+  <!-- /prism -->
+
+  <!-- user scripts -->
+  <!-- /user scripts -->
+
+  <script>
+  (function(window, document) {
+    /**
+     * Set the active nav link
+     * @param {Element} link - Link to make active.
+     */
+    function setActiveLink(link) {
+      if (link) {
+        // remove previously active link
+        var activeLink = document.querySelector('.livingcss__nav .livingcss__nav-link--active');
+  
+        if (activeLink) {
+          activeLink.classList.remove('livingcss__nav-link--active');
+        }
+  
+        link.classList.add('livingcss__nav-link--active');
+      }
+    }
+  
+    // set active link when
+    var nav = document.querySelector('.livingcss__nav');
+    var sections = document.querySelectorAll('article.livingcss__article');
+    var sectionPositions = [];
+  
+    // set the current link based on the hash
+    var currentLink = document.querySelector('.livingcss__nav-link[href="' + window.location.hash + '"]');
+    setActiveLink(currentLink);
+  
+    // save section positions for scrolling
+    for (var i = 0; i < sections.length; i++) {
+      var section = sections[i];
+      var pos = section.getBoundingClientRect().top + window.scrollY -
+        parseInt(getComputedStyle(section).marginTop, 10);
+  
+      sectionPositions.push(pos);
+    }
+  
+    // click link
+    nav.addEventListener('click', function(e) {
+      if (e.target.nodeName === 'A') {
+        setActiveLink(e.target);
+      }
+    });
+  
+    // move active link and affix sidebar
+    window.addEventListener('scroll', function() {
+      var y = window.scrollY;
+  
+      // fix the sidebar nav
+      if (nav.getBoundingClientRect().top <= 0 && y > 50) {
+        nav.classList.add('livingcss__nav--fixed');
+      }
+      else {
+        nav.classList.remove('livingcss__nav--fixed');
+      }
+  
+      // window is scrolled to the very bottom so set last section as active
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
+        var activeSection = document.querySelector('.livingcss__nav .livingcss__nav-link:last-child');
+        setActiveLink(activeSection);
+      }
+      // look for which section is being viewed
+      else {
+        for (var i = 0; i < sections.length; i++) {
+          if (y >= sectionPositions[i] &&
+              (sectionPositions[i+1] ? y < sectionPositions[i+1] : true)) {
+            var id = sections[i].getAttribute('id');
+            var activeSection = document.querySelector('.livingcss__nav .livingcss__nav-link[href="#'+id+'"]');
+            setActiveLink(activeSection);
+          }
+        }
+      }
+    });
+  
+    // open mobile drawer
+    var menu = document.querySelector('.livingcss__menu');
+    if (menu) {
+      menu.addEventListener('click', function(e) {
+        document.body.classList.toggle('livingcss__main-nav--open')
+      });
+    }
+  })(window, document);
+  </script>
+</body>
+</html>

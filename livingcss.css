@@ -1,0 +1,257 @@
+/**
+ * LivingCSS Style Guide is a node.js tool that parses comments in your CSS to generate a
+ * living style guide using Markdown, [Handlebars](http://handlebarsjs.com/), and
+ * [Prism](http://prismjs.com/) syntax highlighter. It is also available as a [gulp plugin](https://github.com/straker/gulp-livingcss) for ease of use.
+ *
+ * This page has been generated with LivingCSS using default options. Below are some examples
+ * of what a style guide (in this case Bootstrap) would look like inside LivingCSS.
+ *
+ * Visit [LivingCSS on github](https://github.com/straker/livingcss) for more information on how to use LivingCSS and its options.
+ *
+ * @section Overview
+ */
+
+
+/**
+ * @section Typography
+ */
+body {
+  font-family: 'Helvetica Neue', Helvetica, sans-seif;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid rgba(128,128,128,0.5);
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+/**
+ * Headings
+ *
+ * All HTML headings, `<h1>` through `<h6>`, are available. `.h1` through `.h6` classes are also available, for when you want to match the font styling of a heading but still want your text to be displayed inline.
+ *
+ * @section
+ * @sectionof Typography
+ * @example
+ * <h1>h1. heading</h1>
+ * <hr>
+ * <h2>h2. heading</h2>
+ * <hr>
+ * <h3>h3. heading</h3>
+ * <hr>
+ * <h4>h4. heading</h4>
+ * <hr>
+ * <h5>h5. heading</h5>
+ * <hr>
+ * <h6>h6. heading</h6>
+ *
+ * @code
+ * <h1>h1. heading</h1>
+ * <h2>h2. heading</h2>
+ * <h3>h3. heading</h3>
+ * <h4>h4. heading</h4>
+ * <h5>h5. heading</h5>
+ * <h6>h6. heading</h6>
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h1,
+.h1 {
+  font-size: 36px;
+}
+h2,
+.h2 {
+  font-size: 30px;
+}
+h3,
+.h3 {
+  font-size: 24px;
+}
+h4,
+.h4 {
+  font-size: 18px;
+}
+h5,
+.h5 {
+  font-size: 14px;
+}
+h6,
+.h6 {
+  font-size: 12px;
+}
+
+/**
+ * Body Copy
+ *
+ * @section
+ * @sectionof Typography
+ * @example
+ * <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed condimentum et ipsum tristique ultrices. Ut commodo tortor sit amet aliquam facilisis. Maecenas eleifend convallis feugiat. Ut feugiat metus nec dolor luctus, in tristique tortor tempus. Donec iaculis lectus quam, non vulputate mi aliquam quis. Mauris lobortis turpis vitae nisl gravida gravida. Sed rutrum lacus non mauris luctus, vel condimentum nunc eleifend. Aenean nec rutrum lectus, non maximus neque. Mauris vestibulum ligula id metus accumsan maximus. Donec viverra ligula at rhoncus lobortis. Aenean vel purus mauris.</p>
+ * @code
+ * <p>...</p>
+ */
+p {
+  margin: 0 0 10px;
+}
+
+/**
+ * @section Buttons
+ */
+
+/**
+ * Button tags
+ *
+ * Use the button classes on an `<a>`, `<button>`, or `<input>` element.
+ *
+ * @section
+ * @sectionof Buttons
+ * @example
+ * <a class="btn btn-default" href="#" role="button">Link</a>
+ * <button class="btn btn-default" type="submit">Button</button>
+ * <input class="btn btn-default" type="button" value="Input">
+ * <input class="btn btn-default" type="submit" value="Submit">
+ */
+.btn {
+  display: inline-block;
+  cursor: pointer;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.btn-default:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+
+.btn.focus, .btn:focus, .btn:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+/**
+ * Provide contextual feedback messages.
+ * @section Alerts
+ */
+
+/**
+ * Examples
+ *
+ * Wrap any in `.alert` and on of the four contextual classes for basic alert messages.
+ *
+ * @section
+ * @sectionof Alerts
+ * @example
+ * <div class="alert alert-success" role="alert"> <strong>Well done!</strong> You successfully read this important alert message. </div>
+ * <div class="alert alert-info" role="alert"> <strong>Heads up!</strong> This alert needs your attention, but it's not super important. </div>
+ * <div class="alert alert-warning" role="alert"> <strong>Warning!</strong> Better check yourself, you're not looking too good. </div>
+ * <div class="alert alert-danger" role="alert"> <strong>Oh snap!</strong> Change a few things up and try submitting again. </div>
+ *
+ * @code
+ * <div class="alert alert-success" role="alert">...</div>
+ * <div class="alert alert-info" role="alert">...</div>
+ * <div class="alert alert-warning" role="alert">...</div>
+ * <div class="alert alert-danger" role="alert">...</div>
+ */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert > p,
+.alert > ul {
+  margin-bottom: 0;
+}
+.alert > p + p {
+  margin-top: 5px;
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.alert-warning {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
