@@ -10,6 +10,27 @@ Parse comments in your CSS to generate a living style guide using Markdown, [Han
 
 `$ npm install --save livingcss`
 
+## Demos
+
+See the [github page](http://straker.github.io/livingcss) for an example of the default output of LivingCSS.
+
+See [FamilySearch.org Style Guide](https://familysearch.org/reference/styleguide) for an example of using LivingCSS with custom tags and a custom Handlebars template.
+
+## Gulp
+
+Use [gulp-livingcss](https://github.com/straker/gulp-livingcss)
+
+```js
+var gulp = require('gulp');
+var livingcss = require('gulp-livingcss');
+
+gulp.task('default', function () {
+  gulp.src('src/styles.css')
+    .pipe(livingcss())
+    .pipe(gulp.dest('dist'))
+});
+```
+
 ## Usage
 
 ```js
@@ -188,7 +209,7 @@ livingcss(['input.css', 'css/*.css'], 'styleguide.html', {
     context.title = 'My Awesome Style Guide';
 
     // register a Handlebars partial
-    Handlebars.registerParial('myPartial', '{{name}}');
+    Handlebars.registerPartial('myPartial', '{{name}}');
   },
   sortOrder: [
     // sort the pages components and modules in that order, and sort sections
@@ -279,7 +300,7 @@ livingcss('input.css', 'styleguide.html', {
     context.title = 'My Awesome Style Guide';
 
     // register a Handlebars partial
-    Handlebars.registerParial('myPartial', '{{name}}');
+    Handlebars.registerPartial('myPartial', '{{name}}');
   }
 });
 ```
@@ -347,18 +368,3 @@ LivingCSS has a few helpful utility functions that you can use in custom tags or
       }
     });
     ```
-
-## Gulp
-
-Use [gulp-livingcss](https://github.com/straker/gulp-livingcss)
-
-```js
-var gulp = require('gulp');
-var livingcss = require('gulp-livingcss');
-
-gulp.task('default', function () {
-  gulp.src('src/styles.css')
-    .pipe(livingcss())
-    .pipe(gulp.dest('dist'))
-});
-```
