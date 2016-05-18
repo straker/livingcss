@@ -138,7 +138,7 @@ describe('parseComments', function() {
       '.secondary -description',
       { description: 'description', type: 'type' },
       'description with some text and no name',
-      '.party some text which then needs a hyphen - to separate content'
+      { description: 'to separate content', name: '.party some text which then needs a hyphen'}
     ]};
 
     fs.readFile(file, 'utf8', function(err, data) {
