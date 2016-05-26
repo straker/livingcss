@@ -327,7 +327,7 @@ LivingCSS has a few helpful utility functions that you can use in custom tags or
     livingcss.utils.getId('Section Name');  //=> 'section-name'
     ```
 
-* `normalizeName(name)` - Normalize a name. Useful for comparisons ignoring case.
+* `livingcss.utils.normalizeName(name)` - Normalize a name. Useful for comparisons ignoring case.
 
     ```js
     livingcss.utils.normalizeName('Section Name');  //=> 'section name'
