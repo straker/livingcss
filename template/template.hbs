@@ -15,45 +15,13 @@
 
   <script src="https://cdn.jsdelivr.net/webcomponentsjs/0.7.21/webcomponents-lite.min.js"></script>
 </head>
-<body class="livingcss" style="/*background: linear-gradient( to bottom, #000, #fdfdfd 1px);*/ background-size: 100% 26px;">
+<body class="livingcss">
   <!-- webcomponent -->
-  <template id="livingcssExampleTemplate">
-    <style>
-    {{#each stylesheets}}
-    @import "{{this}}";
-    {{/each}}
-
-    :host {
-      display: block;
-    }
-    </style>
-
-    <div class="livingcss__example"></div>
-  </template>
-
-  <script>
-  (function(document) {
-    var proto = Object.create(HTMLElement.prototype, {
-      createdCallback: {
-        value: function() {
-          // create a shadow DOM to encapsulate user styles
-          var shadow = this.createShadowRoot();
-          var template = document.querySelector('#livingcssExampleTemplate');
-          var clone = document.importNode(template.content, true);
-
-          // add all childNodes of the element to the shadow DOM
-          while (this.childNodes.length > 0) {
-            clone.querySelector('.livingcss__example').appendChild(this.childNodes[0]);
-          }
-
-          shadow.appendChild(clone);
-        }
-      }
-    });
-
-    document.registerElement('livingcss-example', {prototype: proto});
-  })(document);
-  </script>
+  <!--
+    inlining polymer makes this section really long, but inlining it prevents FOUC and
+    makes all examples the correct size when created for determining scroll positions
+   -->
+  {{> polymer}}
   <!-- /webcomponent -->
 
   <div class="livingcss__wrapper">
