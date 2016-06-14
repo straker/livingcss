@@ -123,10 +123,10 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
     ```css
     /**
-     + Section belonging to a page.
+     * Section belonging to a page.
      *
-     + @section Section Name
-     + @page Page Name
+     * @section Section Name
+     * @page Page Name
      */
     ```
 
