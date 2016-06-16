@@ -57,6 +57,15 @@ describe('utils', function() {
       });
     });
 
+    it('should generate sort order of an array of pages names inside the array', function() {
+      var sortOrder = [['Page One', 'Page Two', 'Page Three']];
+      var context = {};
+
+      utils.generateSortOrder(context, sortOrder);
+
+      expect(context.pageOrder).to.deep.equal(['page one', 'page two', 'page three']);
+    });
+
     it('should generate sort order of both: array of objects of page names to array of section names', function() {
       var sortOrder = [
         {'Page One': ['Section One', 'Section Two']},
