@@ -20,6 +20,12 @@ body {
   line-height: 1.625rem;  /* 26px */
 }
 
+
+
+
+
+/* A parent section with an @page will cause all child sections to belong to that page */
+
 /**
  * Buttons
  *
@@ -96,20 +102,17 @@ body {
   padding: 4px 10px;
 }
 
-/**
- * Typography
- *
- * Defaults typography styles.
- *
- * @section
- * @page Typography
- */
+
+
+
+
+/* Can also just declare @page for every section you want part of the same page */
 
 /**
  * Headings
  *
  * @section
- * @sectionof Typography
+ * @page Typography
  *
  * @example
  * <h1>Heading H1</h1>
@@ -158,7 +161,7 @@ h4, h5, h6 {
  * Paragraphs
  *
  * @section
- * @sectionof Typography
+ * @page Typography
  *
  * @example
  * <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pharetra sed magna eget ullamcorper. Aliquam rutrum dui tempus nibh porta egestas.</p>
