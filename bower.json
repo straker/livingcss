@@ -1,0 +1,22 @@
+{
+  "name": "livingcss",
+  "description": "Generate a style guide using comment driven content creation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/straker/livingcss.git"
+  },
+  "keywords": [
+    "style",
+    "guide",
+    "generator",
+    "css"
+  ],
+  "authors": [
+    "Steven Lambert <steven@sklambert.com> (http://sklambert.com/)"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/straker/livingcss",
+  "dependencies": {
+    "polymer": "~1.5.0"
+  }
+}

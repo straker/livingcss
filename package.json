@@ -37,10 +37,14 @@
     "gulp-connect": "^2.3.1",
     "gulp-jshint": "^2.0.0",
     "gulp-mocha": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-vulcanize": "^6.1.0",
     "istanbul": "^0.4.2",
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.1.0",
     "mocha": "^2.4.5",
+    "node-sass": "^3.8.0",
     "proxyquire": "^1.7.4",
     "sinon": "^1.17.3"
   }

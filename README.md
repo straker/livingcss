@@ -314,7 +314,9 @@ livingcss('input.css', 'styleguide.html', {
 * `pages` - List of all pages and their sections. List will be sorted by `options.sortOrder`.
 * `scripts` - List of all JavaScript files to load at the end of the style guide.
 * `sections` - List all root sections (sections without a parent) for the page and their children. List will be sorted by `options.sortOrder`.
-* `stylesheets` - List of all CSS files to load in the examples of the style guide. If the `options.loadcss` option is set, this list will contain all CSS files used to generate the style guide.
+* `stylesheets` - List of all CSS files to load in the examples of the style guide. If the `options.loadcss` option is set, this list will contain all CSS files used to generate the style guide. 
+
+  **NOTE:** files will only be referenced by their file path and will not be copied over to the output directory. This ensures any relative file paths to images and other CSS files still work.
 * `title` - Title of the style guide. Defaults to 'LivingCSS Style Guide'.
 
 ## Utility functions

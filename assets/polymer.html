@@ -1,0 +1,53 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+ <dom-module id="styleguide-styles">
+  <template>
+    <style>
+    {{#each parsedStylesheets}}
+    {{this}}
+
+    {{/each}}
+    </style>
+  </template>
+</dom-module>
+
+<dom-module id="livingcss-example">
+  <style include="styleguide-styles"></style>
+  <style>
+  :host {
+    display: block;
+  }
+  </style>
+
+  <template>
+    <content></content>
+  </template>
+</dom-module>
+
+<script>
+(function() {
+  Polymer({
+    is: 'livingcss-example',
+    ready: function() {
+
+      // create an html and body element to fake the cascade
+      var html = document.createElement('html');
+      html.classList.add(this.is);
+      var body = document.createElement('body');
+      body.classList.add(this.is);
+
+      // add scoped class to all content injected child nodes
+      while(this.childNodes.length) {
+        if (this.childNodes[0].classList) {
+          this.childNodes[0].classList.add(this.is);
+        }
+
+        body.appendChild(this.childNodes[0]);
+      }
+
+      html.appendChild(body);
+      this.appendChild(html);
+    }
+  });
+})();
+</script>
