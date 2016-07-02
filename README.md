@@ -4,7 +4,7 @@
 
 # LivingCSS
 
-Parse comments in your CSS to generate a living style guide using Markdown, [Handlebars](http://handlebarsjs.com/), and [Prism](http://prismjs.com/) syntax highlighter.
+Parse comments in your CSS to generate a living style guide using Markdown, [Handlebars](http://handlebarsjs.com/), [Polymer](https://www.polymer-project.org/1.0/), and [Prism](http://prismjs.com/) syntax highlighter.
 
 ## Installation
 
