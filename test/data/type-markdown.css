@@ -1,0 +1,6 @@
+/**
+ * @testTag {markdown} *Will* be parsed as `markdown`.
+ * @multipleLines {markdown}
+ * ### Header
+ * paragraph
+ */

@@ -154,4 +154,21 @@ describe('parseComments', function() {
     });
   });
 
+  it('should parse a description as markdown if the type is {markdown}', function(done) {
+    var file = path.join(__dirname, 'data/type-markdown.css');
+
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) {
+        throw err;
+      }
+
+      parseComments(data, file, {}, {}, function(block) {
+         expect(block.testTag.description).to.equal('<p><em>Will</em> be parsed as <code>markdown</code>.</p>');
+         expect(block.multipleLines.description).to.equal('<h3 id="header">Header</h3>\n<p>paragraph</p>');
+      });
+
+      done();
+    });
+  });
+
 });

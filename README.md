@@ -70,6 +70,14 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
 * `@tag {type} name - description` - Any tag that follows this format will be parsed. The type, name, and description are all optional. If only the `tag` is defined, the description will be set to `true`.
 
+  * If the type is `{markdown}`, the description will be passed as markdown.
+
+      ```css
+      /**
+       * @tag {markdown} *Will* be parsed as `markdown`.
+       */
+      ```
+
 * `@section` - Add a new section to the style guide. The `@section` tag can define the name of the section or the first line of the comment description will be used as the section name.
 
     ```css
