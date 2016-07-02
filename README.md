@@ -70,7 +70,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
 * `@tag {type} name - description` - Any tag that follows this format will be parsed. The type, name, and description are all optional. If only the `tag` is defined, the description will be set to `true`.
 
-  * If the type is `{markdown}`, the description will be passed as markdown.
+  * If the type is `{markdown}`, the description will be parsed as markdown.
 
       ```css
       /**
