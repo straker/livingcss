@@ -29,4 +29,24 @@ describe('livingcss', function() {
     });
   });
 
+  it('should resolve when no pages have been processed', function(done) {
+    var file = path.join(__dirname, 'data/no-tags.css');
+    var options = {
+      preprocess: function(context) {
+        return false;
+      }
+    };
+
+    sinon.spy(options, 'preprocess');
+
+    livingcss(file, '.', options).then(function() {
+      expect(options.preprocess.called).to.be.false;
+
+      done();
+    })
+    .catch(function(e) {
+      done(e);
+    });
+  });
+
 });
