@@ -94,7 +94,7 @@ function livingcss(source, dest, options) {
     tags[tag] = options.tags[tag];
   }
 
-  Promise.all([
+  return Promise.all([
     // read the handlebars template
     new Promise(function(resolve, reject) {
       fs.readFile(options.template, 'utf8', function(err, data) {
@@ -129,7 +129,11 @@ function livingcss(source, dest, options) {
 
     context.allSections = context.sections;
 
-    if (context.pages.length > 1) {
+    if (context.pages.length === 0) {
+      console.warn('Warning: no pages generated from source files.');
+    }
+
+    else if (context.pages.length > 1) {
       context.navbar = context.pages.map(function(page) {
         return {
           name: page.name,
@@ -137,6 +141,8 @@ function livingcss(source, dest, options) {
         };
       });
     }
+
+    var promises = [];
 
     context.pages.forEach(function(page, index) {
       // deep copy context for each page
@@ -151,8 +157,14 @@ function livingcss(source, dest, options) {
       }
 
       // values[0] = handlebars template
-      generate(path.join(dest, page.id + '.html'), values[0], pageContext, options);
+      promises.push(
+        generate(path.join(dest, page.id + '.html'), values[0], pageContext, options)
+      );
     });
+
+    // wait until all promises have returned (either rejected or resolved) before
+    // returning the last promise
+    return Promise.all(promises);
   })
   .catch(function(err) {
     console.error(err.stack);
