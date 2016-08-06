@@ -5,6 +5,8 @@ var connect = require('gulp-connect');
 var vulcanize = require('gulp-vulcanize');
 var replace = require('gulp-replace');
 var rename = require('gulp-rename');
+var sass = require('gulp-sass');
+var insert = require('gulp-insert');
 
 var src = ['index.js', 'lib/**.js', 'test/**/*.*'];
 
@@ -45,9 +47,23 @@ gulp.task('connect', function() {
   });
 });
 
+gulp.task('sass', function() {
+  return gulp.src('assets/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    // add style tag
+    .pipe(insert.prepend('<style>\n'))
+    .pipe(insert.append('\n</style>'))
+    .pipe(rename(function(path) {
+      path.extname = '.hbs';
+      return path;
+    }))
+    .pipe(gulp.dest('template/partials'))
+});
+
 gulp.task('watch', function() {
   gulp.watch(src, ['lint']);
   gulp.watch('assets/polymer.html', ['vulcanize']);
+  gulp.watch('assets/*.scss', ['sass']);
 });
 
-gulp.task('default', ['lint', 'test', 'watch']);
+gulp.task('default', ['connect', 'sass', 'lint', 'test', 'watch']);
