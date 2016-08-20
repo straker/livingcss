@@ -7710,11 +7710,13 @@ this.fire('dom-change');
       body.classList.add(this.is);
 
       // add scoped class to all content injected child nodes
-      while(this.childNodes.length) {
-        if (this.childNodes[0].classList) {
-          this.childNodes[0].classList.add(this.is);
-        }
+      var nodes = this.querySelectorAll('*');
+      for (var i = 0; i < nodes.length; i++) {
+        nodes[i].classList.add(this.is);
+      }
 
+      // move content to body
+      while (this.childNodes.length) {
         body.appendChild(this.childNodes[0]);
       }
 
