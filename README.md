@@ -166,7 +166,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
-  **NOTE:** By default, the style guide only loads Prism markup (HTML) syntax highlighting. If you need another [syntax language](https://www.jsdelivr.com/projects/prism), you'll have to add it to the `options.globalStylesheets` array.
+  **NOTE:** By default, the style guide only loads Prism markup (HTML) syntax highlighting. If you need another [syntax language](https://www.jsdelivr.com/projects/prism), you'll have to add it to the `options.scripts` array.
 
 * `@code` - Same as `@example`, but can be used to override the code output to be different than the example output. Useful if you need to provide extra context for the example that does not need to be shown in the code.
 
