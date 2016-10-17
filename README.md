@@ -166,7 +166,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
-  **NOTE:** By default, the style guide only loads Prism markup (HTML) syntax highlighting. If you need another [syntax language](https://www.jsdelivr.com/projects/prism), you'll have to add it to the `options.globalStylesheets` array.
+  **NOTE:** By default, the style guide only loads Prism markup (HTML) syntax highlighting. If you need another [syntax language](https://www.jsdelivr.com/projects/prism), you'll have to add it to the `context.scripts` array.
 
 * `@code` - Same as `@example`, but can be used to override the code output to be different than the example output. Useful if you need to provide extra context for the example that does not need to be shown in the code.
 
@@ -322,7 +322,7 @@ livingcss('input.css', 'styleguide.html', {
 * `pages` - List of all pages and their sections. List will be sorted by `options.sortOrder`.
 * `scripts` - List of all JavaScript files to load at the end of the style guide.
 * `sections` - List all root sections (sections without a parent) for the page and their children. List will be sorted by `options.sortOrder`.
-* `stylesheets` - List of all CSS files to load in the examples of the style guide. If the `options.loadcss` option is set, this list will contain all CSS files used to generate the style guide. 
+* `stylesheets` - List of all CSS files to load in the examples of the style guide. If the `options.loadcss` option is set, this list will contain all CSS files used to generate the style guide.
 
   **NOTE:** files will only be referenced by their file path and will not be copied over to the output directory. This ensures any relative file paths to images and other CSS files still work.
 * `title` - Title of the style guide. Defaults to 'LivingCSS Style Guide'.
