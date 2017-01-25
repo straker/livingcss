@@ -1,6 +1,6 @@
 {
   "name": "livingcss",
-  "version": "4.1.3",
+  "version": "4.1.4",
   "description": "Generate a style guide using comment driven content creation",
   "main": "index.js",
   "scripts": {
