@@ -202,21 +202,27 @@ describe('tags', function() {
       });
     });
 
-    it('should throw an error if a section is referenced before being defined', function(done) {
-      var file = path.join(__dirname, 'data/sectionof-undefined-section.css');
+    it('should allow you to reference a section that will be defined later', function(done) {
+      var file = path.join(__dirname, 'data/sectionof-forward-reference.css');
+      var file2 = path.join(__dirname, 'data/sectionof-forward-reference-section.css');
       var sections = [];
       var pages = [];
 
       fs.readFile(file, 'utf8', function(err, data) {
-        if (err) {
-          throw err;
-        }
+        fs.readFile(file2, 'utf8', function(error, data2) {
+          if (err || error) {
+            throw err || error;
+          }
 
-        expect(function() {
           parseComments(data, file, tags, {sections: sections, pages: pages});
-        }).to.throw(ReferenceError);
+          parseComments(data2, file2, tags, {sections: sections, pages: pages});
 
-        done();
+          expect(sections['buttons'].children).to.exist;
+          expect(sections['buttons'].children.length).to.equal(1);
+          expect(sections['buttons'].children[0].name).to.equal('Awesome Button');
+
+          done();
+        });
       });
     });
 

@@ -124,6 +124,14 @@ function livingcss(source, dest, options) {
       Handlebars.registerPartial(partialName, data);
     })
   ]).then(function(values) {
+
+    // throw all sectionsofs that didn't have a section defined
+    for (var section in tags.forwardReferenceSections) {
+      if (!tags.forwardReferenceSections.hasOwnProperty(section)) continue;
+
+      throw tags.forwardReferenceSections[section][0].error;
+    }
+
     utils.generateSortOrder(context, options.sortOrder);
     utils.sortCategoryBy(context.pages, context.pageOrder);
 
@@ -168,6 +176,7 @@ function livingcss(source, dest, options) {
   })
   .catch(function(err) {
     console.error(err.stack);
+    throw err;
   });
 }
 
