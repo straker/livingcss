@@ -57,8 +57,6 @@ describe('livingcss', function() {
       }
     };
 
-    sinon.spy(options, 'preprocess');
-
     livingcss(file, '.', options).then(function() {
 
       // this should not be hit
