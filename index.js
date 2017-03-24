@@ -175,7 +175,13 @@ function livingcss(source, dest, options) {
     return Promise.all(promises);
   })
   .catch(function(err) {
-    console.error(err.stack);
+
+    // in a gulp pipeline we don't want to log the error as gulp-util will do that
+    // for us
+    if (!options._squelchLogging) {
+      console.error(err.stack);
+    }
+
     throw err;
   });
 }
