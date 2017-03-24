@@ -124,6 +124,14 @@ function livingcss(source, dest, options) {
       Handlebars.registerPartial(partialName, data);
     })
   ]).then(function(values) {
+
+    // throw error if an @sectionof referenced a section that was never defined
+    for (var section in tags.forwardReferenceSections) {
+      if (!tags.forwardReferenceSections.hasOwnProperty(section)) continue;
+
+      throw tags.forwardReferenceSections[section][0].error;
+    }
+
     utils.generateSortOrder(context, options.sortOrder);
     utils.sortCategoryBy(context.pages, context.pageOrder);
 
@@ -167,7 +175,14 @@ function livingcss(source, dest, options) {
     return Promise.all(promises);
   })
   .catch(function(err) {
-    console.error(err.stack);
+
+    // in a gulp pipeline we don't want to log the error as gulp-util will do that
+    // for us
+    if (!options._squelchLogging) {
+      console.error(err.stack);
+    }
+
+    throw err;
   });
 }
 

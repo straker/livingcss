@@ -49,4 +49,24 @@ describe('livingcss', function() {
     });
   });
 
+  it('should throw an error if a section is referenced but never defined', function(done) {
+    var file = path.join(__dirname, 'data/sectionof-undefined-section.css');
+    var options = {
+      preprocess: function(context) {
+        return false;
+      }
+    };
+
+    livingcss(file, '.', options).then(function() {
+
+      // this should not be hit
+      done(new Error('Undefined section did not throw an error'));
+    })
+    .catch(function(e) {
+      expect(e.message.indexOf('section \'Buttons\' is not defined')).to.not.equal(-1);
+
+      done();
+    });
+  });
+
 });
