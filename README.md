@@ -190,7 +190,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      * @section Code With At Symbol
      * @code
      * .example {
-     *   @extend %placeholder-selector;
+     *   &#64;extend %placeholder-selector;
      * }
      */
     ```
