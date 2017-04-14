@@ -433,6 +433,24 @@ describe('tags', function() {
       });
     });
 
+    it('should allow the use of the @ symbol', function(done) {
+      var file = path.join(__dirname, 'data/code-at-symbol.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.code.description).to.equal('.example {\n  @extend %placeholder-selector;\n}');
+        });
+
+        done();
+      });
+    });
+
   });
 
 
