@@ -1,0 +1,6 @@
+/**
+ * @code {scss}
+ * .example {
+ *   &#64;extend %placeholder-selector;
+ * }
+ */
