@@ -217,9 +217,9 @@ describe('tags', function() {
           parseComments(data, file, tags, {sections: sections, pages: pages});
           parseComments(data2, file2, tags, {sections: sections, pages: pages});
 
-          expect(sections['buttons'].children).to.exist;
-          expect(sections['buttons'].children.length).to.equal(1);
-          expect(sections['buttons'].children[0].name).to.equal('Awesome Button');
+          expect(sections.buttons.children).to.exist;
+          expect(sections.buttons.children.length).to.equal(1);
+          expect(sections.buttons.children[0].name).to.equal('Awesome Button');
 
           done();
         });

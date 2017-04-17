@@ -166,7 +166,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
-  **NOTE:** By default, the style guide only loads Prism markup (HTML) syntax highlighting. If you need another [syntax language](https://www.jsdelivr.com/projects/prism) (use files for `v1.4.1`), you'll have to add it to the `context.scripts` array.
+  **NOTE:** By default, the style guide only loads Prism markup (HTML) syntax highlighting. If you need another [syntax language](https://www.jsdelivr.com/projects/prism) (use files for `v1.6.0`), you'll have to add it to the `context.scripts` array.
 
 * `@code` - Same as `@example`, but can be used to override the code output to be different than the example output. Useful if you need to provide extra context for the example that does not need to be shown in the code. If you need to use the `@` symbol at the start of a newline (such as with `@extend` or `@include` in CSS preprocessors), use the HTML entity encoding `&#64;`, otherwise the parser will try to parse it as a tag.
 
