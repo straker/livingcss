@@ -337,6 +337,46 @@ livingcss('input.css', 'styleguide.html', {
   **NOTE:** files will only be referenced by their file path and will not be copied over to the output directory. This ensures any relative file paths to images and other CSS files still work.
 * `title` - Title of the style guide. Defaults to 'LivingCSS Style Guide'.
 
+## Using the context object in Handlebars
+
+Let's say your comment looks like this:
+
+```css
+/**
+ * A simple Button.
+ * @section Buttons
+ * @example <button>Click Me</button>
+ * @customTag Hello World
+ */
+```
+
+This would generate a context object like so:
+
+```json
+{
+  "sections": [{
+    "name": "Buttons",
+    "description": "<p>A simple Button.</p>",
+    "example": {
+      "description": "<button>Click me</button>",
+      "type": "markup"
+    },
+    "customTag": "Hello World"
+  }]
+}
+```
+
+Then in handlebars you would do this:
+
+```hbs
+{{#each sections}}
+  <h1>{{name}}</h1>
+  {{{description}}}
+  <div>{{{example.description}}}</div>
+  <div>{{customTag}}</div>
+{{/each}}
+```
+
 ## Utility functions
 
 LivingCSS has a few helpful utility functions that you can use in custom tags or in the `options.preprocess` function.
