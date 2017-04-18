@@ -127,7 +127,9 @@ function livingcss(source, dest, options) {
 
     // throw error if an @sectionof referenced a section that was never defined
     for (var section in tags.forwardReferenceSections) {
-      if (!tags.forwardReferenceSections.hasOwnProperty(section)) continue;
+      if (!tags.forwardReferenceSections.hasOwnProperty(section)) {
+        continue;
+      }
 
       throw tags.forwardReferenceSections[section][0].error;
     }
