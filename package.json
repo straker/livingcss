@@ -2,6 +2,6 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-connect": "^4.0.0",
-    "livingcss": "^3.0.0"
+    "livingcss": "straker/livingcss"
   }
 }
