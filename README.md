@@ -68,13 +68,31 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
 ## Defined tags
 
-* `@tag {type} name - description` - Any tag that follows this format will be parsed. The type, name, and description are all optional. If only the `tag` is defined, the description will be set to `true`.
+* `@tag {type} name - description` - Any tag that follows this format will be parsed. The type, name, and description are all optional. If only the `tag` is defined, the description will be set to `true`. Multiple tags with the same name will be added as an array in the context object.
 
   * If the type is `{markdown}`, the description will be parsed as markdown.
 
       ```css
       /**
        * @tag {markdown} *Will* be parsed as `markdown`.
+       */
+      ```
+      
+      ```css
+      /**
+       * Will produce:
+       *   
+       *     { 
+       *       color: [
+       *         {name: 'Red', description: '#f00'}, 
+       *         {name: 'Green', description: '#0f0'},
+       *         {name: 'Blue', description: '#00f'}
+       *       ]
+       *     }
+       *
+       * @color Red - #f00
+       * @color Green - #0f0
+       * @color Blue - #00f
        */
       ```
 
