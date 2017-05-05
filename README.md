@@ -80,7 +80,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
       
       ```css
       /**
-       * Will produce:
+       * Example of multiple tags with the same name. Will result in:
        *   
        *     { 
        *       color: [
