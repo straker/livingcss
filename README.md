@@ -210,7 +210,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
-* `@doc` - A file that defines the Section name, description, example, or code. Useful if your section description needs to output HTML. The first heading of the file will be used as the section description if one is not defined. 
+* `@doc` - A file that defines the section name, description, example, or code. Useful if your section description needs to output HTML. The first heading of the file will be used as the section description if one is not defined. 
 
     ```css
     /**
@@ -224,7 +224,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
     [//]: # "externalDoc.md"
     # Section Title
 
-    This markdown file can define the @section name using a heading and the section description. Anything that is not an `@example` or `@code` code block will be added to the description of the section.
+    This markdown file can define the `@section` name using a heading and the section description. Anything that is not an `@example` or `@code` code block will be added to the description of the section.
 
     ```
     This code block will be part of the description.
