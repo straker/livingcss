@@ -210,6 +210,38 @@ It also generates a JSON object of the parsed comments that can be used to gener
      */
     ```
 
+* `@doc` - A file that defines the Section name, description, example, or code. Useful if your section description needs to output HTML. The first heading of the file will be used as the section description if one is not defined. 
+
+    ```css
+    /**
+     * @doc externalDoc.md
+     * @section
+     */
+    ```
+
+    ````md
+
+    [//]: # "externalDoc.md"
+    # Section Title
+
+    This markdown file can define the @section name using a heading and the section description. Anything that is not an `@example` or `@code` code block will be added to the description of the section.
+
+    ```
+    This code block will be part of the description.
+    ```
+
+    ```
+    @example
+    <p>This code block will be treated as the <code>@example</code> tag</p>
+    ```
+
+        @code
+        <p>This code block will be treated as the <code>@code</code> tag.</p>
+        <p>You can use either the triple ticks or 4 spaces when defining the <code>@example</code> or <code>@code</code> blocks.</p>
+    ````
+
+  **NOTE:** Because `@doc` can provide a section name, the `@section` tag **must** come after the `@doc` tag, otherwise you will get an Unnamed Section error.
+
 ## Options
 
 * `loadcss` - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work). Defaults to `true`.

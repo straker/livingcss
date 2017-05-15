@@ -8,7 +8,7 @@ var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var insert = require('gulp-insert');
 
-var src = ['index.js', 'lib/**.js', 'test/**/*.*'];
+var src = ['index.js', 'lib/**.js', 'test/**/*.js'];
 
 gulp.task('lint', function() {
   return gulp.src(src)
