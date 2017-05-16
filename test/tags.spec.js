@@ -500,4 +500,125 @@ describe('tags', function() {
 
   });
 
+
+
+
+
+  // --------------------------------------------------
+  // @doc
+  // --------------------------------------------------
+  describe('@doc', function() {
+
+    it('should make the name of the section the first heading from the file', function(done) {
+      var file = path.join(__dirname, 'data/doc.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages});
+
+        expect(sections[0].name).to.equal('Doc Example');
+
+        done();
+      });
+    });
+
+    it('should not override the section name if one is already defined', function(done) {
+      var file = path.join(__dirname, 'data/doc-with-section-name.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages});
+
+        expect(sections[0].name).to.equal('Buttons');
+
+        done();
+      });
+    });
+
+    it('should add anything that isn\'t @example or @code to the description', function(done) {
+      var file = path.join(__dirname, 'data/doc.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages});
+
+        expect(sections[0].description).to.equal('<p>Description of the section.</p>\n<h2 id="secondary-heading">Secondary Heading</h2>\n<h1 id="l-heading">L Heading</h1>\n<ul>\n<li>list item 1</li>\n<li>list item 2</li>\n</ul>\n<pre><code>Code in the description\n</code></pre>');
+
+        done();
+      });
+    });
+
+    it('should allow @example', function(done) {
+      var file = path.join(__dirname, 'data/doc.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages});
+
+        expect(sections[0].example).to.exist;
+        expect(sections[0].example.description).to.equal('<div>foobar</div>');
+
+        done();
+      });
+    });
+
+    it('should allow @code', function(done) {
+      var file = path.join(__dirname, 'data/doc.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages});
+
+        expect(sections[0].code).to.exist;
+        expect(sections[0].code.description).to.equal('<div class="faz">foobar</div>');
+
+        done();
+      });
+    });
+
+    it('should throw and error if the file path does not exist', function(done) {
+      var file = path.join(__dirname, 'data/doc-with-nonexistent-file.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        expect(function() {
+          parseComments(data, file, tags, {sections: sections, pages: pages});
+        }).to.throw(ReferenceError);
+
+        done();
+      });
+    });
+
+  });
+
 });
