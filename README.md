@@ -230,7 +230,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
     This code block will be part of the description.
     ```
 
-    ```
+    ```html
     @example
     <p>This code block will be treated as the <code>@example</code> tag</p>
     ```
