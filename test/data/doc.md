@@ -6,6 +6,9 @@ Description of the section.
 
 ## Secondary Heading
 
+L Heading
+=========
+
 - list item 1
 - list item 2
 
