@@ -14,7 +14,7 @@ Parse comments in your CSS to generate a living style guide using Markdown, [Han
 
 See the [github page](http://straker.github.io/livingcss) for an example of the default output of LivingCSS.
 
-See [FamilySearch.org Style Guide](https://familysearch.org/reference/styleguide) for an example of using LivingCSS with custom tags and a custom Handlebars template.
+See [FamilySearch.org Style Guide](https://www.familysearch.org/frontier/styleguide/) for an example of using LivingCSS with custom tags and a custom Handlebars template.
 
 ## Gulp
 
@@ -264,7 +264,7 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
 * `loadcss` - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work). Defaults to `true`.
 * `minify` - If the generated HTML should be minified. Defaults to `false`.
-* `preprocess` - Function that will be called for every page right before Handlebars is called with the context object. The function will be passed the context object, the template, and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object , add additional styles to the examples,or register Handlebars partials, helpers, or decorators.
+* `preprocess` - Function that will be called for every page right before Handlebars is called with the context object. The function will be passed the context object, the template, and the Handlebars object as parameters. Return false if you don't want the style guide to be generated using Handlebars, or return a Promise if you need to make asynchronous calls (reject the Promise to not use Handlebars). Use this function to modify the context object, add additional styles to the examples, or register Handlebars partials, helpers, or decorators.
 * `sortOrder` - List of pages and their sections in the order they should be sorted. Any page or section not listed will be added to the end in the order encountered. Can be an array of page names to just sort pages, an array of objects with page names as keys and an array of section names as values to sort both pages and sections, or a mix of both. Names are case insensitive.
 * `tags` - Object of custom tag names to callback functions that are called when the tag is encountered. The tag, the parsed comment, the block object, the list of sections, the list of pages, and the file are passed as the `this` object to the callback function.
 * `template` - Path to the Handlebars template to use for generating the HTML. Defaults to the LivingCSS template `template/template.hbs'.`
