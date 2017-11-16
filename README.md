@@ -14,7 +14,7 @@ Parse comments in your CSS to generate a living style guide using Markdown, [Han
 
 See the [github page](http://straker.github.io/livingcss) for an example of the default output of LivingCSS.
 
-See [FamilySearch.org Style Guide](https://www.familysearch.org/frontier/styleguide/) for an example of using LivingCSS with custom tags and a custom Handlebars template.
+See [FamilySearch.org Style Guide](https://www.familysearch.org/frontier/styleguide/) for an example of using LivingCSS with custom tags and a custom Handlebars template. [This gist](https://gist.github.com/straker/6cd9923fe1282452f094755fe4be8200) shows the gulpfile and Handlebars template used by the FamilySearch Style Guide.
 
 ## Gulp
 
