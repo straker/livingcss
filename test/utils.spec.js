@@ -259,4 +259,19 @@ describe('utils', function() {
 
   });
 
+
+  // --------------------------------------------------
+  // fixSVGIssue
+  // --------------------------------------------------
+  describe('fixSVGIssue', function() {
+    it('should replace single quotes in url expressions with %27', function() {
+      var testString = 'url("\'")';
+      expect(utils.fixSVGIssue(testString)).to.equal('url("%27")');
+    });
+
+    it('should only replace single quotes in url expressions', function() {
+      var testString = 'url("\'")\nurl("\'")\n\'Arial\'';
+      expect(utils.fixSVGIssue(testString)).to.equal('url("%27")\nurl("%27")\n\'Arial\'');
+    })
+  });
 });
