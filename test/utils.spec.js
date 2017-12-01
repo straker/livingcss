@@ -264,14 +264,21 @@ describe('utils', function() {
   // fixSVGIssue
   // --------------------------------------------------
   describe('fixSVGIssue', function() {
-    it('should replace single quotes in url expressions with %27', function() {
-      var testString = 'url("\'")';
-      expect(utils.fixSVGIssue(testString)).to.equal('url("%27")');
+    it('should replace single quotes in svg url expressions with %27', function() {
+      var testString = 'url("data:image\/svg+xml;\'")';
+      expect(utils.fixSVGIssue(testString)).to.equal('url("data:image\/svg+xml;%27")');
     });
 
-    it('should only replace single quotes in url expressions', function() {
-      var testString = 'url("\'")\nurl("\'")\n\'Arial\'';
-      expect(utils.fixSVGIssue(testString)).to.equal('url("%27")\nurl("%27")\n\'Arial\'');
-    })
+    it('should only replace single quotes in svg url expressions', function() {
+      var testString = 'url("data:image\/svg+xml;\'")\nurl("data:image\/svg+xml;\'")\n\'Arial\'';
+      expect(utils.fixSVGIssue(testString)).to.equal(
+        'url("data:image\/svg+xml;%27")\nurl("data:image\/svg+xml;%27")\n\'Arial\''
+      );
+    });
+
+    it('should leave regular urls alone', function() {
+      var testString = "url('normaladdress.gif')";
+      expect(utils.fixSVGIssue(testString)).to.equal(testString);
+    });
   });
 });
