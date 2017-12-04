@@ -274,6 +274,11 @@ describe('utils', function() {
       expect(utils.fixSVGIssue(testString)).to.equal(
         'url("data:image\/svg+xml;%27")\nurl("data:image\/svg+xml;%27")\n\'Arial\''
       );
+
+      testString = 'url("data:image/svg+xml;\'...\'"), url(\'non-svg-url\')';
+      expect(utils.fixSVGIssue(testString)).to.equal(
+        'url("data:image/svg+xml;%27...%27"), url(\'non-svg-url\')'
+      )
     });
 
     it('should leave regular urls alone', function() {
