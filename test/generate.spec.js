@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 var sinon = require('sinon');
 var proxyquire = require('proxyquire');
 var utils = require('../lib/utils');
+var path = require('path');
 
 // stubs
 var minifyCalled = 0;
@@ -148,6 +149,16 @@ describe('generate', function() {
 
     generate(null, '', {sections: []}, {minify: true}).then(function() {
       expect(minifyCalled).to.equal(1);
+      done();
+    });
+  });
+
+  it('should call fixSVGIssue if context.stylesheets is not empty', function(done) {
+    var file = path.join(__dirname, 'data/svg-url.css');
+    sinon.spy(utils, 'fixSVGIssue');
+    generate(null, '', {sections: [], stylesheets: [file]}, {}).then(function() {
+      expect(utils.fixSVGIssue.called).to.be.true;
+      utils.fixSVGIssue.restore();
       done();
     });
   });
