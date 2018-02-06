@@ -16,10 +16,10 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter( 'jshint-stylish' ))
 });
 
-gulp.task('test', ['lint'], function(done) {
-  return gulp.src('test/*.spec.js', {read: false})
+gulp.task('test', gulp.series('lint', function(done) {
+  return gulp.src('test/tags.spec.js', {read: false})
     .pipe(mocha());
-});
+}));
 
 // create the polymer script for the handlebars template to use
 gulp.task('vulcanize', function() {
@@ -61,9 +61,19 @@ gulp.task('sass', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(src, ['lint']);
-  gulp.watch('assets/polymer.html', ['vulcanize']);
-  gulp.watch('assets/*.scss', ['sass']);
+    gulp.watch(src, gulp.series('lint'));
+    gulp.watch('assets/polymer.html', gulp.series('vulcanize'));
+    gulp.watch('assets/*.scss', gulp.series('sass'));
 });
 
-gulp.task('default', ['connect', 'sass', 'lint', 'test', 'watch']);
+gulp.task('default',
+    gulp.parallel('connect','sass', gulp.series( 'lint', 'test', 'watch'))
+);
+
+// var livingcss = require('gulp-livingcss');
+
+// gulp.task('build', function () {
+//   gulp.src('src/*.css')
+//     .pipe(livingcss())
+//     .pipe(gulp.dest('dist'))
+// });
