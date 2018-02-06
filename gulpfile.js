@@ -17,7 +17,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('test', gulp.series('lint', function(done) {
-  return gulp.src('test/tags.spec.js', {read: false})
+  return gulp.src('test/*.spec.js', {read: false})
     .pipe(mocha());
 }));
 
@@ -62,21 +62,11 @@ gulp.task('sass', function() {
 
 gulp.task('watch', function() {
     gulp.watch(src, gulp.series('lint'));
-    gulp.watch('assets/polymer.html', gulp.series('vulcanize'));
+    //gulp.watch('assets/polymer.html', gulp.series('vulcanize'));
     gulp.watch('assets/*.scss', gulp.series('sass'));
 });
 
 gulp.task('default',
-    gulp.parallel('connect','sass', gulp.series( 'lint', 'test', 'watch'))
+    gulp.series( gulp.parallel('test', 'sass'), gulp.parallel('watch','connect') )
 );
 
-var livingcss = require('gulp-livingcss');
-
-gulp.task('test-build', function () {
-
-  var build = Args.test || "basic";
-
-  gulp.src('examples/*.css')
-    .pipe(livingcss())
-    .pipe(gulp.dest('dist'))
-});
