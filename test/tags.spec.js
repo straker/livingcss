@@ -5,6 +5,7 @@ var fs = require('fs');
 var path = require('path');
 var parseComments = require('../lib/parseComments');
 var tags = require('../lib/tags');
+var normalizeNewline = require('normalize-newline');
 
 describe('tags', function() {
 
@@ -376,7 +377,7 @@ describe('tags', function() {
 
         parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
           expect(block.example).to.exist;
-          expect(block.example.description).to.equal('/**\n * @example example-with-file.css\n */');
+          expect( normalizeNewline(block.example.description) ).to.equal('/**\n * @example example-with-file.css\n */');
         });
 
         done();
@@ -444,7 +445,7 @@ describe('tags', function() {
         }
 
         parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
-          expect(block.code.description).to.equal('.example {\n  @extend %placeholder-selector;\n}');
+          expect( normalizeNewline(block.code.description) ).to.equal('.example {\n  @extend %placeholder-selector;\n}');
         });
 
         done();
@@ -521,7 +522,7 @@ describe('tags', function() {
 
         parseComments(data, file, tags, {sections: sections, pages: pages});
 
-        expect(sections[0].name).to.equal('Doc Example');
+        expect( sections[0].name.trim() ).to.equal('Doc Example');
 
         done();
       });
@@ -557,7 +558,7 @@ describe('tags', function() {
 
         parseComments(data, file, tags, {sections: sections, pages: pages});
 
-        expect(sections[0].description).to.equal('<p>Description of the section.</p>\n<h2 id="secondary-heading">Secondary Heading</h2>\n<h1 id="l-heading">L Heading</h1>\n<ul>\n<li>list item 1</li>\n<li>list item 2</li>\n</ul>\n<pre><code>Code in the description\n</code></pre>');
+        expect( normalizeNewline(sections[0].description).trim() ).to.equal('<p>Description of the section.</p>\n<h2 id="secondary-heading">Secondary Heading</h2>\n<h1 id="l-heading">L Heading</h1>\n<ul>\n<li>list item 1</li>\n<li>list item 2</li>\n</ul>\n<pre><code>Code in the description\n</code></pre>');
 
         done();
       });
