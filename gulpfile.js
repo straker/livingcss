@@ -70,10 +70,13 @@ gulp.task('default',
     gulp.parallel('connect','sass', gulp.series( 'lint', 'test', 'watch'))
 );
 
-// var livingcss = require('gulp-livingcss');
+var livingcss = require('gulp-livingcss');
 
-// gulp.task('build', function () {
-//   gulp.src('src/*.css')
-//     .pipe(livingcss())
-//     .pipe(gulp.dest('dist'))
-// });
+gulp.task('test-build', function () {
+
+  var build = Args.test || "basic";
+
+  gulp.src('examples/*.css')
+    .pipe(livingcss())
+    .pipe(gulp.dest('dist'))
+});
