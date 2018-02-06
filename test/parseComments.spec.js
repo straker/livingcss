@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 var fs = require('fs');
 var path = require('path');
 var parseComments = require('../lib/parseComments');
+var normalizeNewline = require('normalize-newline');
 
 describe('parseComments', function() {
 
@@ -164,7 +165,7 @@ describe('parseComments', function() {
 
       parseComments(data, file, {}, {}, function(block) {
          expect(block.testTag.description).to.equal('<p><em>Will</em> be parsed as <code>markdown</code>.</p>');
-         expect(block.multipleLines.description).to.equal('<h3 id="header">Header</h3>\n<p>paragraph</p>');
+         expect( normalizeNewline(block.multipleLines.description) ).to.equal('<h3 id="header">Header</h3>\n<p>paragraph</p>');
       });
 
       done();
