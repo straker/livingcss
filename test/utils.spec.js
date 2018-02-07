@@ -3,6 +3,7 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var proxyquire = require('proxyquire');
+var normalizeNewline = require('normalize-newline');
 
 // stubs
 var fsStub = {
@@ -269,7 +270,7 @@ describe('utils', function() {
       expect(utils.fixSVGIssue(testString)).to.equal('url("data:image\/svg+xml;%27")');
 
       // Case for a closing paren inside url
-      var testString = 'url("data:image/svg+xml;<svg xmlns=\'blah\'><g transform=\'translate(-1, -1)\'>")';
+      testString = 'url("data:image/svg+xml;<svg xmlns=\'blah\'><g transform=\'translate(-1, -1)\'>")';
       expect(utils.fixSVGIssue(testString)).to.equal(
         'url("data:image/svg+xml;<svg xmlns=%27blah%27><g transform=%27translate(-1, -1)%27>")'
       );
@@ -277,14 +278,14 @@ describe('utils', function() {
 
     it('should only replace single quotes in svg url expressions', function() {
       var testString = 'url("data:image\/svg+xml;\'")\nurl("data:image\/svg+xml;\'")\n\'Arial\'';
-      expect(utils.fixSVGIssue(testString)).to.equal(
+      expect( normalizeNewline( utils.fixSVGIssue(testString) ) ).to.equal(
         'url("data:image\/svg+xml;%27")\nurl("data:image\/svg+xml;%27")\n\'Arial\''
       );
 
       testString = 'url("data:image/svg+xml;\'...\'"), url(\'non-svg-url\')';
       expect(utils.fixSVGIssue(testString)).to.equal(
         'url("data:image/svg+xml;%27...%27"), url(\'non-svg-url\')'
-      )
+      );
     });
 
     it('should leave regular urls alone', function() {

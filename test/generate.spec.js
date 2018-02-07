@@ -7,6 +7,7 @@ var utils = require('../lib/utils');
 var path = require('path');
 
 // stubs
+var stub = sinon.stub().throws();
 var minifyCalled = 0;
 var fsStub = {
   writeFile: function(file, data, options, callback) { callback(null); },
@@ -32,7 +33,7 @@ var generate = proxyquire('../lib/generate', {
 describe('generate', function() {
 
   before(function() {
-    sinon.stub(utils, 'readFileGlobs', function() {
+    sinon.stub(utils, 'readFileGlobs').callsFake( function() {
       return Promise.resolve();
     });
   });
