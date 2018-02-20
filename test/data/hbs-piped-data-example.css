@@ -1,0 +1,7 @@
+/**
+ * @hbs_data 1|2|3
+ * @hbs_example
+ * {{#each hbs_data}}
+ * <h{{this}}>Heading H{{this}} </h{{this}}>
+ * {{/each}}
+ */
