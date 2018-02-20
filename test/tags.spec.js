@@ -431,6 +431,25 @@ describe('tags', function() {
       });
     });
 
+    it('hbs_data should set convert piped string into array then find and create nested array', function(done) {
+      var file = path.join(__dirname, 'data/hbs-piped-array-data-example.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.hbs_data).to.exist;
+          expect(block.hbs_data).to.deep.equal([["key1","value1"],["key2","value2"]]);
+        });
+
+        done();
+      });
+    });    
+
     it('hbs_data should create array if there are two tags', function(done) {
       var file = path.join(__dirname, 'data/hbs-double-data-example.css');
       var sections = [];
