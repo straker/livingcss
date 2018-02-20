@@ -503,7 +503,7 @@ describe('tags', function() {
 
         parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
           expect(block.example.description).to.exist;
-          expect(normalizeNewline(block.example.description)).to.equal('<ul>\n<li class="key">value just </li>\n<li class="key">value just another value</li>\n</ul>');
+          expect(normalizeNewline(block.example.description)).to.equal('<ul>\n<li class="key">\n   value\n</li>\n<li class="key">\n   value\n     is just another value\n</li>\n</ul>');
         });
 
         done();

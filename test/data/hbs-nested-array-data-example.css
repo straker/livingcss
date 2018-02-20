@@ -4,7 +4,12 @@
  * @hbs_example
  * <ul>
  * {{#each hbs_data}}
- * <li class="{{this.[0]}}">{{this.[1]}} just {{this.[2]}}</li>
+ * <li class="{{this.[0]}}">
+ *    {{this.[1]}}
+ *    {{#if this.[2]}} 
+ *      is just {{this.[2]}}
+ *    {{/if}}
+ * </li>
  * {{/each}}
  * </ul>
  */
