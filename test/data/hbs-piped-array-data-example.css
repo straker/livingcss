@@ -1,0 +1,7 @@
+/**
+ * @hbs_data key1::value1|key2::value2
+ * @hbs_example
+ * {{#each hbs_data}}
+ * {{this.[0]}}-{{this.[1]}}
+ * {{/each}}
+ */

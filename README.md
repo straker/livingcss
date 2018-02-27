@@ -260,6 +260,83 @@ It also generates a JSON object of the parsed comments that can be used to gener
 
   **NOTE:** Because `@doc` can provide a section name, the `@section` tag **must** come after the `@doc` tag, otherwise you will get an Unnamed Section error.
 
+* `@hbs_example` & `@hbs_data` - a pair of tags that allow simple, inline Handlebars templates to be rendered and used as the source for the `@example` tag.  
+   **Example** string with pipes between the values: 
+
+    ```css
+    /**
+     * H1-H6 Tags
+     * @hbs_data 1|2|3|4|5|6
+     * @hbs_example
+     * {{#each hbs_data}}
+     * <h{{this}}>Heading H{{this}} </h{{this}}>
+     * {{/each}}
+     */
+   ```
+   will render:
+   ```html
+   <h1>Heading H1 </h1>
+   <h2>Heading H2 </h2>
+   <h3>Heading H3 </h3>
+   <h4>Heading H4 </h4>
+   <h5>Heading H5 </h5>
+   <h6>Heading H6 </h6>
+   ```
+
+  **Example** array from duplicate tags:
+    ```css
+    /**
+     * H1-H6 Tags
+     * @hbs_data 1
+     * @hbs_data 2
+     * @hbs_data 3
+     * @hbs_data 4
+     * @hbs_data 5
+     * @hbs_data 6
+     * @hbs_example
+     * {{#each hbs_data}}
+     * <h{{this}}>Heading H{{this}} </h{{this}}>
+     * {{/each}}
+     */
+    ```
+   will *also* render:
+   ```html
+   <h1>Heading H1 </h1>
+   <h2>Heading H2 </h2>
+   <h3>Heading H3 </h3>
+   <h4>Heading H4 </h4>
+   <h5>Heading H5 </h5>
+   <h6>Heading H6 </h6>
+   ```
+    **Example** nested arrays using double colon (::) seperators on each line:
+    ```css
+    /**
+     * H1-H6 Tags
+     * @hbs_data 1::Page Titles
+     * @hbs_data 2::Section Titles
+     * @hbs_data 3::Sub Section Titles
+     * @hbs_data 4::List Item Titles
+     * @hbs_data 5::List Item Sub Titles
+     * @hbs_data 6::Minor Notes::this tag will be small and hard to read
+     * @hbs_example
+     * {{#each hbs_data}}
+     * <h{{this.[0]}}>The H{{this.[0]}} tag is for {{this.[1]}}
+     *   {{#if this.[2]}}
+     *        <span class="info" {{this.[2]}}<span>
+     *   {{/if}}
+     * </h{{this.[0]}}>
+     * {{/each}}
+     */
+    ```
+   will render:
+   ```html
+   <h1>The H1 tag is for Page Titles </h1>
+   <h2>The H2 tag is for Section Titles</h2>
+   <h3>The H3 tag is for Sub Section Titles</h3>
+   <h4>The H4 tag is for List Item Titles</h4>
+   <h5>The H5 tag is for List Item Sub Titles</h5>
+   <h6>The H6 tag is for Minor Notes <span class="info">This tag will be small and hard to read</span></h6>
+   ```
 ## Options
 
 * `loadcss` - If the style guide should load the css files that were used to generate it. The style guide will not move the styles to the output directory but will merely link to the styles in their current directory (so relative paths from the styles still work). Defaults to `true`.

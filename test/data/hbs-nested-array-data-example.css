@@ -1,0 +1,15 @@
+/**
+ * @hbs_data key::value
+ * @hbs_data key::value::another value
+ * @hbs_example
+ * <ul>
+ * {{#each hbs_data}}
+ * <li class="{{this.[0]}}">
+ *    {{this.[1]}}
+ *    {{#if this.[2]}} 
+ *      is just {{this.[2]}}
+ *    {{/if}}
+ * </li>
+ * {{/each}}
+ * </ul>
+ */

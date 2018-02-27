@@ -404,8 +404,131 @@ describe('tags', function() {
 
   });
 
+  // --------------------------------------------------
+  // @hbs-example
+  // --------------------------------------------------
+  describe('@hbs-example', function() {
+
+    //testing the accompanying hbs_data tag first.
 
 
+    it('hbs_data should set convert piped string into array', function(done) {
+      var file = path.join(__dirname, 'data/hbs-piped-data-example.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.hbs_data).to.exist;
+          expect(block.hbs_data).to.deep.equal(['1','2','3']);
+        });
+
+        done();
+      });
+    });
+
+    it('hbs_data should set convert piped string into array then find and create nested array', function(done) {
+      var file = path.join(__dirname, 'data/hbs-piped-array-data-example.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.hbs_data).to.exist;
+          expect(block.hbs_data).to.deep.equal([["key1","value1"],["key2","value2"]]);
+        });
+
+        done();
+      });
+    });    
+
+    it('hbs_data should create array if there are two tags', function(done) {
+      var file = path.join(__dirname, 'data/hbs-double-data-example.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.hbs_data).to.exist;
+          expect(block.hbs_data).to.deep.equal(['1','2']);
+        });
+
+        done();
+      });
+    });
+
+
+    it('hbs_data should create nested array', function(done) {
+      var file = path.join(__dirname, 'data/hbs-nested-array-data-example.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.hbs_data).to.exist;
+          expect(block.hbs_data).to.deep.equal([ ["key","value"],["key","value","another value"] ]);
+        });
+
+        done();
+      });
+    });
+
+    //testing the rendering output
+
+    it('should return <h> tags', function(done) {
+      var file = path.join(__dirname, 'data/hbs-piped-data-example.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.example.description).to.exist;
+          expect(normalizeNewline(block.example.description)).to.equal('<h1>Heading H1 </h1>\n<h2>Heading H2 </h2>\n<h3>Heading H3 </h3>\n');
+        });
+
+        done();
+      });
+    });
+
+    it('should handle nested arrays', function(done) {
+      var file = path.join(__dirname, 'data/hbs-nested-array-data-example.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.example.description).to.exist;
+          expect(normalizeNewline(block.example.description)).to.equal('<ul>\n<li class="key">\n   value\n</li>\n<li class="key">\n   value\n     is just another value\n</li>\n</ul>');
+        });
+
+        done();
+      });
+    });
+  });
 
 
   // --------------------------------------------------
