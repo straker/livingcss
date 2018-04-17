@@ -90,6 +90,24 @@ describe('tags', function() {
       });
     });
 
+    it('should trim the name of the section', function(done) {
+      var file = path.join(__dirname, 'data/section-trim-name.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages});
+
+        expect(sections[0].name).to.equal('Buttons');
+
+        done();
+      });
+    });
+
   });
 
 
@@ -397,6 +415,25 @@ describe('tags', function() {
         expect(function() {
           parseComments(data, file, tags, {sections: sections, pages: pages});
         }).to.throw(ReferenceError);
+
+        done();
+      });
+    });
+
+    it('should replace all &#64; with @', function(done) {
+      var file = path.join(__dirname, 'data/example-at-symbol.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function(block) {
+          expect(block.code).to.exist;
+          expect(block.code.description).to.equal('@extends foobar\n@media screen and (max-width: 600px)')
+        });
 
         done();
       });
