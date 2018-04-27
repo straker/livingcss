@@ -164,8 +164,26 @@ describe('parseComments', function() {
       }
 
       parseComments(data, file, {}, {}, function(block) {
-         expect(block.testTag.description).to.equal('<p><em>Will</em> be parsed as <code>markdown</code>.</p>');
-         expect( normalizeNewline(block.multipleLines.description) ).to.equal('<h3 id="header">Header</h3>\n<p>paragraph</p>');
+        expect(block.testTag).to.equal('<p><em>Will</em> be parsed as <code>markdown</code>.</p>');
+        expect( normalizeNewline(block.multipleLines) ).to.equal('<h3 id="header">Header</h3>\n<p>paragraph</p>');
+      });
+
+      done();
+    });
+  });
+
+  it('should create an object for an undefined tag of type markdown if it has a name', function(done) {
+    var file = path.join(__dirname, 'data/type-markdown-with-name.css');
+
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) {
+        throw err;
+      }
+
+      parseComments(data, file, {}, {}, function(block) {
+        expect(typeof block.testTag).to.equal('object');
+        expect(block.testTag.name).to.equal('foobar');
+        expect(block.testTag.description).to.equal('<p><em>Will</em> be parsed as <code>markdown</code>.</p>');
       });
 
       done();

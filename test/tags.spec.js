@@ -108,6 +108,24 @@ describe('tags', function() {
       });
     });
 
+    it('should trim the first line of the block description as the name', function(done) {
+      var file = path.join(__dirname, 'data/section-trim-name-description.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function(err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages});
+
+        expect(sections[0].name).to.equal('Buttons');
+
+        done();
+      });
+    });
+
   });
 
 
