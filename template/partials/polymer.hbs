@@ -7709,6 +7709,11 @@ this.fire('dom-change');
       var body = document.createElement('body');
       body.classList.add(this.is);
 
+      // add the namespace of an example to the body
+      if(this.dataset.namespace) {
+        body.classList.add(this.dataset.namespace);
+      }
+
       // add scoped class to all content injected child nodes
       var nodes = this.querySelectorAll('*');
       for (var i = 0; i < nodes.length; i++) {
