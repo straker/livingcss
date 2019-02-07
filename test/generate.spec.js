@@ -59,7 +59,7 @@ describe('generate', function() {
   it('should remove any non-root sections from the sections list', function() {
     var sections = [{name: 'one'}, {name: 'two', parent: 'one'}, {name: 'three', parent: 'two'}];
 
-    generate(null, '', {sections: sections});
+    generate('.', '', {sections: sections});
 
     expect(sections.length).to.equal(1);
     expect(sections[0].name).to.equal('one');
@@ -68,14 +68,14 @@ describe('generate', function() {
   it('should call utils.sortCategoryBy if context.sectionOrder is set', function() {
     sinon.spy(utils, 'sortCategoryBy');
 
-    generate(null, '', {sections: [], sectionOrder: []}, {});
+    generate('.', '', {sections: [], sectionOrder: []}, {});
 
     expect(utils.sortCategoryBy.called).to.be.true;
     utils.sortCategoryBy.restore();
   });
 
   it('should call Handlebars if no preprocess function is defined', function(done) {
-    generate(null, '', {sections: []}).then(function() {
+    generate('.', '', {sections: []}).then(function() {
       expect(HandlebarsStub.compile.called).to.be.true;
       done();
     });
@@ -83,7 +83,7 @@ describe('generate', function() {
 
   it('should throw an error if preproces is not a function', function() {
     var fn = function() {
-      generate(null, '', {sections: {}}, {preprocess: false});
+      generate('.', '', {sections: {}}, {preprocess: false});
     };
 
     expect(fn).to.throw(SyntaxError);
@@ -93,7 +93,7 @@ describe('generate', function() {
   it('should call the preprocess function', function(done) {
     var preprocess = sinon.spy();
 
-    generate(null, '', {sections: []}, {preprocess: preprocess}).then(function() {
+    generate('.', '', {sections: []}, {preprocess: preprocess}).then(function() {
       expect(preprocess.called).to.be.true;
       done();
     });
@@ -102,7 +102,7 @@ describe('generate', function() {
   it('should call Handlebars when preprocess returns null', function(done) {
     var preprocess = function() {};
 
-    generate(null, '', {sections: []}, {preprocess: preprocess}).then(function() {
+    generate('.', '', {sections: []}, {preprocess: preprocess}).then(function() {
       expect(HandlebarsStub.compile.called).to.be.true;
       done();
     });
@@ -111,7 +111,7 @@ describe('generate', function() {
   it('should call Handlebars when preprocess returns true', function(done) {
     var preprocess = function() { return true; };
 
-    generate(null, '', {sections: []}, {preprocess: preprocess}).then(function() {
+    generate('.', '', {sections: []}, {preprocess: preprocess}).then(function() {
       expect(HandlebarsStub.compile.called).to.be.true;
       done();
     });
@@ -120,7 +120,7 @@ describe('generate', function() {
   it('should call Handlebars when preprocess returns a resolved Promise', function(done) {
     var preprocess = function() { return Promise.resolve(); };
 
-    generate(null, '', {sections: []}, {preprocess: preprocess}).then(function() {
+    generate('.', '', {sections: []}, {preprocess: preprocess}).then(function() {
       expect(HandlebarsStub.compile.called).to.be.true;
       done();
     });
@@ -129,7 +129,7 @@ describe('generate', function() {
   it('should not call Handlebars when preprocess returns false', function(done) {
     var preprocess = function() { return false; };
 
-    generate(null, '', {sections: []}, {preprocess: preprocess}).then(function() {
+    generate('.', '', {sections: []}, {preprocess: preprocess}).then(function() {
       expect(HandlebarsStub.compile.called).to.be.false;
       done();
     });
@@ -138,7 +138,7 @@ describe('generate', function() {
   it('should not call Handlebars when preprocess returns a rejected Promise', function(done) {
     var preprocess = function() { return Promise.reject(); };
 
-    generate(null, '', {sections: []}, {preprocess: preprocess}).then(function() {
+    generate('.', '', {sections: []}, {preprocess: preprocess}).then(function() {
       expect(HandlebarsStub.compile.called).to.be.false;
       done();
     });
@@ -148,7 +148,7 @@ describe('generate', function() {
     // for some reason trying to use sinon.spy doesn't work
     minifyCalled = 0;
 
-    generate(null, '', {sections: []}, {minify: true}).then(function() {
+    generate('.', '', {sections: []}, {minify: true}).then(function() {
       expect(minifyCalled).to.equal(1);
       done();
     });
@@ -157,7 +157,7 @@ describe('generate', function() {
   it('should call fixSVGIssue if context.stylesheets is not empty', function(done) {
     var file = path.join(__dirname, 'data/svg-url.css');
     sinon.spy(utils, 'fixSVGIssue');
-    generate(null, '', {sections: [], stylesheets: [file]}, {}).then(function() {
+    generate('.', '', {sections: [], stylesheets: [file]}, {}).then(function() {
       expect(utils.fixSVGIssue.called).to.be.true;
       utils.fixSVGIssue.restore();
       done();
