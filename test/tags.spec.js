@@ -677,4 +677,29 @@ describe('tags', function() {
 
   });
 
+  // --------------------------------------------------
+  // @namespace
+  // --------------------------------------------------
+  describe('@namespace', function () {
+
+    it('should set namespace property', function (done) {
+      var file = path.join(__dirname, 'data/namespace.css');
+      var sections = [];
+      var pages = [];
+
+      fs.readFile(file, 'utf8', function (err, data) {
+        if (err) {
+          throw err;
+        }
+
+        parseComments(data, file, tags, {sections: sections, pages: pages}, function (block) {
+          expect(block.namespace).to.equal('test');
+        });
+
+        done();
+      });
+    });
+
+  });
+
 });

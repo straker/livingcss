@@ -1,7 +1,7 @@
 <div class="livingcss__section-description">{{{description}}}</div>
 
 {{#if example}}
-<livingcss-example>{{{example.description}}}</livingcss-example>
+<livingcss-example{{#if namespace}} data-namespace="{{namespace}}"{{/if}}>{{{example.description}}}</livingcss-example>
 {{/if}}
 
 {{#if code}}

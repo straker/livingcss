@@ -227,6 +227,21 @@ It also generates a JSON object of the parsed comments that can be used to gener
      * @hideCode
      */
     ```
+    
+* `@namespace` - Add a namespace class to the example output.
+
+    ```css
+    /**
+     * A namespace is a class added to the parent DOM element of the example
+     *
+     * @section namespace Example
+     * @namespace my-magical-namespace
+     * @example
+     * <div class="container">
+     *   <div class="my-awesome-class">Example</div>
+     * </div>
+     */
+    ```    
 
 * `@doc` - A file that defines the section name, description, example, or code. Useful if your section description needs to output HTML. The first heading of the file will be used as the section description if one is not defined. 
 
