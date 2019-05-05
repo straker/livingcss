@@ -96,15 +96,7 @@ function livingcss(source, dest, options) {
 
   return Promise.all([
     // read the handlebars template
-    new Promise(function(resolve, reject) {
-      fs.readFile(options.template, 'utf8', function(err, data) {
-        if (err) {
-          reject(err);
-        }
-
-        resolve(data);
-      });
-    }),
+    utils._readFileWithPromise(options.template),
 
     // read all source files and handlebar templates
     utils.readFileGlobs(source, function(data, file) {
