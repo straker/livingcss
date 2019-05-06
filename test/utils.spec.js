@@ -9,11 +9,13 @@ var normalizeNewline = require('normalize-newline');
 var fsStub = {
   writeFile: function(file, data, options, callback) { callback(null); },
   readFile: function(file, options, callback) {
-    if (file instanceof Error) return callback(file)
+    if (file instanceof Error) return callback(file);
+    if (file === '__ERROR__') return callback('readFile error');
     callback(null, '');
   }
 };
 var globStub = function(files, callback) {
+  if (files instanceof Error) return callback(files);
   files = (!Array.isArray(files) ? [files] : files);
   callback(null, files);
 }
@@ -339,14 +341,28 @@ describe('utils', function() {
       });
     });
 
-    it('should handle error', function(done) {
-      var files = new Error('custom: cannot read file');
+    it('should handle glob error', function(done) {
+      var files = new Error('custom: glob error');
 
       utils.readFileGlobs(files)
       .then(function() {
         done('readFileGlobs did not throw error');
       })
       .catch(function(err) {
+        expect(err.message).to.equal('custom: glob error');
+        done();
+      });
+    });
+
+    it('should handle read file error', function(done) {
+      var files = '__ERROR__';
+
+      utils.readFileGlobs(files)
+      .then(function() {
+        done('readFileGlobs did not throw error');
+      })
+      .catch(function(err) {
+        expect(err).to.equal('readFile error');
         done();
       });
     });
