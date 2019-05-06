@@ -4,3 +4,4 @@ node_modules
 examples/**/*.html
 bower_components
 npm-debug.log
+.nyc_output

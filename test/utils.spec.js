@@ -8,11 +8,21 @@ var normalizeNewline = require('normalize-newline');
 // stubs
 var fsStub = {
   writeFile: function(file, data, options, callback) { callback(null); },
-  readFile: function(file, options, callback) { callback(null, ''); }
+  readFile: function(file, options, callback) {
+    if (file instanceof Error) return callback(file);
+    if (file === '__ERROR__') return callback('readFile error');
+    callback(null, '');
+  }
 };
+var globStub = function(files, callback) {
+  if (files instanceof Error) return callback(files);
+  files = (!Array.isArray(files) ? [files] : files);
+  callback(null, files);
+}
 
 var utils = proxyquire('../lib/utils', {
-  fs: fsStub
+  fs: fsStub,
+  glob: globStub
 });
 
 describe('utils', function() {
@@ -214,6 +224,37 @@ describe('utils', function() {
       });
     });
 
+    it('should call the callback in file order', function(done) {
+      var files = [];
+      for (var i = 1; i <= 100; i++) {
+        files.push(i.toString());
+      }
+
+      var counter = 1;
+      utils.readFiles(files, function(data, file) {
+        expect(parseInt(file)).to.equal(counter);
+        counter++;
+      }).then(
+        function() {
+          done();
+        })
+      .catch(function(err) {
+        throw err;
+      });
+    });
+
+    it('should handle error', function(done) {
+      var file = new Error('custom cannot read file');
+
+      utils.readFiles(file)
+      .then(function() {
+        done('readFiles did not throw error');
+      })
+      .catch(function(err) {
+        done();
+      });
+    });
+
   });
 
 
@@ -226,7 +267,7 @@ describe('utils', function() {
   describe('readFileGlobs', function() {
 
     it('should call the callback function for each file read', function(done) {
-      var files = ['template/*.hbs'];
+      var files = ['template/template.hbs'];
       var filesRead = [];
 
       utils.readFileGlobs(files, function(data, file) {
@@ -243,7 +284,7 @@ describe('utils', function() {
     });
 
     it('should allow single file patterns', function(done) {
-      var file = 'template/*.hbs';
+      var file = 'template/template.hbs';
       var fileRead;
 
       utils.readFileGlobs(file, function(data, file) {
@@ -255,6 +296,74 @@ describe('utils', function() {
         })
       .catch(function(err) {
         throw err;
+      });
+    });
+
+    it('should call the callback in file order for single pattern', function(done) {
+      var files = [];
+      for (var i = 1; i <= 100; i++) {
+        files.push(i.toString());
+      }
+
+      var counter = 1;
+      utils.readFileGlobs(files, function(data, file) {
+        expect(parseInt(file)).to.equal(counter);
+        counter++;
+      }).then(
+        function() {
+          done();
+        })
+      .catch(function(err) {
+        throw err;
+      });
+    });
+
+    it('should call the callback in file order for an array of pattens', function(done) {
+      var files = [];
+      for (var j = 0; j < 10; j++) {
+        var fileList = [];
+          for (var i = 1; i <= 10; i++) {
+          fileList.push((j * 10 + i).toString());
+        }
+        files.push(fileList);
+      }
+
+      var counter = 1;
+      utils.readFileGlobs(files, function(data, file) {
+        expect(parseInt(file)).to.equal(counter);
+        counter++;
+      }).then(
+        function() {
+          done();
+        })
+      .catch(function(err) {
+        throw err;
+      });
+    });
+
+    it('should handle glob error', function(done) {
+      var files = new Error('custom: glob error');
+
+      utils.readFileGlobs(files)
+      .then(function() {
+        done('readFileGlobs did not throw error');
+      })
+      .catch(function(err) {
+        expect(err.message).to.equal('custom: glob error');
+        done();
+      });
+    });
+
+    it('should handle read file error', function(done) {
+      var files = '__ERROR__';
+
+      utils.readFileGlobs(files)
+      .then(function() {
+        done('readFileGlobs did not throw error');
+      })
+      .catch(function(err) {
+        expect(err).to.equal('readFile error');
+        done();
       });
     });
 
