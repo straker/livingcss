@@ -84,6 +84,7 @@ function livingcss(source, dest, options) {
   options.tags = options.tags || [];
   options.minify = (typeof options.minify === 'undefined' ? false : options.minify);
   options.loadcss = (typeof options.loadcss === 'undefined' ? true : options.loadcss);
+  options.allSectionPages = (typeof options.allSectionPages === 'undefined' ? false : options.allSectionPages);
 
   // add custom tags
   for (var tag in options.tags) {
@@ -158,10 +159,26 @@ function livingcss(source, dest, options) {
         pageContext.navbar[index].selected = true;
       }
 
-      // values[0] = handlebars template
-      promises.push(
-        generate(path.join(dest, page.id + '.html'), values[0], pageContext, options)
-      );
+      if (options.allSectionPages) {
+        pageContext.allSectionPages = true;
+
+        page.sections.forEach(function(section) {
+          // deep copy context for each page
+          pageContext = JSON.parse(JSON.stringify(pageContext));
+          pageContext.singleSection = section;
+
+          // values[0] = handlebars template
+          promises.push(
+            generate(path.join(dest, section.id + '.html'), values[0], pageContext, options)
+          );
+        });
+      }
+      else {
+        // values[0] = handlebars template
+        promises.push(
+          generate(path.join(dest, page.id + '.html'), values[0], pageContext, options)
+        );
+      }
     });
 
     // wait until all promises have returned (either rejected or resolved) before

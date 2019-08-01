@@ -48,6 +48,18 @@
 
       <main class="livingcss__main" role="main">
 
+        {{#if singleSection}}
+        {{#with singleSection}}
+        <article class="livingcss__article" id="{{id}}">
+          <h1 class="livingcss__article-title">{{name}}</h1>
+          {{~> section}}
+
+          {{#children}}
+          {{~> childSection}}
+          {{/children}}
+        </article>
+        {{/with}}
+        {{else}}
         {{#each sections}}
         <article class="livingcss__article" id="{{id}}">
           <h1 class="livingcss__article-title">{{name}}</h1>
@@ -58,13 +70,18 @@
           {{/children}}
         </article>
         {{/each}}
+        {{/if}}
 
       </main>
 
       <nav class="livingcss__nav">
         <div class="livingcss__nav-container">
         {{#each sections}}
+        {{#if ../allSectionPages}}
+          <a class="livingcss__nav-link" href="{{id}}.html">{{name}}</a>
+        {{else}}
           <a class="livingcss__nav-link" href="#{{id}}">{{name}}</a>
+        {{/if}}
         {{/each}}
         </div>
       </nav>
