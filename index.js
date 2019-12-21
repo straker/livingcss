@@ -5,7 +5,7 @@ var Handlebars = require('handlebars');
 
 var generate = require('./lib/generate');
 var parseComments = require('./lib/parseComments');
-var tags = require('./lib/tags');
+var defaultTags = require('./lib/tags');
 var utils = require('./lib/utils');
 
 /**
@@ -86,13 +86,7 @@ function livingcss(source, dest, options) {
   options.loadcss = (typeof options.loadcss === 'undefined' ? true : options.loadcss);
 
   // add custom tags
-  for (var tag in options.tags) {
-    if (!options.tags.hasOwnProperty(tag)) {
-      continue;
-    }
-
-    tags[tag] = options.tags[tag];
-  }
+  var tags = Object.assign({}, defaultTags, options.tags);
 
   return Promise.all([
     // read the handlebars template
@@ -166,9 +160,12 @@ function livingcss(source, dest, options) {
 
     // wait until all promises have returned (either rejected or resolved) before
     // returning the last promise
-    return Promise.all(promises);
+    return Promise.all(promises).then(function() {
+      defaultTags.resetForwardReference();
+    });
   })
   .catch(function(err) {
+    defaultTags.resetForwardReference();
 
     // in a gulp pipeline we don't want to log the error as gulp-util will do that
     // for us
@@ -183,5 +180,5 @@ function livingcss(source, dest, options) {
 module.exports = livingcss;
 module.exports.generate = generate;
 module.exports.parseComments = parseComments;
-module.exports.tags = tags;
+module.exports.tags = defaultTags;
 module.exports.utils = utils;
