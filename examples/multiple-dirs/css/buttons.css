@@ -1,0 +1,23 @@
+/**
+ * Buttons
+ *
+ * The Button `.btn` class can be applied to `<button>`, `<input>`, or `<a>` elements.
+ *
+ * @section
+ *
+ * @example
+ * <button class="btn">Button</button>
+ * <input type="submit" class="btn" value="Input"/>
+ * <a href="#" class="btn">Anchor</a>
+ */
+.btn {
+  background-color: #ddd;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  color: black;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  padding: 5px 15px;
+  text-decoration: none;
+}
