@@ -1,9 +1,13 @@
 /*jshint -W030 */
 
-var expect = require('chai').expect;
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
 var sinon = require('sinon');
 var proxyquire = require('proxyquire');
 var normalizeNewline = require('normalize-newline');
+
+chai.use(chaiAsPromised);
+var expect = chai.expect;
 
 // stubs
 var fsStub = {
@@ -18,7 +22,7 @@ var globStub = function(files, callback) {
   if (files instanceof Error) return callback(files);
   files = (!Array.isArray(files) ? [files] : files);
   callback(null, files);
-}
+};
 
 var utils = proxyquire('../lib/utils', {
   fs: fsStub,
@@ -243,16 +247,14 @@ describe('utils', function() {
       });
     });
 
-    it('should handle error', function(done) {
-      var file = new Error('custom cannot read file');
+    it('should notify of error', function() {
+      var promise = utils.readFiles(new Error('custom cannot read file'));
+      return expect(promise).to.eventually.be.rejectedWith(Error);
+    });
 
-      utils.readFiles(file)
-      .then(function() {
-        done('readFiles did not throw error');
-      })
-      .catch(function(err) {
-        done();
-      });
+    it('should return empty array if no files', function() {
+      var promise = utils.readFiles([]);
+      return expect(promise).to.eventually.deep.equal([]);
     });
 
   });
@@ -341,30 +343,15 @@ describe('utils', function() {
       });
     });
 
-    it('should handle glob error', function(done) {
-      var files = new Error('custom: glob error');
-
-      utils.readFileGlobs(files)
-      .then(function() {
-        done('readFileGlobs did not throw error');
-      })
-      .catch(function(err) {
-        expect(err.message).to.equal('custom: glob error');
-        done();
-      });
+    it('should handle glob error', async function() {
+      var promise = utils.readFileGlobs(new Error('custom: glob error'));
+      return expect(promise).to.be.rejectedWith(Error);
     });
 
-    it('should handle read file error', function(done) {
+    it('should handle read file error', function() {
       var files = '__ERROR__';
-
-      utils.readFileGlobs(files)
-      .then(function() {
-        done('readFileGlobs did not throw error');
-      })
-      .catch(function(err) {
-        expect(err).to.equal('readFile error');
-        done();
-      });
+      var promise = utils.readFileGlobs(files);
+      return expect(promise).to.be.rejected;
     });
 
   });
