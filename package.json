@@ -16,6 +16,15 @@
     "generator",
     "css"
   ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "index.js",
+    "lib/*",
+    "template/*",
+    "assets/*"
+  ],
   "author": "Steven Lambert <steven@sklambert.com> (http://sklambert.com/)",
   "license": "MIT",
   "bugs": {
