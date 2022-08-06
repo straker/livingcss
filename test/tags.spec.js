@@ -613,7 +613,7 @@ describe('tags', function() {
 
         parseComments(data, file, tags, {sections: sections, pages: pages});
 
-        expect( normalizeNewline(sections[0].description).trim() ).to.equal('<p>Description of the section.</p>\n<h2 id="secondary-heading">Secondary Heading</h2>\n<h1 id="l-heading">L Heading</h1>\n<ul>\n<li>list item 1</li>\n<li>list item 2</li>\n</ul>\n<pre><code>Code in the description</code></pre>');
+        expect( normalizeNewline(sections[0].description).trim() ).to.equal('<p>Description of the section.</p>\n<h2 id="secondary-heading">Secondary Heading</h2>\n<h1 id="l-heading">L Heading</h1>\n<ul>\n<li>list item 1</li>\n<li>list item 2</li>\n</ul>\n<pre><code>Code in the description\n</code></pre>');
 
         done();
       });
