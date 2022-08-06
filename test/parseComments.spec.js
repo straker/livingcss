@@ -70,7 +70,6 @@ describe('parseComments', function() {
       }
 
       parseComments(data, file, {}, {}, function(block) {
-        console.log(block)
         expect(block.color).to.exist;
         expect(block.color.type).to.equal('hex');
         expect(block.color.description).to.equal('#fff');
@@ -182,7 +181,6 @@ describe('parseComments', function() {
       }
 
       parseComments(data, file, {}, {}, function(block) {
-        console.log(block)
         expect(typeof block.testTag).to.equal('object');
         expect(block.testTag.name).to.equal('foobar');
         expect(block.testTag.description).to.equal('<p><em>Will</em> be parsed as <code>markdown</code>.</p>');
