@@ -12,16 +12,51 @@
   <link rel="stylesheet" href="{{this}}">
   {{/each}}
   <!-- /user styles -->
-
-  <script src="https://cdn.jsdelivr.net/webcomponentsjs/0.7.24/webcomponents.min.js"></script>
 </head>
 <body class="livingcss">
   <!-- webcomponent -->
   <!--
-    inlining polymer makes this section really long, but inlining it prevents FOUC and
-    makes all examples the correct size when created for determining scroll positions
+    inlining web components prevents FOUC and makes all examples the correct
+    size when created for determining scroll positions
    -->
-  {{> polymer}}
+  <template id="livingcss-example-template">
+    <style>
+    :host {
+      display: block;
+    }
+
+    {{#each parsedStylesheets}}
+    {{{this}}}
+
+    {{/each}}
+    </style>
+  </template>
+
+  {{#each sections}}
+  {{~> codeTemplate }}
+  {{/each}}
+
+  <script>
+  class LivingCSSExample extends HTMLElement {
+    constructor() {
+      super();
+
+      const template = document.getElementById('livingcss-example-template');
+      const shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(template.content.cloneNode(true));
+
+      this._shadowRoot = shadowRoot;
+    }
+
+    connectedCallback() {
+      const example = this.getAttribute('example');
+      const template = document.getElementById(`${example}-example-template`);
+      this._shadowRoot.appendChild(template.content.cloneNode(true));
+    }
+  }
+
+  customElements.define('livingcss-example', LivingCSSExample);
+  </script>
   <!-- /webcomponent -->
 
   <div class="livingcss__wrapper">
