@@ -84,6 +84,7 @@ function livingcss(source, dest, options) {
   options.tags = options.tags || [];
   options.minify = (typeof options.minify === 'undefined' ? false : options.minify);
   options.loadcss = (typeof options.loadcss === 'undefined' ? true : options.loadcss);
+  options.allSectionPages = (typeof options.allSectionPages === 'undefined' ? false : options.allSectionPages);
 
   // add custom tags
   var tags = Object.assign({}, defaultTags, options.tags);
@@ -152,10 +153,57 @@ function livingcss(source, dest, options) {
         pageContext.navbar[index].selected = true;
       }
 
-      // values[0] = handlebars template
-      promises.push(
-        generate(path.join(dest, page.id + '.html'), values[0], pageContext, options)
-      );
+      // generate a single page for each top level section of the @page
+      if (options.allSectionPages) {
+        pageContext.allSectionPages = true;
+
+        // reset urls to correct path
+        if (context.navbar) {
+          pageContext.navbar = context.pages.map(function(page) {
+            return {
+              name: page.name,
+              url: path.join('/', page.id, 'index.html')
+            };
+          });
+          pageContext.navbar[index].selected = true;
+        }
+
+        page.sections.forEach(function(section) {
+          // deep copy context for each page
+          var singleContext = JSON.parse(JSON.stringify(pageContext));
+          singleContext.singleSection = section;
+
+          // add selected for side nav
+          singleContext.sections.forEach(function(sec) {
+            if (section.id === sec.id) {
+              sec.selected = true;
+            }
+          })
+
+          // values[0] = handlebars template
+          promises.push(
+            generate(path.join(dest, page.id, section.id + '.html'), values[0], singleContext, options)
+          );
+        });
+
+        // generate a TOC for the top level page
+        singleContext = JSON.parse(JSON.stringify(pageContext));
+        singleContext.TOC = true;
+
+        // add urls for TOC list
+        singleContext.sections.forEach(function(sec) {
+          sec.url = path.join(page.id, sec.id + '.html');
+        });
+        promises.push(
+          generate(path.join(dest, page.id, 'index.html'), values[0], singleContext, options)
+        );
+      }
+      else {
+        // values[0] = handlebars template
+        promises.push(
+          generate(path.join(dest, page.id + '.html'), values[0], pageContext, options)
+        );
+      }
     });
 
     // wait until all promises have returned (either rejected or resolved) before

@@ -1,0 +1,10 @@
+<li>
+  <div>{{name}}</div>
+  {{#if children}}
+    <ul>
+    {{#children}}
+    {{~> childTOC}}
+    {{/children}}
+    </ul>
+  {{/if}}
+</li>

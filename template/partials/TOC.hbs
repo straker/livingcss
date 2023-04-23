@@ -1,0 +1,10 @@
+<li>
+  <a href="/{{url}}">{{name}}</a>
+  {{#if children}}
+    <ul>
+    {{#children}}
+    {{~> childTOC}}
+    {{/children}}
+    </ul>
+  {{/if}}
+</li>
